@@ -282,13 +282,22 @@ for (const page of raw) {
   }
 }
 
-// Additional redirects: Hebrew top-level subject URLs → new English routes
-for (const s of SUBJECTS) {
-  redirects.push({ source: s.hebrewOriginalPath, destination: `/${s.id}`, permanent: true });
+// Additional redirects: Hebrew top-level subject URLs → new English routes.
+// Register BOTH the decoded and percent-encoded forms so we match no matter
+// how the browser sends the request.
+function pushHebrewRedirect(hebPath, destination) {
+  redirects.push({ source: hebPath, destination, permanent: true });
+  const enc = encodeURI(hebPath);
+  if (enc !== hebPath) {
+    redirects.push({ source: enc, destination, permanent: true });
+  }
 }
-redirects.push({ source: '/מבחנים', destination: '/exams', permanent: true });
-redirects.push({ source: '/מעבדות', destination: '/labs', permanent: true });
-redirects.push({ source: '/מחשבון', destination: '/calculator', permanent: true });
+for (const s of SUBJECTS) {
+  pushHebrewRedirect(s.hebrewOriginalPath, `/${s.id}`);
+}
+pushHebrewRedirect('/מבחנים', '/exams');
+pushHebrewRedirect('/מעבדות', '/labs');
+pushHebrewRedirect('/מחשבון', '/calculator');
 
 // Deduplicate items (some list pages have partial dupes)
 function dedupe(arr, keyFn) {
