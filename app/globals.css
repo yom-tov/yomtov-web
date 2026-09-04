@@ -90,40 +90,45 @@
 }
 
 /* -----------------------------------------------------------------------------
- * Base
+ * Base — wrapped in @layer base so Tailwind utility classes (which live in
+ * @layer utilities, a later layer) win over these defaults. Unlayered rules
+ * beat any @layer rule in the cascade, so body/`a` color declarations must
+ * be layered or `text-white` etc. never applies to anchors like <Link>.
  * ---------------------------------------------------------------------------*/
-html {
-  color-scheme: light;
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-sans);
-  font-feature-settings: "kern", "ss01";
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-:where(a) { color: inherit; text-decoration: none; }
+@layer base {
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-feature-settings: "kern", "ss01";
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  :where(a) { color: inherit; text-decoration: none; }
 
-:where(h1, h2, h3, h4) {
-  color: var(--text);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-}
+  :where(h1, h2, h3, h4) {
+    color: var(--text);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
 
-/* Better focus rings — visible everywhere, matches brand */
-:focus-visible {
-  outline: 2px solid var(--accent-500);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-button:focus-visible,
-a:focus-visible {
-  outline-offset: 3px;
+  /* Better focus rings — visible everywhere, matches brand */
+  :focus-visible {
+    outline: 2px solid var(--accent-500);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  button:focus-visible,
+  a:focus-visible {
+    outline-offset: 3px;
+  }
 }
 
 /* Numbers should look aligned in Heebo */
