@@ -26,11 +26,25 @@ for (const r of redirectsData as Entry[]) {
 
 export function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
-  const hit = table.get(path);
-  if (!hit) return NextResponse.next();
-  const url = req.nextUrl.clone();
-  url.pathname = hit.destination;
-  return NextResponse.redirect(url, hit.status);
+  let decoded = path;
+  try {
+    decoded = decodeURIComponent(path);
+  } catch {}
+  const hit = table.get(decoded) || table.get(path);
+  const res = hit
+    ? NextResponse.redirect(
+        (() => {
+          const u = req.nextUrl.clone();
+          u.pathname = hit.destination;
+          return u;
+        })(),
+        hit.status
+      )
+    : NextResponse.next();
+  res.headers.set("x-yomtov-mw", hit ? "hit" : "miss");
+  res.headers.set("x-yomtov-mw-path", path);
+  res.headers.set("x-yomtov-mw-decoded", decoded);
+  return res;
 }
 
 // Skip static files, API, and Next.js internals.
