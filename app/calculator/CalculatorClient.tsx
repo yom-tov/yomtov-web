@@ -643,6 +643,21 @@ function ResistorCombo({ mode }: { mode: "series" | "parallel" }) {
 // -----------------------------------------------------------------------------
 // Schematic renderer (SVG resistor bodies + wires) with LED displays per resistor
 // -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Schematic geometry — shared constants
+// -----------------------------------------------------------------------------
+const BODY_LEN = 54;   // length of the zigzag body
+const LEAD_LEN = 22;   // straight wire lead on each side of the resistor
+const COMP_SPAN = BODY_LEN + 2 * LEAD_LEN; // full component span end-to-end
+const ZIG = 11;        // zigzag amplitude (peak/valley offset from baseline)
+
+function fmtResistorLabel(n: number | null | undefined): string {
+  if (n == null || !isFinite(n) || n <= 0) return "—";
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 2)}MΩ`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(n % 1_000 === 0 ? 0 : 2)}kΩ`;
+  return `${n}Ω`;
+}
+
 function SchematicPanel({
   mode,
   values,
@@ -664,20 +679,30 @@ function SchematicPanel({
   result: number | null;
 }) {
   const count = values.length;
-  const displayGrid =
-    mode === "series"
-      ? "grid gap-3 sm:gap-4"
-      : "grid gap-3 sm:gap-4";
   const gridCols =
     count <= 2 ? "sm:grid-cols-2" : count === 3 ? "sm:grid-cols-3" : "sm:grid-cols-4";
+
+  // Series viewBox: extra left/right margins for terminal dots + wire tails.
+  // Parallel viewBox: horizontal spacing between vertical resistors + rail tails.
+  const seriesSpacing = COMP_SPAN + 8;    // small extra wire between components
+  const seriesWidth = 60 + count * seriesSpacing + 60;
+  const parallelSpacing = 150;
+  const parallelWidth = 40 + (count - 1) * parallelSpacing + 100 + 40;
 
   return (
     <div className="rounded-3xl border border-border bg-surface p-4 sm:p-5">
       {/* SVG schematic */}
       <div className="overflow-x-auto">
         <svg
-          viewBox={mode === "series" ? `0 0 ${100 + count * 90} 120` : `0 0 ${140 + count * 90} 160`}
-          className="mx-auto block h-32 w-full max-w-2xl"
+          viewBox={
+            mode === "series"
+              ? `0 0 ${seriesWidth} 160`
+              : `0 0 ${parallelWidth} 220`
+          }
+          className={clsx(
+            "mx-auto block w-full max-w-3xl",
+            mode === "series" ? "h-44 sm:h-52" : "h-64 sm:h-72"
+          )}
           aria-hidden
         >
           <defs>
@@ -693,15 +718,15 @@ function SchematicPanel({
             </linearGradient>
           </defs>
           {mode === "series" ? (
-            <SeriesSchematic count={count} />
+            <SeriesSchematic count={count} values={values} width={seriesWidth} spacing={seriesSpacing} />
           ) : (
-            <ParallelSchematic count={count} />
+            <ParallelSchematic count={count} values={values} width={parallelWidth} spacing={parallelSpacing} />
           )}
         </svg>
       </div>
 
       {/* Resistor value inputs — LED displays, one per resistor */}
-      <div className={clsx("mt-5", displayGrid, gridCols)}>
+      <div className={clsx("mt-5 grid gap-3 sm:gap-4", gridCols)}>
         {values.map((v, i) => (
           <div key={i} className="flex items-start gap-2">
             <div className="flex-1">
@@ -758,133 +783,203 @@ function SchematicPanel({
   );
 }
 
-function SeriesSchematic({ count }: { count: number }) {
-  const spacing = 90;
-  const startX = 40;
-  const y = 60;
-  const endX = startX + count * spacing;
-  const parts: React.ReactElement[] = [];
-  // Left wire
-  parts.push(
-    <line key="left" x1="0" y1={y} x2={startX - 10} y2={y} stroke={`url(#wire-series)`} strokeWidth="3" strokeLinecap="round" />
+function SeriesSchematic({
+  count,
+  values,
+  width,
+  spacing,
+}: {
+  count: number;
+  values: (number | null)[];
+  width: number;
+  spacing: number;
+}) {
+  const y = 70;
+  const stroke = "url(#wire-series)";
+  // Component centers, evenly spaced, first one 60 + spacing/2 from left edge
+  const centers = Array.from(
+    { length: count },
+    (_, i) => 60 + spacing / 2 + i * spacing
   );
-  for (let i = 0; i < count; i++) {
-    const cx = startX + i * spacing;
-    // Resistor body (zigzag between cx-30 and cx+30)
-    parts.push(<Resistor key={`r${i}`} cx={cx} cy={y} label={`R${i + 1}`} />);
-    // Wire to next
-    parts.push(
+  const firstCx = centers[0];
+  const lastCx = centers[count - 1];
+  return (
+    <g>
+      {/* Left terminal + wire into first resistor's left lead */}
+      <circle cx={20} cy={y} r={6} fill="#10B981" />
       <line
-        key={`w${i}`}
-        x1={cx + 30}
+        x1={20}
         y1={y}
-        x2={cx + spacing - 30}
+        x2={firstCx - COMP_SPAN / 2}
         y2={y}
-        stroke={`url(#wire-series)`}
-        strokeWidth="3"
+        stroke={stroke}
+        strokeWidth={3}
         strokeLinecap="round"
       />
-    );
-  }
-  // Right end wire
-  parts.push(
-    <line key="right" x1={endX - 30} y1={y} x2={endX + 10} y2={y} stroke={`url(#wire-series)`} strokeWidth="3" strokeLinecap="round" />
+
+      {/* Resistors + inter-resistor connecting wires */}
+      {centers.map((cx, i) => (
+        <g key={i}>
+          <Resistor cx={cx} cy={y} label={`R${i + 1}`} value={fmtResistorLabel(values[i])} />
+          {i < count - 1 && (
+            <line
+              x1={cx + COMP_SPAN / 2}
+              y1={y}
+              x2={centers[i + 1] - COMP_SPAN / 2}
+              y2={y}
+              stroke={stroke}
+              strokeWidth={3}
+              strokeLinecap="round"
+            />
+          )}
+        </g>
+      ))}
+
+      {/* Right wire out of last resistor + terminal */}
+      <line
+        x1={lastCx + COMP_SPAN / 2}
+        y1={y}
+        x2={width - 20}
+        y2={y}
+        stroke={stroke}
+        strokeWidth={3}
+        strokeLinecap="round"
+      />
+      <circle cx={width - 20} cy={y} r={6} fill="#14B8A6" />
+    </g>
   );
-  // Terminal dots
-  parts.push(<circle key="d1" cx="0" cy={y} r="5" fill="#10B981" />);
-  parts.push(<circle key="d2" cx={endX + 10} cy={y} r="5" fill="#14B8A6" />);
-  return <g>{parts}</g>;
 }
 
-function ParallelSchematic({ count }: { count: number }) {
-  const spacing = 90;
-  const startX = 60;
+function ParallelSchematic({
+  count,
+  values,
+  width,
+  spacing,
+}: {
+  count: number;
+  values: (number | null)[];
+  width: number;
+  spacing: number;
+}) {
   const topY = 40;
-  const botY = 120;
-  const endX = startX + (count - 1) * spacing;
-  const parts: React.ReactElement[] = [];
-  // Top and bottom rails
-  parts.push(
-    <line key="top" x1="10" y1={topY} x2={endX + 40} y2={topY} stroke={`url(#wire-parallel)`} strokeWidth="3" strokeLinecap="round" />
+  const botY = topY + COMP_SPAN; // vertical resistor + leads span exactly this
+  const midY = (topY + botY) / 2;
+  const stroke = "url(#wire-parallel)";
+  const startX = 60;
+  const centers = Array.from({ length: count }, (_, i) => startX + i * spacing);
+  const lastCx = centers[count - 1];
+  const railEndX = lastCx + 40;
+  return (
+    <g>
+      {/* Left terminals */}
+      <circle cx={20} cy={topY} r={6} fill="#D946EF" />
+      <circle cx={20} cy={botY} r={6} fill="#8B5CF6" />
+
+      {/* Top + bottom rails */}
+      <line x1={20} y1={topY} x2={railEndX} y2={topY} stroke={stroke} strokeWidth={3} strokeLinecap="round" />
+      <line x1={20} y1={botY} x2={railEndX} y2={botY} stroke={stroke} strokeWidth={3} strokeLinecap="round" />
+
+      {/* Vertical resistors — leads already touch the rails at topY/botY */}
+      {centers.map((cx, i) => (
+        <Resistor
+          key={i}
+          cx={cx}
+          cy={midY}
+          label={`R${i + 1}`}
+          value={fmtResistorLabel(values[i])}
+          vertical
+        />
+      ))}
+    </g>
   );
-  parts.push(
-    <line key="bot" x1="10" y1={botY} x2={endX + 40} y2={botY} stroke={`url(#wire-parallel)`} strokeWidth="3" strokeLinecap="round" />
-  );
-  // Vertical resistors between rails
-  for (let i = 0; i < count; i++) {
-    const cx = startX + i * spacing;
-    parts.push(<Resistor key={`rp${i}`} cx={cx} cy={(topY + botY) / 2} label={`R${i + 1}`} vertical />);
-    parts.push(
-      <line
-        key={`up${i}`}
-        x1={cx}
-        y1={topY}
-        x2={cx}
-        y2={(topY + botY) / 2 - 25}
-        stroke={`url(#wire-parallel)`}
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-    );
-    parts.push(
-      <line
-        key={`dn${i}`}
-        x1={cx}
-        y1={(topY + botY) / 2 + 25}
-        x2={cx}
-        y2={botY}
-        stroke={`url(#wire-parallel)`}
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-    );
-  }
-  parts.push(<circle key="d1" cx="10" cy={topY} r="5" fill="#D946EF" />);
-  parts.push(<circle key="d2" cx="10" cy={botY} r="5" fill="#8B5CF6" />);
-  return <g>{parts}</g>;
 }
 
+// Standard schematic resistor: lead — zigzag body — lead. Value label near it.
 function Resistor({
   cx,
   cy,
   label,
+  value,
   vertical,
 }: {
   cx: number;
   cy: number;
   label: string;
+  value: string;
   vertical?: boolean;
 }) {
-  // Zigzag between cx-25 and cx+25 (horizontal) or cy-25..cy+25 (vertical)
-  const len = 50;
-  const zig = 8;
-  const segments = 6;
-  const pts: string[] = [];
-  for (let i = 0; i <= segments; i++) {
-    const t = (i / segments) * len - len / 2;
-    const off = i % 2 === 0 ? -zig : zig;
-    if (vertical) pts.push(`${cx + off},${cy + t}`);
-    else pts.push(`${cx + t},${cy + off}`);
-  }
+  const half = BODY_LEN / 2;
+  // Zigzag baseline points: start on baseline, then 3 up-peaks (-ZIG) alternating
+  // with 2 down-valleys (+ZIG), and end on baseline. 7 vertices total.
+  const zigzagUV: { u: number; v: number }[] = [
+    { u: -half, v: 0 },
+    { u: -half + (BODY_LEN * 1) / 6, v: -ZIG },
+    { u: -half + (BODY_LEN * 2) / 6, v: +ZIG },
+    { u: -half + (BODY_LEN * 3) / 6, v: -ZIG },
+    { u: -half + (BODY_LEN * 4) / 6, v: +ZIG },
+    { u: -half + (BODY_LEN * 5) / 6, v: -ZIG },
+    { u: +half, v: 0 },
+  ];
+  const toXY = ({ u, v }: { u: number; v: number }) =>
+    vertical ? `${cx + v},${cy + u}` : `${cx + u},${cy + v}`;
+
+  const leadLeftD = vertical
+    ? `M ${cx},${cy - half - LEAD_LEN} L ${cx},${cy - half}`
+    : `M ${cx - half - LEAD_LEN},${cy} L ${cx - half},${cy}`;
+  const leadRightD = vertical
+    ? `M ${cx},${cy + half} L ${cx},${cy + half + LEAD_LEN}`
+    : `M ${cx + half},${cy} L ${cx + half + LEAD_LEN},${cy}`;
+
+  const stroke = "#0F172A";
+  const strokeWidth = 2.75;
+
+  // Horizontal resistor: label on top of body, value below the body.
+  // Vertical resistor: label + value stacked to the right of the body,
+  // pushed out far enough that they don't collide with the zigzag peaks.
+  const labelX = vertical ? cx + ZIG + 24 : cx;
+  const labelY = vertical ? cy - 5 : cy - 20;
+  const valueX = vertical ? cx + ZIG + 24 : cx;
+  const valueY = vertical ? cy + 15 : cy + 32;
+  const labelFontSize = vertical ? 16 : 14;
+  const valueFontSize = 13;
+
   return (
     <g>
+      <path d={leadLeftD} stroke={stroke} strokeWidth={strokeWidth} strokeLinecap="round" fill="none" />
       <polyline
-        points={pts.join(" ")}
+        points={zigzagUV.map(toXY).join(" ")}
         fill="none"
-        stroke="#0F172A"
-        strokeWidth="2.5"
-        strokeLinejoin="round"
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        strokeLinejoin="miter"
         strokeLinecap="round"
       />
+      <path d={leadRightD} stroke={stroke} strokeWidth={strokeWidth} strokeLinecap="round" fill="none" />
+      {/* Force LTR direction on schematic text — otherwise `text-anchor="start"`
+          resolves to the right side under the page's dir="rtl", which flips
+          labels back onto the zigzag body. */}
       <text
-        x={vertical ? cx + 22 : cx}
-        y={vertical ? cy : cy - 18}
+        x={labelX}
+        y={labelY}
         textAnchor={vertical ? "start" : "middle"}
-        fontSize="12"
-        fontWeight="700"
-        fill="#475569"
+        direction="ltr"
+        fontSize={labelFontSize}
+        fontWeight="800"
+        fill="#0F172A"
       >
         {label}
+      </text>
+      <text
+        x={valueX}
+        y={valueY}
+        textAnchor={vertical ? "start" : "middle"}
+        direction="ltr"
+        fontSize={valueFontSize}
+        fontWeight="700"
+        fill="#1E3AA8"
+        style={{ fontVariantNumeric: "tabular-nums" }}
+      >
+        {value}
       </text>
     </g>
   );
