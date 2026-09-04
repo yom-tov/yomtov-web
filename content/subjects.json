@@ -1,0 +1,26 @@
+[
+  {
+    "id": "electricity",
+    "hebrewTitle": "חשמל",
+    "description": "מבחני מה\"ט ומשרד החינוך, מטלות ותרגולים במעגלי חשמל DC/AC.",
+    "icon": "Zap",
+    "color": "from-blue-600 to-cyan-500",
+    "hebrewOriginalPath": "/חשמל"
+  },
+  {
+    "id": "analog",
+    "hebrewTitle": "אלקטרוניקה תקבילית",
+    "description": "מגברים, טרנזיסטורים, דיודות, מסננים ומעגלים אנלוגיים.",
+    "icon": "CircuitBoard",
+    "color": "from-indigo-600 to-purple-500",
+    "hebrewOriginalPath": "/אלקטרוניקה-תקבילית"
+  },
+  {
+    "id": "digital",
+    "hebrewTitle": "אלקטרוניקה ספרתית",
+    "description": "לוגיקה בוליאנית, שערים, מונים, זיכרונות ומעגלים ספרתיים.",
+    "icon": "Binary",
+    "color": "from-cyan-600 to-teal-500",
+    "hebrewOriginalPath": "/אלקטרוניקה-ספרתית"
+  }
+]

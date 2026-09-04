@@ -1,0 +1,507 @@
+[
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2025",
+    "destination": "/electricity/ministry-exams/2025-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2024",
+    "destination": "/electricity/ministry-exams/2024-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2023",
+    "destination": "/electricity/ministry-exams/2023-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2022",
+    "destination": "/electricity/ministry-exams/2022-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2021",
+    "destination": "/electricity/ministry-exams/2021-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2020",
+    "destination": "/electricity/ministry-exams/2020-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2019",
+    "destination": "/electricity/ministry-exams/2019-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2018",
+    "destination": "/electricity/ministry-exams/2018-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2017",
+    "destination": "/electricity/ministry-exams/2017-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2016",
+    "destination": "/electricity/ministry-exams/2016-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2015",
+    "destination": "/electricity/ministry-exams/2015-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2014",
+    "destination": "/electricity/ministry-exams/2014-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2013",
+    "destination": "/electricity/ministry-exams/2013-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2009",
+    "destination": "/electricity/ministry-exams/2009-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-education",
+    "destination": "/electricity/ministry-exams",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2024-%D7%91",
+    "destination": "/electricity/mahat-exams/summer-2024-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2023-%D7%91",
+    "destination": "/electricity/mahat-exams/summer-2023-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2023-%D7%90",
+    "destination": "/electricity/mahat-exams/summer-2023-a",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2021-%D7%91",
+    "destination": "/electricity/mahat-exams/summer-2021-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2021-%D7%90",
+    "destination": "/electricity/mahat-exams/summer-2021-a",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2018-%D7%90",
+    "destination": "/electricity/mahat-exams/summer-2018-a",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2017-%D7%91",
+    "destination": "/electricity/mahat-exams/summer-2017-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2017-%D7%90",
+    "destination": "/electricity/mahat-exams/summer-2017-a",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2016",
+    "destination": "/electricity/mahat-exams/summer-2016",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2015",
+    "destination": "/electricity/mahat-exams/summer-2015",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%A7%D7%99%D7%A5-2015",
+    "destination": "/electricity/mahat-exams/summer-2015-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2014",
+    "destination": "/electricity/mahat-exams/summer-2014",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2012",
+    "destination": "/electricity/mahat-exams/summer-2012",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%A7%D7%99%D7%A5-2012",
+    "destination": "/electricity/mahat-exams/summer-2012-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%90%D7%91%D7%99%D7%91-2012",
+    "destination": "/electricity/mahat-exams/spring-2012-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2011",
+    "destination": "/electricity/mahat-exams/summer-2011",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%A7%D7%99%D7%A5-2011",
+    "destination": "/electricity/mahat-exams/summer-2011-b",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%90%D7%91%D7%99%D7%91-2011",
+    "destination": "/electricity/mahat-exams/spring-2011-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2010",
+    "destination": "/electricity/mahat-exams/summer-2010",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2009",
+    "destination": "/electricity/mahat-exams/summer-2009",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2008",
+    "destination": "/electricity/mahat-exams/summer-2008",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2000",
+    "destination": "/electricity/mahat-exams/summer-2000",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%A7%D7%99%D7%A5-2020-%D7%90",
+    "destination": "/electricity/mahat-exams/summer-2020-a",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2023-%D7%91",
+    "destination": "/electricity/mahat-exams/spring-2023-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%97%D7%95%D7%A8%D7%A3-2016",
+    "destination": "/electricity/mahat-exams/winter-2016",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2025-%D7%91",
+    "destination": "/electricity/mahat-exams/spring-2025-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2024-%D7%90",
+    "destination": "/electricity/mahat-exams/spring-2024-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2023-%D7%90",
+    "destination": "/electricity/mahat-exams/spring-2023-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2022-%D7%90",
+    "destination": "/electricity/mahat-exams/spring-2022-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2018-%D7%91",
+    "destination": "/electricity/mahat-exams/spring-2018-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2018-%D7%90",
+    "destination": "/electricity/mahat-exams/spring-2018-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2012",
+    "destination": "/electricity/mahat-exams/spring-2012-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2011",
+    "destination": "/electricity/mahat-exams/spring-2011-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2010",
+    "destination": "/electricity/mahat-exams/spring-2010-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2009",
+    "destination": "/electricity/mahat-exams/spring-2009-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2008",
+    "destination": "/electricity/mahat-exams/spring-2008-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2004",
+    "destination": "/electricity/mahat-exams/spring-2004-combined",
+    "permanent": true
+  },
+  {
+    "source": "/tests-mahat",
+    "destination": "/electricity/mahat-exams",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%9E%D7%92%D7%91%D7%A8%D7%99-%D7%A9%D7%A8%D7%AA-1",
+    "destination": "/analog/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%9E%D7%92%D7%91%D7%A8%D7%99-%D7%A9%D7%A8%D7%AA-2",
+    "destination": "/analog/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%9E%D7%92%D7%91%D7%A8%D7%99-%D7%A9%D7%A8%D7%AA-3",
+    "destination": "/analog/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%9E%D7%92%D7%91%D7%A8%D7%99-%D7%A9%D7%A8%D7%AA-4",
+    "destination": "/analog/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA---%D7%91%D7%A1%D7%99%D7%A1%D7%99",
+    "destination": "/analog/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA-1",
+    "destination": "/analog/assignments/item-d4b154a1",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA-2",
+    "destination": "/analog/assignments/item-aca314d7",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA-3",
+    "destination": "/analog/assignments/item-da339537",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA-4",
+    "destination": "/analog/assignments/item-750b21cc",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA-5",
+    "destination": "/analog/assignments/item-b6597933",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%9E%D7%92%D7%91%D7%A8%D7%99-%D7%94%D7%A4%D7%A8%D7%A9",
+    "destination": "/analog/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/%D7%9E%D7%92%D7%91%D7%A8%D7%99%D7%9D",
+    "destination": "/analog/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/bjt-ac",
+    "destination": "/analog/assignments/bjt-ac",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/bjt-dc1",
+    "destination": "/analog/assignments/bjt-dc1",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/bjt-dc2",
+    "destination": "/analog/assignments/bjt-dc2",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics/fet",
+    "destination": "/analog/assignments/fet",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-analog-electronics",
+    "destination": "/analog/assignments",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/dc-0",
+    "destination": "/electricity/assignments/dc-0",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/dc-1",
+    "destination": "/electricity/assignments/dc-1",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/dc-2",
+    "destination": "/electricity/assignments/dc-2",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%90%D7%95%D7%A4%D7%99%D7%99%D7%A0%D7%99%D7%9D",
+    "destination": "/electricity/assignments/a",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%92%D7%A9%D7%A8-%D7%95%D7%99%D7%A1%D7%98%D7%95%D7%9F-%D7%9E%D7%90%D7%95%D7%96%D7%9F",
+    "destination": "/electricity/assignments/a",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%94%D7%91%D7%A0%D7%AA-%D7%94%D7%A0%D7%A7%D7%A8%D7%90",
+    "destination": "/electricity/assignments/combined",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%94%D7%9E%D7%A8%D7%95%D7%AA-1",
+    "destination": "/electricity/assignments/item-b801908f",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%94%D7%9E%D7%A8%D7%95%D7%AA-2",
+    "destination": "/electricity/assignments/item-7c5f6f50",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%96%D7%A8%D7%9D-%D7%97%D7%99%D7%9C%D7%95%D7%A4%D7%99%D7%9F",
+    "destination": "/electricity/assignments/item-fb56f7c7",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%97%D7%96%D7%A8%D7%94-1",
+    "destination": "/electricity/assignments/item-5153d803",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%97%D7%96%D7%A8%D7%94-2",
+    "destination": "/electricity/assignments/item-82299856",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%9E%D7%A2%D7%92%D7%9C%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%A8%D7%91%D7%99%D7%9D",
+    "destination": "/electricity/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%9E%D7%A2%D7%92%D7%9C%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%A8%D7%91%D7%99%D7%9D-1",
+    "destination": "/electricity/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%9E%D7%A2%D7%92%D7%9C%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%A8%D7%91%D7%99%D7%9D-2",
+    "destination": "/electricity/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%9E%D7%A9%D7%A4%D7%98-%D7%9E%D7%99%D7%9C%D7%9E%D7%9F",
+    "destination": "/electricity/assignments/item-030a8b57",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%9E%D7%AA%D7%97%D7%99-%D7%A6%D7%9E%D7%AA%D7%99%D7%9D",
+    "destination": "/electricity/assignments/item-84dbf5dd",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%A0%D7%92%D7%93-%D7%9E%D7%A9%D7%AA%D7%A0%D7%94",
+    "destination": "/electricity/assignments/item-7b331d34",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%A1%D7%95%D7%9C%D7%9C%D7%95%D7%AA",
+    "destination": "/electricity/assignments/item-38836bc2",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%A4%D7%A1%D7%97",
+    "destination": "/electricity/assignments/item-3baa9ece",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%A7%D7%91%D7%9C%D7%99%D7%9D",
+    "destination": "/electricity/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%A9%D7%99%D7%98%D7%95%D7%AA-%D7%A4%D7%99%D7%AA%D7%A8%D7%95%D7%9F",
+    "destination": "/electricity/assignments/item-c2ab656b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%AA%D7%91%D7%A0%D7%99%D7%9F-1",
+    "destination": "/electricity/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%AA%D7%91%D7%A0%D7%99%D7%9F-2",
+    "destination": "/electricity/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity/%D7%AA%D7%95%D7%A4%D7%A2%D7%95%D7%AA-%D7%9E%D7%A2%D7%91%D7%A8",
+    "destination": "/electricity/assignments/b",
+    "permanent": true
+  },
+  {
+    "source": "/assignments-electricity",
+    "destination": "/electricity/assignments",
+    "permanent": true
+  },
+  {
+    "source": "/חשמל",
+    "destination": "/electricity",
+    "permanent": true
+  },
+  {
+    "source": "/אלקטרוניקה-תקבילית",
+    "destination": "/analog",
+    "permanent": true
+  },
+  {
+    "source": "/אלקטרוניקה-ספרתית",
+    "destination": "/digital",
+    "permanent": true
+  },
+  {
+    "source": "/מבחנים",
+    "destination": "/exams",
+    "permanent": true
+  },
+  {
+    "source": "/מעבדות",
+    "destination": "/labs",
+    "permanent": true
+  },
+  {
+    "source": "/מחשבון",
+    "destination": "/calculator",
+    "permanent": true
+  }
+]

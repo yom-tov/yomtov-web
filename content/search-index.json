@@ -1,0 +1,661 @@
+[
+  {
+    "id": "electricity/exam-mahat/spring-2025-combined",
+    "type": "exam-mahat",
+    "title": "אביב 2025 ב",
+    "subject": "electricity",
+    "year": 2025,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2025-combined"
+  },
+  {
+    "id": "electricity/exam-education/2025-b",
+    "type": "exam-education",
+    "title": "מבחן 2025",
+    "subject": "electricity",
+    "year": 2025,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2025-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2024-b",
+    "type": "exam-mahat",
+    "title": "קיץ 2024 ב",
+    "subject": "electricity",
+    "year": 2024,
+    "season": "summer",
+    "version": "b",
+    "url": "/electricity/mahat-exams/summer-2024-b"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2024-combined",
+    "type": "exam-mahat",
+    "title": "אביב 2024 א",
+    "subject": "electricity",
+    "year": 2024,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2024-combined"
+  },
+  {
+    "id": "electricity/exam-education/2024-b",
+    "type": "exam-education",
+    "title": "מבחן 2024",
+    "subject": "electricity",
+    "year": 2024,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2024-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2023-b",
+    "type": "exam-mahat",
+    "title": "קיץ 2023 ב",
+    "subject": "electricity",
+    "year": 2023,
+    "season": "summer",
+    "version": "b",
+    "url": "/electricity/mahat-exams/summer-2023-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2023-a",
+    "type": "exam-mahat",
+    "title": "קיץ 2023 א",
+    "subject": "electricity",
+    "year": 2023,
+    "season": "summer",
+    "version": "a",
+    "url": "/electricity/mahat-exams/summer-2023-a"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2023-combined",
+    "type": "exam-mahat",
+    "title": "אביב 2023 ב",
+    "subject": "electricity",
+    "year": 2023,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2023-combined"
+  },
+  {
+    "id": "electricity/exam-education/2023-b",
+    "type": "exam-education",
+    "title": "מבחן 2023",
+    "subject": "electricity",
+    "year": 2023,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2023-b"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2022-combined",
+    "type": "exam-mahat",
+    "title": "אביב 2022 א",
+    "subject": "electricity",
+    "year": 2022,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2022-combined"
+  },
+  {
+    "id": "electricity/exam-education/2022-b",
+    "type": "exam-education",
+    "title": "מבחן 2022",
+    "subject": "electricity",
+    "year": 2022,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2022-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2021-b",
+    "type": "exam-mahat",
+    "title": "קיץ 2021 ב",
+    "subject": "electricity",
+    "year": 2021,
+    "season": "summer",
+    "version": "b",
+    "url": "/electricity/mahat-exams/summer-2021-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2021-a",
+    "type": "exam-mahat",
+    "title": "קיץ 2021 א",
+    "subject": "electricity",
+    "year": 2021,
+    "season": "summer",
+    "version": "a",
+    "url": "/electricity/mahat-exams/summer-2021-a"
+  },
+  {
+    "id": "electricity/exam-education/2021-b",
+    "type": "exam-education",
+    "title": "מבחן 2021",
+    "subject": "electricity",
+    "year": 2021,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2021-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2020-a",
+    "type": "exam-mahat",
+    "title": "קיץ 2020 א",
+    "subject": "electricity",
+    "year": 2020,
+    "season": "summer",
+    "version": "a",
+    "url": "/electricity/mahat-exams/summer-2020-a"
+  },
+  {
+    "id": "electricity/exam-education/2020-b",
+    "type": "exam-education",
+    "title": "מבחן 2020",
+    "subject": "electricity",
+    "year": 2020,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2020-b"
+  },
+  {
+    "id": "electricity/exam-education/2019-b",
+    "type": "exam-education",
+    "title": "מבחן 2019",
+    "subject": "electricity",
+    "year": 2019,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2019-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2018-a",
+    "type": "exam-mahat",
+    "title": "קיץ 2018 א",
+    "subject": "electricity",
+    "year": 2018,
+    "season": "summer",
+    "version": "a",
+    "url": "/electricity/mahat-exams/summer-2018-a"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2018-combined",
+    "type": "exam-mahat",
+    "title": "אביב 2018 ב",
+    "subject": "electricity",
+    "year": 2018,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2018-combined"
+  },
+  {
+    "id": "electricity/exam-education/2018-b",
+    "type": "exam-education",
+    "title": "מבחן 2018",
+    "subject": "electricity",
+    "year": 2018,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2018-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2017-b",
+    "type": "exam-mahat",
+    "title": "קיץ 2017 ב",
+    "subject": "electricity",
+    "year": 2017,
+    "season": "summer",
+    "version": "b",
+    "url": "/electricity/mahat-exams/summer-2017-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2017-a",
+    "type": "exam-mahat",
+    "title": "קיץ 2017 א",
+    "subject": "electricity",
+    "year": 2017,
+    "season": "summer",
+    "version": "a",
+    "url": "/electricity/mahat-exams/summer-2017-a"
+  },
+  {
+    "id": "electricity/exam-education/2017-b",
+    "type": "exam-education",
+    "title": "מבחן 2017",
+    "subject": "electricity",
+    "year": 2017,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2017-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2016",
+    "type": "exam-mahat",
+    "title": "קיץ 2016",
+    "subject": "electricity",
+    "year": 2016,
+    "season": "summer",
+    "version": null,
+    "url": "/electricity/mahat-exams/summer-2016"
+  },
+  {
+    "id": "electricity/exam-mahat/winter-2016",
+    "type": "exam-mahat",
+    "title": "חורף 2016",
+    "subject": "electricity",
+    "year": 2016,
+    "season": "winter",
+    "version": null,
+    "url": "/electricity/mahat-exams/winter-2016"
+  },
+  {
+    "id": "electricity/exam-education/2016-b",
+    "type": "exam-education",
+    "title": "מבחן 2016",
+    "subject": "electricity",
+    "year": 2016,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2016-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2015",
+    "type": "exam-mahat",
+    "title": "קיץ 2015",
+    "subject": "electricity",
+    "year": 2015,
+    "season": "summer",
+    "version": null,
+    "url": "/electricity/mahat-exams/summer-2015"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2015-b",
+    "type": "exam-mahat",
+    "title": "תקבילית קיץ 2015",
+    "subject": "electricity",
+    "year": 2015,
+    "season": "summer",
+    "version": "b",
+    "url": "/electricity/mahat-exams/summer-2015-b"
+  },
+  {
+    "id": "electricity/exam-education/2015-b",
+    "type": "exam-education",
+    "title": "מבחן 2015",
+    "subject": "electricity",
+    "year": 2015,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2015-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2014",
+    "type": "exam-mahat",
+    "title": "קיץ 2014",
+    "subject": "electricity",
+    "year": 2014,
+    "season": "summer",
+    "version": null,
+    "url": "/electricity/mahat-exams/summer-2014"
+  },
+  {
+    "id": "electricity/exam-education/2014-b",
+    "type": "exam-education",
+    "title": "מבחן 2014",
+    "subject": "electricity",
+    "year": 2014,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2014-b"
+  },
+  {
+    "id": "electricity/exam-education/2013-b",
+    "type": "exam-education",
+    "title": "מבחן 2013",
+    "subject": "electricity",
+    "year": 2013,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2013-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2012",
+    "type": "exam-mahat",
+    "title": "קיץ 2012",
+    "subject": "electricity",
+    "year": 2012,
+    "season": "summer",
+    "version": null,
+    "url": "/electricity/mahat-exams/summer-2012"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2012-b",
+    "type": "exam-mahat",
+    "title": "תקבילית קיץ 2012",
+    "subject": "electricity",
+    "year": 2012,
+    "season": "summer",
+    "version": "b",
+    "url": "/electricity/mahat-exams/summer-2012-b"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2012-combined",
+    "type": "exam-mahat",
+    "title": "תקבילית אביב 2012",
+    "subject": "electricity",
+    "year": 2012,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2012-combined"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2011",
+    "type": "exam-mahat",
+    "title": "קיץ 2011",
+    "subject": "electricity",
+    "year": 2011,
+    "season": "summer",
+    "version": null,
+    "url": "/electricity/mahat-exams/summer-2011"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2011-b",
+    "type": "exam-mahat",
+    "title": "תקבילית קיץ 2011",
+    "subject": "electricity",
+    "year": 2011,
+    "season": "summer",
+    "version": "b",
+    "url": "/electricity/mahat-exams/summer-2011-b"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2011-combined",
+    "type": "exam-mahat",
+    "title": "תקבילית אביב 2011",
+    "subject": "electricity",
+    "year": 2011,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2011-combined"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2010",
+    "type": "exam-mahat",
+    "title": "קיץ 2010",
+    "subject": "electricity",
+    "year": 2010,
+    "season": "summer",
+    "version": null,
+    "url": "/electricity/mahat-exams/summer-2010"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2010-combined",
+    "type": "exam-mahat",
+    "title": "אביב 2010",
+    "subject": "electricity",
+    "year": 2010,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2010-combined"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2009",
+    "type": "exam-mahat",
+    "title": "קיץ 2009",
+    "subject": "electricity",
+    "year": 2009,
+    "season": "summer",
+    "version": null,
+    "url": "/electricity/mahat-exams/summer-2009"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2009-combined",
+    "type": "exam-mahat",
+    "title": "אביב 2009",
+    "subject": "electricity",
+    "year": 2009,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2009-combined"
+  },
+  {
+    "id": "electricity/exam-education/2009-b",
+    "type": "exam-education",
+    "title": "מבחן 2009",
+    "subject": "electricity",
+    "year": 2009,
+    "season": null,
+    "version": "b",
+    "url": "/electricity/ministry-exams/2009-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2008",
+    "type": "exam-mahat",
+    "title": "קיץ 2008",
+    "subject": "electricity",
+    "year": 2008,
+    "season": "summer",
+    "version": null,
+    "url": "/electricity/mahat-exams/summer-2008"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2008-combined",
+    "type": "exam-mahat",
+    "title": "אביב 2008",
+    "subject": "electricity",
+    "year": 2008,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2008-combined"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2004-combined",
+    "type": "exam-mahat",
+    "title": "אביב 2004",
+    "subject": "electricity",
+    "year": 2004,
+    "season": "spring",
+    "version": "combined",
+    "url": "/electricity/mahat-exams/spring-2004-combined"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2000",
+    "type": "exam-mahat",
+    "title": "קיץ 2000",
+    "subject": "electricity",
+    "year": 2000,
+    "season": "summer",
+    "version": null,
+    "url": "/electricity/mahat-exams/summer-2000"
+  },
+  {
+    "id": "electricity/assignments/a",
+    "type": "assignment",
+    "title": "אופיינים",
+    "subject": "electricity",
+    "url": "/electricity/assignments/a"
+  },
+  {
+    "id": "analog/assignments/item-d4b154a1",
+    "type": "assignment",
+    "title": "דיודות 1",
+    "subject": "analog",
+    "url": "/analog/assignments/item-d4b154a1"
+  },
+  {
+    "id": "analog/assignments/item-aca314d7",
+    "type": "assignment",
+    "title": "דיודות 2",
+    "subject": "analog",
+    "url": "/analog/assignments/item-aca314d7"
+  },
+  {
+    "id": "analog/assignments/item-da339537",
+    "type": "assignment",
+    "title": "דיודות 3",
+    "subject": "analog",
+    "url": "/analog/assignments/item-da339537"
+  },
+  {
+    "id": "analog/assignments/item-750b21cc",
+    "type": "assignment",
+    "title": "דיודות 4",
+    "subject": "analog",
+    "url": "/analog/assignments/item-750b21cc"
+  },
+  {
+    "id": "analog/assignments/item-b6597933",
+    "type": "assignment",
+    "title": "דיודות 5",
+    "subject": "analog",
+    "url": "/analog/assignments/item-b6597933"
+  },
+  {
+    "id": "electricity/assignments/combined",
+    "type": "assignment",
+    "title": "הבנת הנקרא",
+    "subject": "electricity",
+    "url": "/electricity/assignments/combined"
+  },
+  {
+    "id": "electricity/assignments/item-b801908f",
+    "type": "assignment",
+    "title": "המרות 1",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-b801908f"
+  },
+  {
+    "id": "electricity/assignments/item-7c5f6f50",
+    "type": "assignment",
+    "title": "המרות 2",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-7c5f6f50"
+  },
+  {
+    "id": "electricity/assignments/item-fb56f7c7",
+    "type": "assignment",
+    "title": "זרם חילופין",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-fb56f7c7"
+  },
+  {
+    "id": "electricity/assignments/item-5153d803",
+    "type": "assignment",
+    "title": "חזרה 1",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-5153d803"
+  },
+  {
+    "id": "electricity/assignments/item-82299856",
+    "type": "assignment",
+    "title": "חזרה 2",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-82299856"
+  },
+  {
+    "id": "analog/assignments/b",
+    "type": "assignment",
+    "title": "מגברי שרת 1",
+    "subject": "analog",
+    "url": "/analog/assignments/b"
+  },
+  {
+    "id": "electricity/assignments/b",
+    "type": "assignment",
+    "title": "מעגלים מעורבים",
+    "subject": "electricity",
+    "url": "/electricity/assignments/b"
+  },
+  {
+    "id": "electricity/assignments/item-030a8b57",
+    "type": "assignment",
+    "title": "משפט מילמן",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-030a8b57"
+  },
+  {
+    "id": "electricity/assignments/item-84dbf5dd",
+    "type": "assignment",
+    "title": "מתחי צמתים",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-84dbf5dd"
+  },
+  {
+    "id": "electricity/assignments/item-7b331d34",
+    "type": "assignment",
+    "title": "נגד משתנה",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-7b331d34"
+  },
+  {
+    "id": "electricity/assignments/item-38836bc2",
+    "type": "assignment",
+    "title": "סוללות",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-38836bc2"
+  },
+  {
+    "id": "electricity/assignments/item-3baa9ece",
+    "type": "assignment",
+    "title": "פסח",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-3baa9ece"
+  },
+  {
+    "id": "electricity/assignments/item-c2ab656b",
+    "type": "assignment",
+    "title": "שיטות פיתרון",
+    "subject": "electricity",
+    "url": "/electricity/assignments/item-c2ab656b"
+  },
+  {
+    "id": "analog/assignments/bjt-ac",
+    "type": "assignment",
+    "title": "BJT-AC",
+    "subject": "analog",
+    "url": "/analog/assignments/bjt-ac"
+  },
+  {
+    "id": "analog/assignments/bjt-dc1",
+    "type": "assignment",
+    "title": "BJT-DC1",
+    "subject": "analog",
+    "url": "/analog/assignments/bjt-dc1"
+  },
+  {
+    "id": "analog/assignments/bjt-dc2",
+    "type": "assignment",
+    "title": "BJT-DC2",
+    "subject": "analog",
+    "url": "/analog/assignments/bjt-dc2"
+  },
+  {
+    "id": "electricity/assignments/dc-0",
+    "type": "assignment",
+    "title": "DC-0",
+    "subject": "electricity",
+    "url": "/electricity/assignments/dc-0"
+  },
+  {
+    "id": "electricity/assignments/dc-1",
+    "type": "assignment",
+    "title": "DC-1",
+    "subject": "electricity",
+    "url": "/electricity/assignments/dc-1"
+  },
+  {
+    "id": "electricity/assignments/dc-2",
+    "type": "assignment",
+    "title": "DC-2",
+    "subject": "electricity",
+    "url": "/electricity/assignments/dc-2"
+  },
+  {
+    "id": "analog/assignments/fet",
+    "type": "assignment",
+    "title": "FET",
+    "subject": "analog",
+    "url": "/analog/assignments/fet"
+  }
+]

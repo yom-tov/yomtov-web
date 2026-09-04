@@ -1,0 +1,605 @@
+[
+  {
+    "id": "electricity/assignments/a",
+    "slug": "a",
+    "subject": "electricity",
+    "title": "אופיינים",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_efabc6fc412b4667a0b8b212c6f9f4e1.pdf",
+        "path": "/pdfs/assignments/electricity/a.pdf",
+        "sizeBytes": 552703,
+        "id": "c511a2_efabc6fc412b4667a0b8b212c6f9f4e1.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%90%D7%95%D7%A4%D7%99%D7%99%D7%A0%D7%99%D7%9D"
+  },
+  {
+    "id": "analog/assignments/item-d4b154a1",
+    "slug": "item-d4b154a1",
+    "subject": "analog",
+    "title": "דיודות 1",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_d94ede4bd4df4cb3980ee28e3e3f56e6.pdf",
+        "path": "/pdfs/assignments/analog/item-d4b154a1.pdf",
+        "sizeBytes": 571864,
+        "id": "c511a2_d94ede4bd4df4cb3980ee28e3e3f56e6.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_ad44c26f084a483ea0b75cf9de32e942.pdf",
+        "path": "/pdfs/assignments/analog/item-d4b154a1-solution.pdf",
+        "sizeBytes": 1713564,
+        "id": "c511a2_ad44c26f084a483ea0b75cf9de32e942.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA-1"
+  },
+  {
+    "id": "analog/assignments/item-aca314d7",
+    "slug": "item-aca314d7",
+    "subject": "analog",
+    "title": "דיודות 2",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_677ba87a556042008ae789383c4cf1c7.pdf",
+        "path": "/pdfs/assignments/analog/item-aca314d7.pdf",
+        "sizeBytes": 401154,
+        "id": "c511a2_677ba87a556042008ae789383c4cf1c7.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_a0a11c89416143beb8c246e37465ad47.pdf",
+        "path": "/pdfs/assignments/analog/item-aca314d7-solution.pdf",
+        "sizeBytes": 2313436,
+        "id": "c511a2_a0a11c89416143beb8c246e37465ad47.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA-2"
+  },
+  {
+    "id": "analog/assignments/item-da339537",
+    "slug": "item-da339537",
+    "subject": "analog",
+    "title": "דיודות 3",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_92937ade4a2a4ae38710e5e747bea96b.pdf",
+        "path": "/pdfs/assignments/analog/item-da339537.pdf",
+        "sizeBytes": 116675,
+        "id": "c511a2_92937ade4a2a4ae38710e5e747bea96b.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA-3"
+  },
+  {
+    "id": "analog/assignments/item-750b21cc",
+    "slug": "item-750b21cc",
+    "subject": "analog",
+    "title": "דיודות 4",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_f5af5a24f33c4167b8f556b87eee078c.pdf",
+        "path": "/pdfs/assignments/analog/item-750b21cc.pdf",
+        "sizeBytes": 1114405,
+        "id": "c511a2_f5af5a24f33c4167b8f556b87eee078c.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA-4"
+  },
+  {
+    "id": "analog/assignments/item-b6597933",
+    "slug": "item-b6597933",
+    "subject": "analog",
+    "title": "דיודות 5",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_7b589599ebab411790620ec9549701ef.pdf",
+        "path": "/pdfs/assignments/analog/item-b6597933.pdf",
+        "sizeBytes": 87280,
+        "id": "c511a2_7b589599ebab411790620ec9549701ef.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_90112450d39f41e5bbaf0c18d10d3a6d.pdf",
+        "path": "/pdfs/assignments/analog/item-b6597933-solution.pdf",
+        "sizeBytes": 1291186,
+        "id": "c511a2_90112450d39f41e5bbaf0c18d10d3a6d.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/%D7%93%D7%99%D7%95%D7%93%D7%95%D7%AA-5"
+  },
+  {
+    "id": "electricity/assignments/combined",
+    "slug": "combined",
+    "subject": "electricity",
+    "title": "הבנת הנקרא",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_d3b7f4abacd84e178ab7fb0c4bd2e813.pdf",
+        "path": "/pdfs/assignments/electricity/combined.pdf",
+        "sizeBytes": 4092614,
+        "id": "c511a2_d3b7f4abacd84e178ab7fb0c4bd2e813.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_0e58161151b04efb9ffd739ae7dac1a5.pdf",
+        "path": "/pdfs/assignments/electricity/combined-solution.pdf",
+        "sizeBytes": 1226418,
+        "id": "c511a2_0e58161151b04efb9ffd739ae7dac1a5.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%94%D7%91%D7%A0%D7%AA-%D7%94%D7%A0%D7%A7%D7%A8%D7%90"
+  },
+  {
+    "id": "electricity/assignments/item-b801908f",
+    "slug": "item-b801908f",
+    "subject": "electricity",
+    "title": "המרות 1",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_c79eb683f7f84309b71acd4221dc6ae4.pdf",
+        "path": "/pdfs/assignments/electricity/item-b801908f.pdf",
+        "sizeBytes": 458080,
+        "id": "c511a2_c79eb683f7f84309b71acd4221dc6ae4.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_f178e1f937034a21a8ee1c55379912a8.pdf",
+        "path": "/pdfs/assignments/electricity/item-b801908f-solution.pdf",
+        "sizeBytes": 711765,
+        "id": "c511a2_f178e1f937034a21a8ee1c55379912a8.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%94%D7%9E%D7%A8%D7%95%D7%AA-1"
+  },
+  {
+    "id": "electricity/assignments/item-7c5f6f50",
+    "slug": "item-7c5f6f50",
+    "subject": "electricity",
+    "title": "המרות 2",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_33ef0defb82349ddb66471dd6275935b.pdf",
+        "path": "/pdfs/assignments/electricity/item-7c5f6f50.pdf",
+        "sizeBytes": 810561,
+        "id": "c511a2_33ef0defb82349ddb66471dd6275935b.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_a4b2710d0fc644628a1c375fab13749a.pdf",
+        "path": "/pdfs/assignments/electricity/item-7c5f6f50-solution.pdf",
+        "sizeBytes": 683984,
+        "id": "c511a2_a4b2710d0fc644628a1c375fab13749a.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%94%D7%9E%D7%A8%D7%95%D7%AA-2"
+  },
+  {
+    "id": "electricity/assignments/item-fb56f7c7",
+    "slug": "item-fb56f7c7",
+    "subject": "electricity",
+    "title": "זרם חילופין",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_f6f108faa83c4f90ba6d42b6995773a3.pdf",
+        "path": "/pdfs/assignments/electricity/item-fb56f7c7.pdf",
+        "sizeBytes": 746892,
+        "id": "c511a2_f6f108faa83c4f90ba6d42b6995773a3.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_96e57552ca044cc7b39b86e61df35b14.pdf",
+        "path": "/pdfs/assignments/electricity/item-fb56f7c7-solution.pdf",
+        "sizeBytes": 3299273,
+        "id": "c511a2_96e57552ca044cc7b39b86e61df35b14.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%96%D7%A8%D7%9D-%D7%97%D7%99%D7%9C%D7%95%D7%A4%D7%99%D7%9F"
+  },
+  {
+    "id": "electricity/assignments/item-5153d803",
+    "slug": "item-5153d803",
+    "subject": "electricity",
+    "title": "חזרה 1",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_3b0b796c61434ba5b3e76ab60003a8b7.pdf",
+        "path": "/pdfs/assignments/electricity/item-5153d803.pdf",
+        "sizeBytes": 689172,
+        "id": "c511a2_3b0b796c61434ba5b3e76ab60003a8b7.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_c15c12cbc9d34c22bfebe631ab2170d2.pdf",
+        "path": "/pdfs/assignments/electricity/item-5153d803-solution.pdf",
+        "sizeBytes": 3392023,
+        "id": "c511a2_c15c12cbc9d34c22bfebe631ab2170d2.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%97%D7%96%D7%A8%D7%94-1"
+  },
+  {
+    "id": "electricity/assignments/item-82299856",
+    "slug": "item-82299856",
+    "subject": "electricity",
+    "title": "חזרה 2",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_33334d63715048359181463fb55b3fa9.pdf",
+        "path": "/pdfs/assignments/electricity/item-82299856.pdf",
+        "sizeBytes": 402245,
+        "id": "c511a2_33334d63715048359181463fb55b3fa9.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_c260120d2ba042e7a7d060153302fde9.pdf",
+        "path": "/pdfs/assignments/electricity/item-82299856-solution.pdf",
+        "sizeBytes": 2910534,
+        "id": "c511a2_c260120d2ba042e7a7d060153302fde9.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%97%D7%96%D7%A8%D7%94-2"
+  },
+  {
+    "id": "analog/assignments/b",
+    "slug": "b",
+    "subject": "analog",
+    "title": "מגברי שרת 1",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_0f2e582357f947b7b558b2c75a3a603a.pdf",
+        "path": "/pdfs/assignments/analog/b.pdf",
+        "sizeBytes": 148465,
+        "id": "c511a2_0f2e582357f947b7b558b2c75a3a603a.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_63a7f6ac8a3045ad9695bb8603a100c4.pdf",
+        "path": "/pdfs/assignments/analog/b-solution.pdf",
+        "sizeBytes": 1741506,
+        "id": "c511a2_63a7f6ac8a3045ad9695bb8603a100c4.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/%D7%9E%D7%92%D7%91%D7%A8%D7%99-%D7%A9%D7%A8%D7%AA-1"
+  },
+  {
+    "id": "electricity/assignments/b",
+    "slug": "b",
+    "subject": "electricity",
+    "title": "מעגלים מעורבים",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_e125d34ae04f4b40bece6337e07b9de1.pdf",
+        "path": "/pdfs/assignments/electricity/b.pdf",
+        "sizeBytes": 347618,
+        "id": "c511a2_e125d34ae04f4b40bece6337e07b9de1.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_f8bbd8ccfda6473db5e6ff7a355795ee.pdf",
+        "path": "/pdfs/assignments/electricity/b-solution.pdf",
+        "sizeBytes": 6222485,
+        "id": "c511a2_f8bbd8ccfda6473db5e6ff7a355795ee.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%9E%D7%A2%D7%92%D7%9C%D7%99%D7%9D-%D7%9E%D7%A2%D7%95%D7%A8%D7%91%D7%99%D7%9D"
+  },
+  {
+    "id": "electricity/assignments/item-030a8b57",
+    "slug": "item-030a8b57",
+    "subject": "electricity",
+    "title": "משפט מילמן",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_b84cb11ed7ce451b96f06f7f1be6d594.pdf",
+        "path": "/pdfs/assignments/electricity/item-030a8b57.pdf",
+        "sizeBytes": 249551,
+        "id": "c511a2_b84cb11ed7ce451b96f06f7f1be6d594.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_a750f6ba3cb8476f949322ff80201508.pdf",
+        "path": "/pdfs/assignments/electricity/item-030a8b57-solution.pdf",
+        "sizeBytes": 4380336,
+        "id": "c511a2_a750f6ba3cb8476f949322ff80201508.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%9E%D7%A9%D7%A4%D7%98-%D7%9E%D7%99%D7%9C%D7%9E%D7%9F"
+  },
+  {
+    "id": "electricity/assignments/item-84dbf5dd",
+    "slug": "item-84dbf5dd",
+    "subject": "electricity",
+    "title": "מתחי צמתים",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_f5f860c8a4874249bb715082c2b533af.pdf",
+        "path": "/pdfs/assignments/electricity/item-84dbf5dd.pdf",
+        "sizeBytes": 1133266,
+        "id": "c511a2_f5f860c8a4874249bb715082c2b533af.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_a19462b5dc7c43549965634281df53d7.pdf",
+        "path": "/pdfs/assignments/electricity/item-84dbf5dd-solution.pdf",
+        "sizeBytes": 4471432,
+        "id": "c511a2_a19462b5dc7c43549965634281df53d7.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%9E%D7%AA%D7%97%D7%99-%D7%A6%D7%9E%D7%AA%D7%99%D7%9D"
+  },
+  {
+    "id": "electricity/assignments/item-7b331d34",
+    "slug": "item-7b331d34",
+    "subject": "electricity",
+    "title": "נגד משתנה",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_8597584aaa034067a0fa8184885443b7.pdf",
+        "path": "/pdfs/assignments/electricity/item-7b331d34.pdf",
+        "sizeBytes": 170761,
+        "id": "c511a2_8597584aaa034067a0fa8184885443b7.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_7a153261dcb24cfbb428b89a2d4307f3.pdf",
+        "path": "/pdfs/assignments/electricity/item-7b331d34-solution.pdf",
+        "sizeBytes": 11070771,
+        "id": "c511a2_7a153261dcb24cfbb428b89a2d4307f3.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%A0%D7%92%D7%93-%D7%9E%D7%A9%D7%AA%D7%A0%D7%94"
+  },
+  {
+    "id": "electricity/assignments/item-38836bc2",
+    "slug": "item-38836bc2",
+    "subject": "electricity",
+    "title": "סוללות",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_8209dda51f584334818fa46f39367c17.pdf",
+        "path": "/pdfs/assignments/electricity/item-38836bc2.pdf",
+        "sizeBytes": 1163304,
+        "id": "c511a2_8209dda51f584334818fa46f39367c17.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_664e804131284296a1363ed4e2b5be65.pdf",
+        "path": "/pdfs/assignments/electricity/item-38836bc2-solution.pdf",
+        "sizeBytes": 3484203,
+        "id": "c511a2_664e804131284296a1363ed4e2b5be65.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%A1%D7%95%D7%9C%D7%9C%D7%95%D7%AA"
+  },
+  {
+    "id": "electricity/assignments/item-3baa9ece",
+    "slug": "item-3baa9ece",
+    "subject": "electricity",
+    "title": "פסח",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_5d6351758b294c2992f7e70749d31742.pdf",
+        "path": "/pdfs/assignments/electricity/item-3baa9ece.pdf",
+        "sizeBytes": 1285363,
+        "id": "c511a2_5d6351758b294c2992f7e70749d31742.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_606d24c457ea4ce79947e630346b245f.pdf",
+        "path": "/pdfs/assignments/electricity/item-3baa9ece-solution.pdf",
+        "sizeBytes": 7892972,
+        "id": "c511a2_606d24c457ea4ce79947e630346b245f.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%A4%D7%A1%D7%97"
+  },
+  {
+    "id": "electricity/assignments/item-c2ab656b",
+    "slug": "item-c2ab656b",
+    "subject": "electricity",
+    "title": "שיטות פיתרון",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_b2417069ff3f430b925a5265c0839ee6.pdf",
+        "path": "/pdfs/assignments/electricity/item-c2ab656b.pdf",
+        "sizeBytes": 408488,
+        "id": "c511a2_b2417069ff3f430b925a5265c0839ee6.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_3fe95974cc7a4967825ab02de2985453.pdf",
+        "path": "/pdfs/assignments/electricity/item-c2ab656b-solution.pdf",
+        "sizeBytes": 5481322,
+        "id": "c511a2_3fe95974cc7a4967825ab02de2985453.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/%D7%A9%D7%99%D7%98%D7%95%D7%AA-%D7%A4%D7%99%D7%AA%D7%A8%D7%95%D7%9F"
+  },
+  {
+    "id": "analog/assignments/bjt-ac",
+    "slug": "bjt-ac",
+    "subject": "analog",
+    "title": "BJT-AC",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_ec6e9987ea5c430cacd0ee5e8bdf2286.pdf",
+        "path": "/pdfs/assignments/analog/bjt-ac.pdf",
+        "sizeBytes": 972949,
+        "id": "c511a2_ec6e9987ea5c430cacd0ee5e8bdf2286.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_8939ecc4742e4f29812cba46624b33d9.pdf",
+        "path": "/pdfs/assignments/analog/bjt-ac-solution.pdf",
+        "sizeBytes": 4054235,
+        "id": "c511a2_8939ecc4742e4f29812cba46624b33d9.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/bjt-ac"
+  },
+  {
+    "id": "analog/assignments/bjt-dc1",
+    "slug": "bjt-dc1",
+    "subject": "analog",
+    "title": "BJT-DC1",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_60255e185cfe47b89ac9455488d8a2fa.pdf",
+        "path": "/pdfs/assignments/analog/bjt-dc1.pdf",
+        "sizeBytes": 518402,
+        "id": "c511a2_60255e185cfe47b89ac9455488d8a2fa.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_66dc2cdf7d594c67b524eedae5fed057.pdf",
+        "path": "/pdfs/assignments/analog/bjt-dc1-solution.pdf",
+        "sizeBytes": 16274872,
+        "id": "c511a2_66dc2cdf7d594c67b524eedae5fed057.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/bjt-dc1"
+  },
+  {
+    "id": "analog/assignments/bjt-dc2",
+    "slug": "bjt-dc2",
+    "subject": "analog",
+    "title": "BJT-DC2",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_c2e4add1ac4b41f3b933a13dff16e5e2.pdf",
+        "path": "/pdfs/assignments/analog/bjt-dc2.pdf",
+        "sizeBytes": 483464,
+        "id": "c511a2_c2e4add1ac4b41f3b933a13dff16e5e2.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_bf76bf3d03c84428b567c5660e0c1837.pdf",
+        "path": "/pdfs/assignments/analog/bjt-dc2-solution.pdf",
+        "sizeBytes": 15826981,
+        "id": "c511a2_bf76bf3d03c84428b567c5660e0c1837.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/bjt-dc2"
+  },
+  {
+    "id": "electricity/assignments/dc-0",
+    "slug": "dc-0",
+    "subject": "electricity",
+    "title": "DC-0",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_3fbd60f7caef49f0ac0a754fa0c524b0.pdf",
+        "path": "/pdfs/assignments/electricity/dc-0.pdf",
+        "sizeBytes": 621150,
+        "id": "c511a2_3fbd60f7caef49f0ac0a754fa0c524b0.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_70823e09a16549bb8bffe8bdaa27ccb6.pdf",
+        "path": "/pdfs/assignments/electricity/dc-0-solution.pdf",
+        "sizeBytes": 434785,
+        "id": "c511a2_70823e09a16549bb8bffe8bdaa27ccb6.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/dc-0"
+  },
+  {
+    "id": "electricity/assignments/dc-1",
+    "slug": "dc-1",
+    "subject": "electricity",
+    "title": "DC-1",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_1548a855b3114be0977824b562c4fe4a.pdf",
+        "path": "/pdfs/assignments/electricity/dc-1.pdf",
+        "sizeBytes": 2661926,
+        "id": "c511a2_1548a855b3114be0977824b562c4fe4a.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_c03e2acd45744200b84dfa2c499fe2f0.pdf",
+        "path": "/pdfs/assignments/electricity/dc-1-solution.pdf",
+        "sizeBytes": 12823704,
+        "id": "c511a2_c03e2acd45744200b84dfa2c499fe2f0.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/dc-1"
+  },
+  {
+    "id": "electricity/assignments/dc-2",
+    "slug": "dc-2",
+    "subject": "electricity",
+    "title": "DC-2",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_f7a15b431cba414d89df314ebca11718.pdf",
+        "path": "/pdfs/assignments/electricity/dc-2.pdf",
+        "sizeBytes": 1306043,
+        "id": "c511a2_f7a15b431cba414d89df314ebca11718.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_822cb7c762cc496db16fc945b88ed3c2.pdf",
+        "path": "/pdfs/assignments/electricity/dc-2-solution.pdf",
+        "sizeBytes": 844008,
+        "id": "c511a2_822cb7c762cc496db16fc945b88ed3c2.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-electricity",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-electricity/dc-2"
+  },
+  {
+    "id": "analog/assignments/fet",
+    "slug": "fet",
+    "subject": "analog",
+    "title": "FET",
+    "topic": null,
+    "files": [
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_4ee0a3d98a8a461a87035fe76e77ddb6.pdf",
+        "path": "/pdfs/assignments/analog/fet.pdf",
+        "sizeBytes": 752088,
+        "id": "c511a2_4ee0a3d98a8a461a87035fe76e77ddb6.pdf"
+      },
+      {
+        "url": "https://docs.wixstatic.com/ugd/c511a2_21ecce3152b24c3cb9ecc8ca15b3c125.pdf",
+        "path": "/pdfs/assignments/analog/fet-solution.pdf",
+        "sizeBytes": 2002674,
+        "id": "c511a2_21ecce3152b24c3cb9ecc8ca15b3c125.pdf"
+      }
+    ],
+    "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
+    "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/fet"
+  }
+]

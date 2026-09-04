@@ -36,6 +36,16 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Claude Code local config
+.claude/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# crawl artefacts — only the derived content/ and public/pdfs are committed
+/scripts/crawl-output/pages.json
+/scripts/crawl-output/pdfs.json
+/scripts/crawl-output/visited.json
+/scripts/crawl-output/assets.json
+/scripts/crawl-output/*.log

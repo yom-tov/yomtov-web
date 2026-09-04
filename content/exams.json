@@ -1,0 +1,1177 @@
+[
+  {
+    "id": "electricity/exam-mahat/spring-2025-combined",
+    "slug": "spring-2025-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "אביב 2025 ב",
+    "year": 2025,
+    "season": "spring",
+    "version": "combined",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_2edcce613358410aad7edb8efd5c61ba.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2025-combined.pdf",
+      "sizeBytes": 544639,
+      "id": "c511a2_2edcce613358410aad7edb8efd5c61ba.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_1e47abdfc6f640eaa74ea2d87104eedd.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2025-combined-solution.pdf",
+      "sizeBytes": 11139752,
+      "id": "c511a2_1e47abdfc6f640eaa74ea2d87104eedd.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2025-%D7%91"
+  },
+  {
+    "id": "electricity/exam-education/2025-b",
+    "slug": "2025-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2025",
+    "year": 2025,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_8ece55d87cce4cf5a38177fcb1d19b24.pdf",
+      "path": "/pdfs/education/electricity/2025-b.pdf",
+      "sizeBytes": 831238,
+      "id": "c511a2_8ece55d87cce4cf5a38177fcb1d19b24.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_8f9d4f4fd9b34918954a253740cdef6c.pdf",
+      "path": "/pdfs/education/electricity/2025-b-solution.pdf",
+      "sizeBytes": 3846563,
+      "id": "c511a2_8f9d4f4fd9b34918954a253740cdef6c.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2025"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2024-b",
+    "slug": "summer-2024-b",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2024 ב",
+    "year": 2024,
+    "season": "summer",
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_6f9f303f09564465a8b2644aa9029a6d.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2024-b.pdf",
+      "sizeBytes": 548587,
+      "id": "c511a2_6f9f303f09564465a8b2644aa9029a6d.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_f9092df06fd84b91aa08afdbefb5c5f0.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2024-b-solution.pdf",
+      "sizeBytes": 20568717,
+      "id": "c511a2_f9092df06fd84b91aa08afdbefb5c5f0.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2024-%D7%91"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2024-combined",
+    "slug": "spring-2024-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "אביב 2024 א",
+    "year": 2024,
+    "season": "spring",
+    "version": "combined",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_0aad2cb457ac4475a513f2983a918b6f.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2024-combined.pdf",
+      "sizeBytes": 528836,
+      "id": "c511a2_0aad2cb457ac4475a513f2983a918b6f.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_a020217629e14345b0deea00535fe2b7.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2024-combined-solution.pdf",
+      "sizeBytes": 12793342,
+      "id": "c511a2_a020217629e14345b0deea00535fe2b7.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2024-%D7%90"
+  },
+  {
+    "id": "electricity/exam-education/2024-b",
+    "slug": "2024-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2024",
+    "year": 2024,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_486c53f62116425c824ba712cacca6cc.pdf",
+      "path": "/pdfs/education/electricity/2024-b.pdf",
+      "sizeBytes": 31416,
+      "id": "c511a2_486c53f62116425c824ba712cacca6cc.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_968b38c7d627458e9211307039d57f35.pdf",
+      "path": "/pdfs/education/electricity/2024-b-solution.pdf",
+      "sizeBytes": 1158497,
+      "id": "c511a2_968b38c7d627458e9211307039d57f35.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2024"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2023-b",
+    "slug": "summer-2023-b",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2023 ב",
+    "year": 2023,
+    "season": "summer",
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_a5eb299a2f9347cbb6562866d07d38de.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2023-b.pdf",
+      "sizeBytes": 287427,
+      "id": "c511a2_a5eb299a2f9347cbb6562866d07d38de.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_f82fa991b90d4f25a4b05e7d4a62bf2d.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2023-b-solution.pdf",
+      "sizeBytes": 2975829,
+      "id": "c511a2_f82fa991b90d4f25a4b05e7d4a62bf2d.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2023-%D7%91"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2023-a",
+    "slug": "summer-2023-a",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2023 א",
+    "year": 2023,
+    "season": "summer",
+    "version": "a",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_a1501bbe66b44933a564167196c92b4f.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2023-a.pdf",
+      "sizeBytes": 485410,
+      "id": "c511a2_a1501bbe66b44933a564167196c92b4f.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_cfc7d2bcdd2a4b1fb1374233c1b2dd60.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2023-a-solution.pdf",
+      "sizeBytes": 4883342,
+      "id": "c511a2_cfc7d2bcdd2a4b1fb1374233c1b2dd60.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2023-%D7%90"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2023-combined",
+    "slug": "spring-2023-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "אביב 2023 ב",
+    "year": 2023,
+    "season": "spring",
+    "version": "combined",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_cabd6e8da982479dba59b74aa86153cf.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2023-combined.pdf",
+      "sizeBytes": 781433,
+      "id": "c511a2_cabd6e8da982479dba59b74aa86153cf.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_9e410dbc2e33427e9d48ee5706cacaa6.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2023-combined-solution.pdf",
+      "sizeBytes": 1873297,
+      "id": "c511a2_9e410dbc2e33427e9d48ee5706cacaa6.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2023-%D7%91"
+  },
+  {
+    "id": "electricity/exam-education/2023-b",
+    "slug": "2023-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2023",
+    "year": 2023,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_23e4203e4a4640da9c9dceb12579319d.pdf",
+      "path": "/pdfs/education/electricity/2023-b.pdf",
+      "sizeBytes": 6699183,
+      "id": "c511a2_23e4203e4a4640da9c9dceb12579319d.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_9f722f8aac7548da83bc22f81bba31aa.pdf",
+      "path": "/pdfs/education/electricity/2023-b-solution.pdf",
+      "sizeBytes": 2694852,
+      "id": "c511a2_9f722f8aac7548da83bc22f81bba31aa.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2023"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2022-combined",
+    "slug": "spring-2022-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "אביב 2022 א",
+    "year": 2022,
+    "season": "spring",
+    "version": "combined",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_ec78c615f854416f8aedeefc62a62afd.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2022-combined.pdf",
+      "sizeBytes": 3068174,
+      "id": "c511a2_ec78c615f854416f8aedeefc62a62afd.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_cc277594f309412c95f00fce15b2cb44.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2022-combined-solution.pdf",
+      "sizeBytes": 6295944,
+      "id": "c511a2_cc277594f309412c95f00fce15b2cb44.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2022-%D7%90"
+  },
+  {
+    "id": "electricity/exam-education/2022-b",
+    "slug": "2022-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2022",
+    "year": 2022,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_52227e2c29d34442bf3680f79e87cbe1.pdf",
+      "path": "/pdfs/education/electricity/2022-b.pdf",
+      "sizeBytes": 1083098,
+      "id": "c511a2_52227e2c29d34442bf3680f79e87cbe1.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_ca50f06a743f4e90b6b815279667e996.pdf",
+      "path": "/pdfs/education/electricity/2022-b-solution.pdf",
+      "sizeBytes": 3422672,
+      "id": "c511a2_ca50f06a743f4e90b6b815279667e996.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2022"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2021-b",
+    "slug": "summer-2021-b",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2021 ב",
+    "year": 2021,
+    "season": "summer",
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_ec332174b4d44ccd845b4be4415ad726.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2021-b.pdf",
+      "sizeBytes": 1374926,
+      "id": "c511a2_ec332174b4d44ccd845b4be4415ad726.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_74239d75249648e39403d3b5074a2047.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2021-b-solution.pdf",
+      "sizeBytes": 10063864,
+      "id": "c511a2_74239d75249648e39403d3b5074a2047.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2021-%D7%91"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2021-a",
+    "slug": "summer-2021-a",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2021 א",
+    "year": 2021,
+    "season": "summer",
+    "version": "a",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_2eff3809be6141019072f0049b5ef1d9.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2021-a.pdf",
+      "sizeBytes": 1918907,
+      "id": "c511a2_2eff3809be6141019072f0049b5ef1d9.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_f031b86777bf488e807b76210f8a234b.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2021-a-solution.pdf",
+      "sizeBytes": 8969826,
+      "id": "c511a2_f031b86777bf488e807b76210f8a234b.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2021-%D7%90"
+  },
+  {
+    "id": "electricity/exam-education/2021-b",
+    "slug": "2021-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2021",
+    "year": 2021,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_d3c3bb41500f49bea6f3ed9233fbb0a7.pdf",
+      "path": "/pdfs/education/electricity/2021-b.pdf",
+      "sizeBytes": 293082,
+      "id": "c511a2_d3c3bb41500f49bea6f3ed9233fbb0a7.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_b554a09fcb274186b2ef7c73e5a891e5.pdf",
+      "path": "/pdfs/education/electricity/2021-b-solution.pdf",
+      "sizeBytes": 2093550,
+      "id": "c511a2_b554a09fcb274186b2ef7c73e5a891e5.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2021"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2020-a",
+    "slug": "summer-2020-a",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2020 א",
+    "year": 2020,
+    "season": "summer",
+    "version": "a",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_53129d1944f040ec9aeea2e7f58ee286.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2020-a.pdf",
+      "sizeBytes": 622610,
+      "id": "c511a2_53129d1944f040ec9aeea2e7f58ee286.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_4c21b9899a5c41b1838531c2bb9b2a0c.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2020-a-solution.pdf",
+      "sizeBytes": 838358,
+      "id": "c511a2_4c21b9899a5c41b1838531c2bb9b2a0c.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2020-%D7%90"
+  },
+  {
+    "id": "electricity/exam-education/2020-b",
+    "slug": "2020-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2020",
+    "year": 2020,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_ca772f06df5540bebc3f0b2a74f53e2a.pdf",
+      "path": "/pdfs/education/electricity/2020-b.pdf",
+      "sizeBytes": 472857,
+      "id": "c511a2_ca772f06df5540bebc3f0b2a74f53e2a.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_bb4ba10a4e044c6bb54b1a681b0e3c5f.pdf",
+      "path": "/pdfs/education/electricity/2020-b-solution.pdf",
+      "sizeBytes": 1730888,
+      "id": "c511a2_bb4ba10a4e044c6bb54b1a681b0e3c5f.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2020"
+  },
+  {
+    "id": "electricity/exam-education/2019-b",
+    "slug": "2019-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2019",
+    "year": 2019,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_740c41920d4e496799679f841f91c11f.pdf",
+      "path": "/pdfs/education/electricity/2019-b.pdf",
+      "sizeBytes": 146358,
+      "id": "c511a2_740c41920d4e496799679f841f91c11f.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_af63dd5439024b6b8bcde438a30bb65d.pdf",
+      "path": "/pdfs/education/electricity/2019-b-solution.pdf",
+      "sizeBytes": 63171,
+      "id": "c511a2_af63dd5439024b6b8bcde438a30bb65d.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2019"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2018-a",
+    "slug": "summer-2018-a",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2018 א",
+    "year": 2018,
+    "season": "summer",
+    "version": "a",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_35ac8e5f0f9c4cbd8593a53e06fabc8a.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2018-a.pdf",
+      "sizeBytes": 1884002,
+      "id": "c511a2_35ac8e5f0f9c4cbd8593a53e06fabc8a.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_6dba0bb0481b4ff385f3a6f269b7b51f.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2018-a-solution.pdf",
+      "sizeBytes": 3615468,
+      "id": "c511a2_6dba0bb0481b4ff385f3a6f269b7b51f.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2018-%D7%90"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2018-combined",
+    "slug": "spring-2018-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "אביב 2018 ב",
+    "year": 2018,
+    "season": "spring",
+    "version": "combined",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_fd2354729f8f4149a9fc3af166904563.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2018-combined.pdf",
+      "sizeBytes": 475097,
+      "id": "c511a2_fd2354729f8f4149a9fc3af166904563.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_f31e19e374a0496fa6ac067c116e7eaa.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2018-combined-solution.pdf",
+      "sizeBytes": 2256782,
+      "id": "c511a2_f31e19e374a0496fa6ac067c116e7eaa.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2018-%D7%91"
+  },
+  {
+    "id": "electricity/exam-education/2018-b",
+    "slug": "2018-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2018",
+    "year": 2018,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_52c812193293489bb8f8501610e8fbea.pdf",
+      "path": "/pdfs/education/electricity/2018-b.pdf",
+      "sizeBytes": 3734571,
+      "id": "c511a2_52c812193293489bb8f8501610e8fbea.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_50604d058dc94a89868782deaf847942.pdf",
+      "path": "/pdfs/education/electricity/2018-b-solution.pdf",
+      "sizeBytes": 871428,
+      "id": "c511a2_50604d058dc94a89868782deaf847942.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2018"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2017-b",
+    "slug": "summer-2017-b",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2017 ב",
+    "year": 2017,
+    "season": "summer",
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_c5f45d6fe1d443b489dfb41de3764db9.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2017-b.pdf",
+      "sizeBytes": 99296,
+      "id": "c511a2_c5f45d6fe1d443b489dfb41de3764db9.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_c11adc8262d34ffdafef5a4182640e9d.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2017-b-solution.pdf",
+      "sizeBytes": 2039155,
+      "id": "c511a2_c11adc8262d34ffdafef5a4182640e9d.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2017-%D7%91"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2017-a",
+    "slug": "summer-2017-a",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2017 א",
+    "year": 2017,
+    "season": "summer",
+    "version": "a",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_8797a80aad224132ad155aab73e663cb.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2017-a.pdf",
+      "sizeBytes": 3591097,
+      "id": "c511a2_8797a80aad224132ad155aab73e663cb.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_a953f21039f24809bad147af0521dd72.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2017-a-solution.pdf",
+      "sizeBytes": 5191403,
+      "id": "c511a2_a953f21039f24809bad147af0521dd72.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2017-%D7%90"
+  },
+  {
+    "id": "electricity/exam-education/2017-b",
+    "slug": "2017-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2017",
+    "year": 2017,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_5eb6fa59adda432baa7e1aa3b2b92d81.pdf",
+      "path": "/pdfs/education/electricity/2017-b.pdf",
+      "sizeBytes": 203208,
+      "id": "c511a2_5eb6fa59adda432baa7e1aa3b2b92d81.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_d084b7f32ab94830ba3891979202e361.pdf",
+      "path": "/pdfs/education/electricity/2017-b-solution.pdf",
+      "sizeBytes": 1144172,
+      "id": "c511a2_d084b7f32ab94830ba3891979202e361.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2017"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2016",
+    "slug": "summer-2016",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2016",
+    "year": 2016,
+    "season": "summer",
+    "version": null,
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_feb11841b6654bf8853c4351709c6c81.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2016.pdf",
+      "sizeBytes": 112584,
+      "id": "c511a2_feb11841b6654bf8853c4351709c6c81.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_7565873f48d145a3a6d2519bd1734c6f.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2016-solution.pdf",
+      "sizeBytes": 3839719,
+      "id": "c511a2_7565873f48d145a3a6d2519bd1734c6f.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2016"
+  },
+  {
+    "id": "electricity/exam-mahat/winter-2016",
+    "slug": "winter-2016",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "חורף 2016",
+    "year": 2016,
+    "season": "winter",
+    "version": null,
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_481b66492d304bbeb909bd8759a61d86.pdf",
+      "path": "/pdfs/mahat/electricity/winter-2016.pdf",
+      "sizeBytes": 2699003,
+      "id": "c511a2_481b66492d304bbeb909bd8759a61d86.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_3e7cea2317214c8bb88b747f1a95dc0c.pdf",
+      "path": "/pdfs/mahat/electricity/winter-2016-solution.pdf",
+      "sizeBytes": 4075641,
+      "id": "c511a2_3e7cea2317214c8bb88b747f1a95dc0c.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%97%D7%95%D7%A8%D7%A3-2016"
+  },
+  {
+    "id": "electricity/exam-education/2016-b",
+    "slug": "2016-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2016",
+    "year": 2016,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_1082985b919647f9b572571864f03bdc.pdf",
+      "path": "/pdfs/education/electricity/2016-b.pdf",
+      "sizeBytes": 206527,
+      "id": "c511a2_1082985b919647f9b572571864f03bdc.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_8b9df659bbad4d27a0a39699e0f3c103.pdf",
+      "path": "/pdfs/education/electricity/2016-b-solution.pdf",
+      "sizeBytes": 84141,
+      "id": "c511a2_8b9df659bbad4d27a0a39699e0f3c103.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2016"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2015",
+    "slug": "summer-2015",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2015",
+    "year": 2015,
+    "season": "summer",
+    "version": null,
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_988263fbc8254387a1bbb10daa4c1014.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2015.pdf",
+      "sizeBytes": 2993335,
+      "id": "c511a2_988263fbc8254387a1bbb10daa4c1014.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_4a9f43c176f84b96b534415cceb6c856.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2015-solution.pdf",
+      "sizeBytes": 6919332,
+      "id": "c511a2_4a9f43c176f84b96b534415cceb6c856.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2015"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2015-b",
+    "slug": "summer-2015-b",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "תקבילית קיץ 2015",
+    "year": 2015,
+    "season": "summer",
+    "version": "b",
+    "topic": "analog",
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_219fd13da37f403282afdb1b4fcc9e78.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2015-b.pdf",
+      "sizeBytes": 1625800,
+      "id": "c511a2_219fd13da37f403282afdb1b4fcc9e78.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_2e79e2bce183444e8c92c388dd03feb9.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2015-b-solution.pdf",
+      "sizeBytes": 7030617,
+      "id": "c511a2_2e79e2bce183444e8c92c388dd03feb9.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%A7%D7%99%D7%A5-2015"
+  },
+  {
+    "id": "electricity/exam-education/2015-b",
+    "slug": "2015-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2015",
+    "year": 2015,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_d8fcf3c95c924ddf86d66e2398113cd1.pdf",
+      "path": "/pdfs/education/electricity/2015-b.pdf",
+      "sizeBytes": 274200,
+      "id": "c511a2_d8fcf3c95c924ddf86d66e2398113cd1.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_4b7203cea42d43dca33dd426d13d80f3.pdf",
+      "path": "/pdfs/education/electricity/2015-b-solution.pdf",
+      "sizeBytes": 50161,
+      "id": "c511a2_4b7203cea42d43dca33dd426d13d80f3.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2015"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2014",
+    "slug": "summer-2014",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2014",
+    "year": 2014,
+    "season": "summer",
+    "version": null,
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_5395c9baa2e0423a80f0df5b3530f796.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2014.pdf",
+      "sizeBytes": 2420684,
+      "id": "c511a2_5395c9baa2e0423a80f0df5b3530f796.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_0172a3bab8da490bb34f900e40c24b34.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2014-solution.pdf",
+      "sizeBytes": 2947175,
+      "id": "c511a2_0172a3bab8da490bb34f900e40c24b34.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2014"
+  },
+  {
+    "id": "electricity/exam-education/2014-b",
+    "slug": "2014-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2014",
+    "year": 2014,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_7da7b8d874844c01be2fb97b22967648.pdf",
+      "path": "/pdfs/education/electricity/2014-b.pdf",
+      "sizeBytes": 203236,
+      "id": "c511a2_7da7b8d874844c01be2fb97b22967648.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_a2fde817d91a4b04977fd0554f057af2.pdf",
+      "path": "/pdfs/education/electricity/2014-b-solution.pdf",
+      "sizeBytes": 2923866,
+      "id": "c511a2_a2fde817d91a4b04977fd0554f057af2.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2014"
+  },
+  {
+    "id": "electricity/exam-education/2013-b",
+    "slug": "2013-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2013",
+    "year": 2013,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_3bed001c237d4aa5b2099b101d873d81.pdf",
+      "path": "/pdfs/education/electricity/2013-b.pdf",
+      "sizeBytes": 373401,
+      "id": "c511a2_3bed001c237d4aa5b2099b101d873d81.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_ca06d808bc0643d899365edb98c2c0da.pdf",
+      "path": "/pdfs/education/electricity/2013-b-solution.pdf",
+      "sizeBytes": 1976511,
+      "id": "c511a2_ca06d808bc0643d899365edb98c2c0da.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2013"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2012",
+    "slug": "summer-2012",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2012",
+    "year": 2012,
+    "season": "summer",
+    "version": null,
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_4a0a4c7b9631431c9e2ffcdfa7813804.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2012.pdf",
+      "sizeBytes": 108722,
+      "id": "c511a2_4a0a4c7b9631431c9e2ffcdfa7813804.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_b22f4c74b69c47e493281b8d83d013d9.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2012-solution.pdf",
+      "sizeBytes": 3676664,
+      "id": "c511a2_b22f4c74b69c47e493281b8d83d013d9.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2012"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2012-b",
+    "slug": "summer-2012-b",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "תקבילית קיץ 2012",
+    "year": 2012,
+    "season": "summer",
+    "version": "b",
+    "topic": "analog",
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_b47d699270194a9d9ad0037254ea1e7e.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2012-b.pdf",
+      "sizeBytes": 122706,
+      "id": "c511a2_b47d699270194a9d9ad0037254ea1e7e.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_e24f83b7aeb44f06b533dcaf39aac7b0.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2012-b-solution.pdf",
+      "sizeBytes": 6052432,
+      "id": "c511a2_e24f83b7aeb44f06b533dcaf39aac7b0.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%A7%D7%99%D7%A5-2012"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2012-combined",
+    "slug": "spring-2012-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "תקבילית אביב 2012",
+    "year": 2012,
+    "season": "spring",
+    "version": "combined",
+    "topic": "analog",
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_7bfa6763faf44fcf9265006a19d2f8b3.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2012-combined.pdf",
+      "sizeBytes": 1793018,
+      "id": "c511a2_7bfa6763faf44fcf9265006a19d2f8b3.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_63ccf8fd03c548a5a9181b7b394f6822.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2012-combined-solution.pdf",
+      "sizeBytes": 5033306,
+      "id": "c511a2_63ccf8fd03c548a5a9181b7b394f6822.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%90%D7%91%D7%99%D7%91-2012"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2011",
+    "slug": "summer-2011",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2011",
+    "year": 2011,
+    "season": "summer",
+    "version": null,
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_70740cb9c3d0402eaa3b9dd75e4d71fa.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2011.pdf",
+      "sizeBytes": 1251403,
+      "id": "c511a2_70740cb9c3d0402eaa3b9dd75e4d71fa.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_472c0746095f4696877a252cb53ca921.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2011-solution.pdf",
+      "sizeBytes": 3768578,
+      "id": "c511a2_472c0746095f4696877a252cb53ca921.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2011"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2011-b",
+    "slug": "summer-2011-b",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "תקבילית קיץ 2011",
+    "year": 2011,
+    "season": "summer",
+    "version": "b",
+    "topic": "analog",
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_5a99acf1bf8a48a28ecb0f4640970c3b.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2011-b.pdf",
+      "sizeBytes": 1626010,
+      "id": "c511a2_5a99acf1bf8a48a28ecb0f4640970c3b.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_dd9d8b95dda440439b3d143892e49f29.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2011-b-solution.pdf",
+      "sizeBytes": 3696000,
+      "id": "c511a2_dd9d8b95dda440439b3d143892e49f29.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%A7%D7%99%D7%A5-2011"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2011-combined",
+    "slug": "spring-2011-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "תקבילית אביב 2011",
+    "year": 2011,
+    "season": "spring",
+    "version": "combined",
+    "topic": "analog",
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_aec427cde134477aa6c7673733e42493.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2011-combined.pdf",
+      "sizeBytes": 115820,
+      "id": "c511a2_aec427cde134477aa6c7673733e42493.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_c90a01f900e44f94833efaefd1807fa1.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2011-combined-solution.pdf",
+      "sizeBytes": 4930501,
+      "id": "c511a2_c90a01f900e44f94833efaefd1807fa1.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%90%D7%91%D7%99%D7%91-2011"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2010",
+    "slug": "summer-2010",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2010",
+    "year": 2010,
+    "season": "summer",
+    "version": null,
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_1c66437f5c9c4eefbb514ce628f3217f.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2010.pdf",
+      "sizeBytes": 120143,
+      "id": "c511a2_1c66437f5c9c4eefbb514ce628f3217f.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_f92ef26963b04956b94457e29e69e853.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2010-solution.pdf",
+      "sizeBytes": 4072967,
+      "id": "c511a2_f92ef26963b04956b94457e29e69e853.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2010"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2010-combined",
+    "slug": "spring-2010-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "אביב 2010",
+    "year": 2010,
+    "season": "spring",
+    "version": "combined",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_1254b8be5a1d431f9eef02d58d118ef1.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2010-combined.pdf",
+      "sizeBytes": 135645,
+      "id": "c511a2_1254b8be5a1d431f9eef02d58d118ef1.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_3ae1977d092c4299ae85676d82bcb82a.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2010-combined-solution.pdf",
+      "sizeBytes": 4701790,
+      "id": "c511a2_3ae1977d092c4299ae85676d82bcb82a.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2010"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2009",
+    "slug": "summer-2009",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2009",
+    "year": 2009,
+    "season": "summer",
+    "version": null,
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_3ad2d5120e6b41b2a536aca5831123ab.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2009.pdf",
+      "sizeBytes": 3063024,
+      "id": "c511a2_3ad2d5120e6b41b2a536aca5831123ab.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_5306d61f14c94451b27fb5a706c8c570.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2009-solution.pdf",
+      "sizeBytes": 4395332,
+      "id": "c511a2_5306d61f14c94451b27fb5a706c8c570.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2009"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2009-combined",
+    "slug": "spring-2009-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "אביב 2009",
+    "year": 2009,
+    "season": "spring",
+    "version": "combined",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_17d1fc902dfd4183be08593b62a5cbf7.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2009-combined.pdf",
+      "sizeBytes": 74733,
+      "id": "c511a2_17d1fc902dfd4183be08593b62a5cbf7.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_a0bbbeefbf1e4234b5a1b55a7de12f0f.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2009-combined-solution.pdf",
+      "sizeBytes": 6918137,
+      "id": "c511a2_a0bbbeefbf1e4234b5a1b55a7de12f0f.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2009"
+  },
+  {
+    "id": "electricity/exam-education/2009-b",
+    "slug": "2009-b",
+    "subject": "electricity",
+    "source": "education",
+    "title": "מבחן 2009",
+    "year": 2009,
+    "season": null,
+    "version": "b",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_4b508b1ab467470cab797146a3e05237.pdf",
+      "path": "/pdfs/education/electricity/2009-b.pdf",
+      "sizeBytes": 387744,
+      "id": "c511a2_4b508b1ab467470cab797146a3e05237.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_4f4432992c2f43e8ae4fa6e0871adce5.pdf",
+      "path": "/pdfs/education/electricity/2009-b-solution.pdf",
+      "sizeBytes": 985996,
+      "id": "c511a2_4f4432992c2f43e8ae4fa6e0871adce5.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-education",
+    "originalDetailUrl": "https://www.e-tv.site/tests-education/%D7%9E%D7%91%D7%97%D7%9F-2009"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2008",
+    "slug": "summer-2008",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2008",
+    "year": 2008,
+    "season": "summer",
+    "version": null,
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_0047c5a0dd06421faf58638a1d92043d.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2008.pdf",
+      "sizeBytes": 116771,
+      "id": "c511a2_0047c5a0dd06421faf58638a1d92043d.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_4074fea57bf5463383ef558411a6d056.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2008-solution.pdf",
+      "sizeBytes": 5819305,
+      "id": "c511a2_4074fea57bf5463383ef558411a6d056.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2008"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2008-combined",
+    "slug": "spring-2008-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "אביב 2008",
+    "year": 2008,
+    "season": "spring",
+    "version": "combined",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_90775a9302064c9892341e45eb300df0.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2008-combined.pdf",
+      "sizeBytes": 161947,
+      "id": "c511a2_90775a9302064c9892341e45eb300df0.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_9fd5ce590f9b46f6bd4256813e0fee95.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2008-combined-solution.pdf",
+      "sizeBytes": 400564,
+      "id": "c511a2_9fd5ce590f9b46f6bd4256813e0fee95.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2008"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2004-combined",
+    "slug": "spring-2004-combined",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "אביב 2004",
+    "year": 2004,
+    "season": "spring",
+    "version": "combined",
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_3bec8f5020544f34bdeae26adaaf1d59.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2004-combined.pdf",
+      "sizeBytes": 2356299,
+      "id": "c511a2_3bec8f5020544f34bdeae26adaaf1d59.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_c4f721690a714bdab6e5ddfdd728ea25.pdf",
+      "path": "/pdfs/mahat/electricity/spring-2004-combined-solution.pdf",
+      "sizeBytes": 358403,
+      "id": "c511a2_c4f721690a714bdab6e5ddfdd728ea25.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%90%D7%91%D7%99%D7%91-2004"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2000",
+    "slug": "summer-2000",
+    "subject": "electricity",
+    "source": "mahat",
+    "title": "קיץ 2000",
+    "year": 2000,
+    "season": "summer",
+    "version": null,
+    "topic": null,
+    "exam": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_9aad2d04ff9c4a07b13f92766a01556b.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2000.pdf",
+      "sizeBytes": 109413,
+      "id": "c511a2_9aad2d04ff9c4a07b13f92766a01556b.pdf"
+    },
+    "solution": {
+      "url": "https://docs.wixstatic.com/ugd/c511a2_b7d2283ce52b4be28a232f8e86a44f69.pdf",
+      "path": "/pdfs/mahat/electricity/summer-2000-solution.pdf",
+      "sizeBytes": 325381,
+      "id": "c511a2_b7d2283ce52b4be28a232f8e86a44f69.pdf"
+    },
+    "originalListUrl": "https://www.e-tv.site/tests-mahat",
+    "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2000"
+  }
+]
