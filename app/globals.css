@@ -188,14 +188,21 @@ body { overflow-x: hidden; }
 /* ---------------------------------------------------------------------------
  * Motion — subtle "living" animations for the hero logo and category cards
  * -------------------------------------------------------------------------*/
-@keyframes hero-float {
-  0%   { transform: translateY(0)     rotate(-3deg); }
-  50%  { transform: translateY(-8px)  rotate(3deg); }
-  100% { transform: translateY(0)     rotate(-3deg); }
+/* Slow, hypnotic full rotation for the hero logo. Kept slow enough that
+   the eye barely registers "spinning" — it just feels alive. */
+@keyframes hero-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+/* Independent up/down float, applied on a wrapping element so it composes
+   cleanly with hero-spin on the child. */
+@keyframes hero-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
 }
 @keyframes halo-pulse {
   0%   { transform: scale(1);    opacity: 0.55; }
-  50%  { transform: scale(1.06); opacity: 0.85; }
+  50%  { transform: scale(1.08); opacity: 0.9;  }
   100% { transform: scale(1);    opacity: 0.55; }
 }
 @keyframes led-flash {
@@ -204,7 +211,8 @@ body { overflow-x: hidden; }
   100% { opacity: 1; }
 }
 
-.animate-hero-float { animation: hero-float 9s ease-in-out infinite; }
+.animate-hero-spin { animation: hero-spin 32s linear infinite; transform-origin: 50% 50%; }
+.animate-hero-bob  { animation: hero-bob 6s ease-in-out infinite; }
 .animate-halo-pulse { animation: halo-pulse 5s ease-in-out infinite; }
 .animate-led-flash  { animation: led-flash 0.35s ease-out both; }
 
@@ -235,7 +243,8 @@ body { overflow-x: hidden; }
 }
 @media (prefers-reduced-motion: reduce) {
   .card-shine::after { display: none; }
-  .animate-hero-float,
+  .animate-hero-spin,
+  .animate-hero-bob,
   .animate-halo-pulse,
   .animate-led-flash { animation: none; }
 }

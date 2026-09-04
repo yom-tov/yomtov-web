@@ -66,20 +66,26 @@ export default function Home() {
               </dl>
             </div>
 
-            {/* logo — living micro-animation */}
+            {/* logo — halo pulse + gentle bob + slow continuous spin. Nested
+                wrappers so translate/rotate compose without fighting. The
+                animations are hand-defined in globals.css and are muted there
+                under prefers-reduced-motion, so no Tailwind motion-safe prefix
+                is needed. */}
             <div className="relative hidden md:block">
               <div
                 aria-hidden
-                className="absolute -inset-6 rounded-full bg-gradient-to-br from-fuchsia-200 via-amber-200 to-cyan-200 opacity-60 blur-2xl motion-safe:animate-halo-pulse"
+                className="absolute -inset-6 rounded-full bg-gradient-to-br from-fuchsia-200 via-amber-200 to-cyan-200 opacity-60 blur-2xl animate-halo-pulse"
               />
-              <Image
-                src="/images/mark.png"
-                alt=""
-                width={240}
-                height={240}
-                priority
-                className="relative mx-auto h-auto w-56 drop-shadow-xl motion-safe:animate-hero-float"
-              />
+              <div className="relative mx-auto w-56 animate-hero-bob">
+                <Image
+                  src="/images/mark.png"
+                  alt=""
+                  width={240}
+                  height={240}
+                  priority
+                  className="mx-auto h-auto w-full drop-shadow-xl animate-hero-spin"
+                />
+              </div>
             </div>
           </div>
         </div>
