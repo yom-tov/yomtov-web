@@ -23,9 +23,14 @@ export function SubjectCard({
       href={`/${subject.id}`}
       className="group relative overflow-hidden rounded-3xl border border-border bg-surface p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
     >
+      {/* top colored strip */}
+      <div
+        aria-hidden
+        className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-l ${subject.color}`}
+      />
       {/* decorative gradient corner */}
       <div
-        className={`pointer-events-none absolute -top-16 -left-16 h-40 w-40 rounded-full bg-gradient-to-br ${subject.color} opacity-15 blur-2xl transition-opacity group-hover:opacity-25`}
+        className={`pointer-events-none absolute -top-16 -left-16 h-44 w-44 rounded-full bg-gradient-to-br ${subject.color} opacity-20 blur-2xl transition-opacity group-hover:opacity-40`}
         aria-hidden
       />
       <div className="relative flex items-start justify-between">
@@ -42,7 +47,9 @@ export function SubjectCard({
         </h3>
         <p className="mt-2 text-sm leading-6 text-text-muted">{subject.description}</p>
         {stats && (
-          <div className="mt-4 text-xs font-medium text-primary-700 num">{stats}</div>
+          <div className="mt-4 inline-flex rounded-full border border-border bg-surface-2/60 px-3 py-1 text-xs font-semibold text-text-muted num">
+            {stats}
+          </div>
         )}
       </div>
     </Link>

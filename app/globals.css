@@ -27,6 +27,14 @@
   --accent-500: #06B6D4;
   --accent-600: #0891B2;
 
+  /* Playful supporting palette — inspired by the logo's rainbow star */
+  --joy-rose:    #F43F5E;
+  --joy-amber:   #F59E0B;
+  --joy-emerald: #10B981;
+  --joy-cyan:    #06B6D4;
+  --joy-violet:  #8B5CF6;
+  --joy-fuchsia: #D946EF;
+
   /* Semantic */
   --success: #10B981;
   --warn:    #F59E0B;
@@ -65,6 +73,13 @@
   --color-accent-400: var(--accent-400);
   --color-accent-500: var(--accent-500);
   --color-accent-600: var(--accent-600);
+
+  --color-joy-rose: var(--joy-rose);
+  --color-joy-amber: var(--joy-amber);
+  --color-joy-emerald: var(--joy-emerald);
+  --color-joy-cyan: var(--joy-cyan);
+  --color-joy-violet: var(--joy-violet);
+  --color-joy-fuchsia: var(--joy-fuchsia);
 
   --color-success: var(--success);
   --color-warn: var(--warn);
@@ -125,8 +140,6 @@ a:focus-visible {
   .container-page { padding-inline: 2rem; }
 }
 
-/* RTL-aware helpers: use logical CSS everywhere — Tailwind already does it. */
-
 /* Hide horizontal scroll on body but allow inside tables/pre */
 body { overflow-x: hidden; }
 
@@ -149,4 +162,25 @@ body { overflow-x: hidden; }
   background-size: 400% 100%;
   animation: shimmer 1.4s ease-in-out infinite;
   border-radius: var(--radius-sm);
+}
+
+/* Rainbow accent bar utility (echoes the logo colors) */
+.rainbow-bar {
+  background: linear-gradient(
+    90deg,
+    var(--joy-rose) 0%,
+    var(--joy-amber) 22%,
+    var(--joy-emerald) 44%,
+    var(--joy-cyan) 66%,
+    var(--joy-violet) 84%,
+    var(--joy-fuchsia) 100%
+  );
+}
+
+/* Soft playful background for hero sections */
+.hero-halo {
+  background:
+    radial-gradient(56rem 30rem at 78% -6%, rgba(217, 70, 239, 0.18), transparent 60%),
+    radial-gradient(48rem 26rem at 18% 12%, rgba(6, 182, 212, 0.22), transparent 55%),
+    radial-gradient(38rem 22rem at 50% 100%, rgba(245, 158, 11, 0.12), transparent 60%);
 }

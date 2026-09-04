@@ -5,10 +5,20 @@ import { clsx } from "clsx";
 
 type Tab = "ohm" | "series" | "parallel";
 
+const TAB_TONES: Record<Tab, string> = {
+  ohm: "from-amber-500 to-orange-500",
+  series: "from-emerald-500 to-teal-500",
+  parallel: "from-fuchsia-500 to-violet-500",
+};
+
 export function CalculatorClient() {
   const [tab, setTab] = useState<Tab>("ohm");
   return (
-    <div className="rounded-3xl border border-border bg-surface shadow-sm">
+    <div className="overflow-hidden rounded-3xl border border-border bg-surface shadow-sm">
+      <div
+        aria-hidden
+        className={`h-1 bg-gradient-to-l ${TAB_TONES[tab]} transition-colors`}
+      />
       <div className="flex flex-wrap gap-1 border-b border-border p-2">
         <TabButton current={tab} value="ohm" onSelect={setTab} icon={<Zap className="h-4 w-4" />}>
           חוק אוהם

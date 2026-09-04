@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
-import { Menu, Search, X, Zap } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 
 const NAV = [
   { href: "/electricity", label: "חשמל" },
@@ -15,21 +16,23 @@ const NAV = [
 export function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-surface/80 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border bg-surface/85 backdrop-blur-md">
       <div className="container-page flex h-16 items-center gap-4">
-        <Link href="/" className="group flex items-center gap-2.5">
-          <span
-            aria-hidden
-            className="grid h-9 w-9 place-items-center rounded-xl bg-primary-900 text-accent-400 shadow-md transition-transform group-hover:scale-105"
-          >
-            <Zap className="h-4.5 w-4.5" strokeWidth={2.5} />
-          </span>
+        <Link href="/" className="group flex items-center gap-3" aria-label="דף הבית — אבי יומטוביאן">
+          <Image
+            src="/images/mark.png"
+            alt=""
+            width={40}
+            height={40}
+            priority
+            className="h-9 w-9 shrink-0 transition-transform group-hover:rotate-6"
+          />
           <span className="flex flex-col leading-none">
-            <span className="text-lg font-extrabold tracking-tight text-primary-900">
-              יומטוב
+            <span className="text-base font-extrabold tracking-tight text-primary-900">
+              אבי יומטוביאן
             </span>
-            <span className="text-[11px] font-medium text-text-subtle">
-              e-tv learning platform
+            <span className="text-[11px] font-semibold text-accent-600">
+              פשוט להבין!
             </span>
           </span>
         </Link>
@@ -72,6 +75,12 @@ export function Header() {
           </button>
         </div>
       </div>
+
+      {/* rainbow accent bar echoing the logo colors */}
+      <div
+        aria-hidden
+        className="h-[3px] w-full bg-gradient-to-r from-rose-400 via-amber-400 via-emerald-400 via-cyan-400 via-indigo-400 to-fuchsia-400"
+      />
 
       {open && (
         <div className="md:hidden border-t border-border bg-surface">

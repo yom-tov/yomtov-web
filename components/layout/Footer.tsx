@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const SECTIONS = [
   {
@@ -29,12 +30,32 @@ const SECTIONS = [
 export function Footer() {
   return (
     <footer className="mt-16 border-t border-border bg-surface">
+      <div
+        aria-hidden
+        className="h-[3px] w-full bg-gradient-to-r from-fuchsia-400 via-indigo-400 via-cyan-400 via-emerald-400 via-amber-400 to-rose-400"
+      />
       <div className="container-page py-12">
         <div className="grid gap-10 md:grid-cols-4">
           <div className="md:col-span-1">
-            <div className="text-lg font-extrabold text-primary-900">יומטוב</div>
-            <p className="mt-2 text-sm leading-6 text-text-muted">
-              פלטפורמת לימוד מקצועית לסטודנטים ללימודי חשמל ואלקטרוניקה — מבחני מה&quot;ט,
+            <div className="flex items-center gap-3">
+              <Image
+                src="/images/mark.png"
+                alt=""
+                width={40}
+                height={40}
+                className="h-9 w-9"
+              />
+              <div className="flex flex-col leading-none">
+                <span className="text-base font-extrabold text-primary-900">
+                  אבי יומטוביאן
+                </span>
+                <span className="text-xs font-semibold text-accent-600">
+                  פשוט להבין!
+                </span>
+              </div>
+            </div>
+            <p className="mt-4 text-sm leading-6 text-text-muted">
+              מאגר לימוד לסטודנטים ללימודי חשמל ואלקטרוניקה — מבחני מה&quot;ט,
               מבחני משרד החינוך, מטלות, מעבדות ומחשבונים.
             </p>
           </div>
@@ -56,13 +77,8 @@ export function Footer() {
             </div>
           ))}
         </div>
-        <div className="mt-10 flex flex-col items-start justify-between gap-2 border-t border-border pt-6 text-xs text-text-subtle sm:flex-row">
-          <div>
-            © {new Date().getFullYear()} יומטוב · כל הזכויות שמורות.
-          </div>
-          <div>
-            עיצוב וממשק חדשים — התוכן מקורו באתר הלימוד המקורי.
-          </div>
+        <div className="mt-10 border-t border-border pt-6 text-xs text-text-subtle">
+          © {new Date().getFullYear()} אבי יומטוביאן · כל הזכויות שמורות.
         </div>
       </div>
     </footer>

@@ -19,9 +19,9 @@ const nextConfig: NextConfig = {
     ];
   },
   async redirects() {
-    // Legacy e-tv.site URL preservation: every crawled Hebrew URL redirects to
-    // its new English counterpart with a 301 so external inbound links keep
-    // working. Deduplicated by `source`.
+    // Legacy URL preservation: every crawled URL from the source archive
+    // redirects to its new English counterpart with a 301 so external inbound
+    // links keep working. Deduplicated by `source`.
     const seen = new Set<string>();
     const uniq: Redirect[] = [];
     for (const r of redirectsData as Redirect[]) {
