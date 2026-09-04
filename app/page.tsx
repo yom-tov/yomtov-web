@@ -33,12 +33,12 @@ export default function Home() {
                 <span className="bg-gradient-to-l from-primary-700 via-accent-500 to-fuchsia-500 bg-clip-text text-transparent">
                   מבחני מה&quot;ט ומשרד החינוך
                 </span>
-                , המטלות והמעבדות —{" "}
+                , המטלות והמעבדות -{" "}
                 <span className="whitespace-nowrap text-accent-600">במקום אחד.</span>
               </h1>
               <p className="mt-5 max-w-2xl text-lg leading-8 text-text-muted">
                 מאגר של <span className="num font-semibold text-text">{stats.exams}</span> מבחנים,{" "}
-                <span className="num font-semibold text-text">{stats.assignments}</span> מטלות ותרגולים ועוד — לסטודנטים
+                <span className="num font-semibold text-text">{stats.assignments}</span> מטלות ותרגולים ועוד - לסטודנטים
                 ללימודי חשמל, אלקטרוניקה תקבילית וספרתית. חינם, מהיר, ומאורגן להפליא.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -58,7 +58,7 @@ export default function Home() {
                 </Link>
               </div>
 
-              {/* stat pills — each a different color */}
+              {/* stat pills - each a different color */}
               <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4 text-center">
                 <StatPill label='מבחני מה"ט' value={stats.mahatExams} tone="primary" />
                 <StatPill label="מבחני מ״החינוך" value={stats.ministryExams} tone="cyan" />
@@ -66,7 +66,7 @@ export default function Home() {
               </dl>
             </div>
 
-            {/* logo — halo pulse + gentle bob + slow continuous spin. Nested
+            {/* logo - halo pulse + gentle bob + slow continuous spin. Nested
                 wrappers so translate/rotate compose without fighting. The
                 animations are hand-defined in globals.css and are muted there
                 under prefers-reduced-motion, so no Tailwind motion-safe prefix

@@ -1,15 +1,15 @@
 # yomtov-web
 
-A modern redesign of [e-tv.site](https://www.e-tv.site) — a Hebrew-language educational platform for Israeli students of **Electrical & Electronics Engineering**.
+A modern redesign of [e-tv.site](https://www.e-tv.site) - a Hebrew-language educational platform for Israeli students of **Electrical & Electronics Engineering**.
 
-The original site is a Wix-hosted archive of MAHAT exams, Ministry of Education exams, assignments, labs, and calculators — decades of curated study material for practical engineering students. This project rebuilds it as a fast, accessible, SEO-first learning platform without changing the underlying content.
+The original site is a Wix-hosted archive of MAHAT exams, Ministry of Education exams, assignments, labs, and calculators - decades of curated study material for practical engineering students. This project rebuilds it as a fast, accessible, SEO-first learning platform without changing the underlying content.
 
 ## Goals
 
-- **Preserve** every exam, PDF, solution, image, and category from the original site — nothing invented, nothing dropped.
+- **Preserve** every exam, PDF, solution, image, and category from the original site - nothing invented, nothing dropped.
 - **Rebuild** the UI/UX from scratch: modern EdTech feel, real search, real filters, real hierarchy.
-- **Perform** — SSG-first with Next.js 15/16, Lighthouse ≥ 95 mobile, RTL native.
-- **Respect** SEO — clean English URLs + 301 redirects from every legacy Hebrew URL.
+- **Perform** - SSG-first with Next.js 15/16, Lighthouse ≥ 95 mobile, RTL native.
+- **Respect** SEO - clean English URLs + 301 redirects from every legacy Hebrew URL.
 
 ## Stack
 
@@ -43,4 +43,4 @@ types/          shared TS types
 
 ## Status
 
-Bootstrapping — see [`../plans/redesign-glittery-lobster.md`](https://github.com/yom-tov/yomtov-web) for the full plan.
+Bootstrapping - see [`../plans/redesign-glittery-lobster.md`](https://github.com/yom-tov/yomtov-web) for the full plan.

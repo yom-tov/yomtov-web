@@ -292,7 +292,7 @@ function KeyPad({
 }
 
 // -----------------------------------------------------------------------------
-// Ohm's law — triangular calculator with three LED displays
+// Ohm's law - triangular calculator with three LED displays
 // -----------------------------------------------------------------------------
 type OhmField = "v" | "i" | "r";
 
@@ -415,7 +415,7 @@ function OhmsLaw() {
               value={displayValue("v")}
               unit="V"
               color="amber"
-              label="V — מתח"
+              label="V - מתח"
               active={active === "v"}
               onClick={() => setActive("v")}
               computed={derived?.field === "v"}
@@ -428,7 +428,7 @@ function OhmsLaw() {
               value={displayValue("i")}
               unit="A"
               color="amber"
-              label="I — זרם"
+              label="I - זרם"
               active={active === "i"}
               onClick={() => setActive("i")}
               computed={derived?.field === "i"}
@@ -441,7 +441,7 @@ function OhmsLaw() {
               value={displayValue("r")}
               unit="Ω"
               color="amber"
-              label="R — התנגדות"
+              label="R - התנגדות"
               active={active === "r"}
               onClick={() => setActive("r")}
               computed={derived?.field === "r"}
@@ -504,14 +504,14 @@ function OhmsLaw() {
       </aside>
 
       <p className="md:col-span-2 text-xs text-text-subtle">
-        הזן שני ערכים והשלישי יחושב אוטומטית. לחץ על תצוגה כדי לערוך אותה — עם המקלדת, ה־Stepper, או הקדם־קבועים.
+        הזן שני ערכים והשלישי יחושב אוטומטית. לחץ על תצוגה כדי לערוך אותה - עם המקלדת, ה־Stepper, או הקדם־קבועים.
       </p>
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-// Series / Parallel — schematic-style calculator
+// Series / Parallel - schematic-style calculator
 // -----------------------------------------------------------------------------
 
 const R_PRESETS = [
@@ -644,7 +644,7 @@ function ResistorCombo({ mode }: { mode: "series" | "parallel" }) {
 // Schematic renderer (SVG resistor bodies + wires) with LED displays per resistor
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
-// Schematic geometry — shared constants
+// Schematic geometry - shared constants
 // -----------------------------------------------------------------------------
 const BODY_LEN = 54;   // length of the zigzag body
 const LEAD_LEN = 22;   // straight wire lead on each side of the resistor
@@ -652,7 +652,7 @@ const COMP_SPAN = BODY_LEN + 2 * LEAD_LEN; // full component span end-to-end
 const ZIG = 11;        // zigzag amplitude (peak/valley offset from baseline)
 
 function fmtResistorLabel(n: number | null | undefined): string {
-  if (n == null || !isFinite(n) || n <= 0) return "—";
+  if (n == null || !isFinite(n) || n <= 0) return "-";
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(n % 1_000_000 === 0 ? 0 : 2)}MΩ`;
   if (n >= 1_000) return `${(n / 1_000).toFixed(n % 1_000 === 0 ? 0 : 2)}kΩ`;
   return `${n}Ω`;
@@ -725,7 +725,7 @@ function SchematicPanel({
         </svg>
       </div>
 
-      {/* Resistor value inputs — LED displays, one per resistor */}
+      {/* Resistor value inputs - LED displays, one per resistor */}
       <div className={clsx("mt-5 grid gap-3 sm:gap-4", gridCols)}>
         {values.map((v, i) => (
           <div key={i} className="flex items-start gap-2">
@@ -879,7 +879,7 @@ function ParallelSchematic({
       <line x1={20} y1={topY} x2={railEndX} y2={topY} stroke={stroke} strokeWidth={3} strokeLinecap="round" />
       <line x1={20} y1={botY} x2={railEndX} y2={botY} stroke={stroke} strokeWidth={3} strokeLinecap="round" />
 
-      {/* Vertical resistors — leads already touch the rails at topY/botY */}
+      {/* Vertical resistors - leads already touch the rails at topY/botY */}
       {centers.map((cx, i) => (
         <Resistor
           key={i}
@@ -894,7 +894,7 @@ function ParallelSchematic({
   );
 }
 
-// Standard schematic resistor: lead — zigzag body — lead. Value label near it.
+// Standard schematic resistor: lead - zigzag body - lead. Value label near it.
 function Resistor({
   cx,
   cy,
@@ -955,7 +955,7 @@ function Resistor({
         strokeLinecap="round"
       />
       <path d={leadRightD} stroke={stroke} strokeWidth={strokeWidth} strokeLinecap="round" fill="none" />
-      {/* Force LTR direction on schematic text — otherwise `text-anchor="start"`
+      {/* Force LTR direction on schematic text - otherwise `text-anchor="start"`
           resolves to the right side under the page's dir="rtl", which flips
           labels back onto the zigzag body. */}
       <text

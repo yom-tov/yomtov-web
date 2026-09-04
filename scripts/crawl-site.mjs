@@ -160,7 +160,7 @@ async function crawlOne(browser, url, depth) {
   try {
     const resp = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 });
     nav.push({ status: resp?.status?.() });
-    // Wix keeps polling — networkidle never fires. Wait for a fixed window
+    // Wix keeps polling - networkidle never fires. Wait for a fixed window
     // for SPA to hydrate PDF blocks and Wix dynamic elements.
     try {
       await page.waitForLoadState('load', { timeout: 15000 });

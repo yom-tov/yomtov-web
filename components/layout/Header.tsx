@@ -18,7 +18,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-surface/85 backdrop-blur-md">
       <div className="container-page flex h-16 items-center gap-4">
-        <Link href="/" className="group flex items-center gap-3" aria-label="דף הבית — אבי יומטוביאן">
+        <Link href="/" className="group flex items-center gap-3" aria-label="דף הבית - אבי יומטוביאן">
           <Image
             src="/images/mark.png"
             alt=""
@@ -42,9 +42,15 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-text-muted transition-colors hover:bg-surface-2 hover:text-primary-700"
+              className="group relative inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium text-text-muted transition-all duration-300 ease-out hover:-translate-y-0.5 hover:scale-110 hover:bg-primary-50 hover:text-primary-700 hover:shadow-sm hover:shadow-primary-500/15"
             >
-              {item.label}
+              <span className="relative">
+                {item.label}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -bottom-1 right-0 left-0 mx-auto h-0.5 w-0 rounded-full bg-gradient-to-l from-primary-600 to-accent-500 transition-all duration-300 ease-out group-hover:w-full"
+                />
+              </span>
             </Link>
           ))}
         </nav>

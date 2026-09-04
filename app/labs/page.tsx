@@ -23,7 +23,7 @@ export default function LabsPage() {
         <EmptyState
           icon={<Beaker className="h-6 w-6" />}
           title="חומרי מעבדה בהעלאה"
-          description="בקרוב יעלו הפרוטוקולים והמדריכים המלאים. בינתיים בחן את מבחני מה״ט של השנים האחרונות — רבים מהם כוללים ניתוח מעבדה מובנה."
+          description="בקרוב יעלו הפרוטוקולים והמדריכים המלאים. בינתיים בחן את מבחני מה״ט של השנים האחרונות - רבים מהם כוללים ניתוח מעבדה מובנה."
           action={
             <Link
               href="/electricity/mahat-exams"

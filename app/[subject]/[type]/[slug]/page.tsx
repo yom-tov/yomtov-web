@@ -54,9 +54,9 @@ export async function generateMetadata(
     : findAssignment(subject, slug);
   if (!item) return {};
   const title =
-    "source" in item ? `${item.title} — ${SOURCE_TITLE_HE[item.source]}` : item.title;
+    "source" in item ? `${item.title} - ${SOURCE_TITLE_HE[item.source]}` : item.title;
   return {
-    title: `${title} — ${s.hebrewTitle}`,
+    title: `${title} - ${s.hebrewTitle}`,
     description: `הורדה וצפייה בקובץ PDF, כולל פתרון אם קיים. ${s.hebrewTitle}.`,
   };
 }
@@ -101,7 +101,7 @@ export default async function ItemPage({
     });
     if (exam.solution) {
       files.push({
-        label: `פתרון — ${exam.title}`,
+        label: `פתרון - ${exam.title}`,
         role: "solution",
         url: exam.solution.url,
         path: exam.solution.path,
@@ -120,7 +120,7 @@ export default async function ItemPage({
     });
   }
 
-  // related items — same subject/type, exclude current
+  // related items - same subject/type, exclude current
   const related = exam
     ? exams
         .filter(
@@ -142,7 +142,7 @@ export default async function ItemPage({
     ? {
         "@context": "https://schema.org",
         "@type": "LearningResource",
-        name: `${exam.title} — ${SOURCE_TITLE_HE[exam.source]}`,
+        name: `${exam.title} - ${SOURCE_TITLE_HE[exam.source]}`,
         inLanguage: "he",
         educationalLevel: "post-secondary",
         learningResourceType: "Exam",

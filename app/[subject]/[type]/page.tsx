@@ -39,7 +39,7 @@ export async function generateMetadata(
   const kind =
     type === "assignments" ? "עבודות ותרגולים" : src ? SOURCE_TITLE_HE[src] : "";
   return {
-    title: `${kind} — ${s.hebrewTitle}`,
+    title: `${kind} - ${s.hebrewTitle}`,
     description: `${kind} בתחום ${s.hebrewTitle}. מאגר מקצועי מקוטלג לפי שנה ומועד.`,
   };
 }

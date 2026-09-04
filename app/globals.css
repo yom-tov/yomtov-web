@@ -14,7 +14,7 @@
   --text-muted: #475569;
   --text-subtle: #64748B;
 
-  /* Brand — deep navy + electric cyan */
+  /* Brand - deep navy + electric cyan */
   --primary-50:  #EEF4FF;
   --primary-100: #DBE7FF;
   --primary-200: #B6CDFF;
@@ -27,7 +27,7 @@
   --accent-500: #06B6D4;
   --accent-600: #0891B2;
 
-  /* Playful supporting palette — inspired by the logo's rainbow star */
+  /* Playful supporting palette - inspired by the logo's rainbow star */
   --joy-rose:    #F43F5E;
   --joy-amber:   #F59E0B;
   --joy-emerald: #10B981;
@@ -90,7 +90,7 @@
 }
 
 /* -----------------------------------------------------------------------------
- * Base — wrapped in @layer base so Tailwind utility classes (which live in
+ * Base - wrapped in @layer base so Tailwind utility classes (which live in
  * @layer utilities, a later layer) win over these defaults. Unlayered rules
  * beat any @layer rule in the cascade, so body/`a` color declarations must
  * be layered or `text-white` etc. never applies to anchors like <Link>.
@@ -119,7 +119,7 @@
     letter-spacing: -0.01em;
   }
 
-  /* Better focus rings — visible everywhere, matches brand */
+  /* Better focus rings - visible everywhere, matches brand */
   :focus-visible {
     outline: 2px solid var(--accent-500);
     outline-offset: 3px;
@@ -191,10 +191,10 @@ body { overflow-x: hidden; }
 }
 
 /* ---------------------------------------------------------------------------
- * Motion — subtle "living" animations for the hero logo and category cards
+ * Motion - subtle "living" animations for the hero logo and category cards
  * -------------------------------------------------------------------------*/
 /* Slow, hypnotic full rotation for the hero logo. Kept slow enough that
-   the eye barely registers "spinning" — it just feels alive. */
+   the eye barely registers "spinning" - it just feels alive. */
 @keyframes hero-spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
@@ -221,7 +221,7 @@ body { overflow-x: hidden; }
 .animate-halo-pulse { animation: halo-pulse 5s ease-in-out infinite; }
 .animate-led-flash  { animation: led-flash 0.35s ease-out both; }
 
-/* Diagonal shine sweep for cards on hover — pseudo-element trick */
+/* Diagonal shine sweep for cards on hover - pseudo-element trick */
 .card-shine {
   position: relative;
 }
@@ -255,7 +255,7 @@ body { overflow-x: hidden; }
 }
 
 /* ---------------------------------------------------------------------------
- * Calculator — LED / segment-display feel
+ * Calculator - LED / segment-display feel
  * -------------------------------------------------------------------------*/
 .led-display {
   background:

@@ -119,7 +119,7 @@ const SUBJECTS = [
 //     /assignments-electricity
 //     /assignments-analog-electronics
 //     /assignments-digital-electronics
-//     /labs                              (we haven't seen these paths yet — probably JS-only)
+//     /labs                              (we haven't seen these paths yet - probably JS-only)
 //   subject hubs (top-level Hebrew paths):
 //     /חשמל  → 3 subpages via H2
 //     ...
@@ -179,13 +179,13 @@ for (const page of raw) {
       if (subUrl) {
         const subPage = pageByUrl.get(subUrl);
         if (subPage && subPage.files && subPage.files.length > 1) {
-          // subpage typically has [examId, solutionId] — find the file that is NOT the exam file
+          // subpage typically has [examId, solutionId] - find the file that is NOT the exam file
           const notExam = subPage.files.find((f) => f.id !== file.id) || subPage.files[1];
           if (notExam?.url) {
             solution = { url: notExam.url, sizeBytes: notExam.sizeBytes, id: notExam.id };
           }
         } else if (subPage && subPage.files && subPage.files.length === 1) {
-          // Only 1 file — might be solution-only or dup of exam; keep only if different
+          // Only 1 file - might be solution-only or dup of exam; keep only if different
           const only = subPage.files[0];
           if (only.id !== file.id) {
             solution = { url: only.url, sizeBytes: only.sizeBytes, id: only.id };

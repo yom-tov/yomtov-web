@@ -5,7 +5,7 @@ import { exams } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "כל המבחנים",
-  description: "מבחני מה\"ט ומשרד החינוך בכל תחומי הלימוד — חשמל, אלקטרוניקה תקבילית וספרתית.",
+  description: "מבחני מה\"ט ומשרד החינוך בכל תחומי הלימוד - חשמל, אלקטרוניקה תקבילית וספרתית.",
 };
 
 export default function AllExamsPage() {

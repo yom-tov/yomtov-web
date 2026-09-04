@@ -28,7 +28,7 @@ export function SubjectCard({
         aria-hidden
         className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-l ${subject.color}`}
       />
-      {/* decorative gradient corner — grows on hover */}
+      {/* decorative gradient corner - grows on hover */}
       <div
         className={`pointer-events-none absolute -top-16 -left-16 h-44 w-44 rounded-full bg-gradient-to-br ${subject.color} opacity-20 blur-2xl transition-all duration-500 ease-out group-hover:scale-125 group-hover:opacity-45`}
         aria-hidden

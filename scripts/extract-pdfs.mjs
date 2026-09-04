@@ -81,7 +81,7 @@ for (const page of pages) {
   try {
     html = await fetchWithRetry(page.url);
   } catch (e) {
-    console.warn(`[${pageIdx}] SKIP fetch failed: ${page.url} — ${e.message}`);
+    console.warn(`[${pageIdx}] SKIP fetch failed: ${page.url} - ${e.message}`);
     continue;
   }
   const ids = [...new Set(html.match(FILE_RE) || [])];
