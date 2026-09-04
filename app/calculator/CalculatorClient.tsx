@@ -1,6 +1,15 @@
 "use client";
-import { useMemo, useState } from "react";
-import { Calculator, Zap, Combine } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Calculator,
+  Check,
+  Combine,
+  Delete,
+  Minus,
+  Plus,
+  RotateCcw,
+  Zap,
+} from "lucide-react";
 import { clsx } from "clsx";
 
 type Tab = "ohm" | "series" | "parallel";
@@ -17,20 +26,33 @@ export function CalculatorClient() {
     <div className="overflow-hidden rounded-3xl border border-border bg-surface shadow-sm">
       <div
         aria-hidden
-        className={`h-1 bg-gradient-to-l ${TAB_TONES[tab]} transition-colors`}
+        className={clsx(
+          "h-1 bg-gradient-to-l transition-colors duration-300",
+          TAB_TONES[tab]
+        )}
       />
       <div className="flex flex-wrap gap-1 border-b border-border p-2">
         <TabButton current={tab} value="ohm" onSelect={setTab} icon={<Zap className="h-4 w-4" />}>
           חוק אוהם
         </TabButton>
-        <TabButton current={tab} value="series" onSelect={setTab} icon={<Combine className="h-4 w-4" />}>
+        <TabButton
+          current={tab}
+          value="series"
+          onSelect={setTab}
+          icon={<Combine className="h-4 w-4" />}
+        >
           נגדים בטור
         </TabButton>
-        <TabButton current={tab} value="parallel" onSelect={setTab} icon={<Calculator className="h-4 w-4" />}>
+        <TabButton
+          current={tab}
+          value="parallel"
+          onSelect={setTab}
+          icon={<Calculator className="h-4 w-4" />}
+        >
           נגדים במקביל
         </TabButton>
       </div>
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         {tab === "ohm" && <OhmsLaw />}
         {tab === "series" && <ResistorCombo mode="series" />}
         {tab === "parallel" && <ResistorCombo mode="parallel" />}
@@ -71,181 +93,799 @@ function TabButton({
 }
 
 // -----------------------------------------------------------------------------
-// Ohm's law: V = I * R  →  solve for the missing value
+// Shared: DigitalDisplay + Stepper + KeyPad
 // -----------------------------------------------------------------------------
-function OhmsLaw() {
-  const [v, setV] = useState("");
-  const [i, setI] = useState("");
-  const [r, setR] = useState("");
+type LedColor = "amber" | "emerald" | "fuchsia" | "cyan";
 
-  const result = useMemo(() => {
-    const vv = parseFloat(v);
-    const ii = parseFloat(i);
-    const rr = parseFloat(r);
-    const known = [!isNaN(vv), !isNaN(ii), !isNaN(rr)].filter(Boolean).length;
-    if (known < 2) return null;
-    if (isNaN(vv)) return { key: "V", value: ii * rr, unit: "V" };
-    if (isNaN(ii)) return { key: "I", value: vv / rr, unit: "A" };
-    if (isNaN(rr)) return { key: "R", value: vv / ii, unit: "Ω" };
-    return null;
-  }, [v, i, r]);
+function fmtLED(n: number | null | undefined, unit: string): string {
+  if (n == null || isNaN(n)) return unit === "Ω" ? "----.-" : "--.--";
+  if (unit === "Ω") {
+    if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(2)}M`;
+    if (n >= 1_000) return `${(n / 1_000).toFixed(2)}k`;
+    return n.toFixed(1);
+  }
+  if (Math.abs(n) >= 1000) return n.toFixed(0);
+  if (Math.abs(n) >= 10) return n.toFixed(2);
+  return n.toFixed(3);
+}
 
+function DigitalDisplay({
+  value,
+  unit,
+  color,
+  label,
+  active,
+  onClick,
+  size = "md",
+  computed = false,
+  flashKey,
+}: {
+  value: number | null;
+  unit: string;
+  color: LedColor;
+  label: string;
+  active?: boolean;
+  onClick?: () => void;
+  size?: "sm" | "md" | "lg";
+  computed?: boolean;
+  flashKey?: string | number;
+}) {
+  const [flash, setFlash] = useState(false);
+  useEffect(() => {
+    if (flashKey == null) return;
+    setFlash(true);
+    const id = setTimeout(() => setFlash(false), 350);
+    return () => clearTimeout(id);
+  }, [flashKey]);
+
+  const sizeCls = {
+    sm: "px-3 py-2 text-2xl",
+    md: "px-4 py-3 text-3xl",
+    lg: "px-6 py-5 text-5xl",
+  }[size];
+  const unitSize = { sm: "text-xs", md: "text-sm", lg: "text-lg" }[size];
+  const labelSize = { sm: "text-[10px]", md: "text-[11px]", lg: "text-xs" }[size];
+
+  const El: React.ElementType = onClick ? "button" : "div";
   return (
-    <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_260px]">
-      <div className="grid gap-4 sm:grid-cols-3">
-        <NumberInput label="מתח V" unit="V" value={v} onChange={setV} />
-        <NumberInput label="זרם I" unit="A" value={i} onChange={setI} />
-        <NumberInput label="התנגדות R" unit="Ω" value={r} onChange={setR} />
+    <El
+      type={onClick ? "button" : undefined}
+      onClick={onClick}
+      aria-label={`${label}${value == null ? "" : ` ${value} ${unit}`}`}
+      className={clsx(
+        "led-display group relative flex w-full flex-col items-stretch gap-1 rounded-2xl font-black leading-none",
+        sizeCls,
+        active && "ring-2 ring-offset-2 ring-offset-surface",
+        active && color === "amber" && "ring-amber-400",
+        active && color === "emerald" && "ring-emerald-400",
+        active && color === "fuchsia" && "ring-fuchsia-400",
+        active && color === "cyan" && "ring-cyan-400",
+        onClick && !active && "cursor-text hover:brightness-125"
+      )}
+      data-color={color}
+    >
+      <span
+        className={clsx(
+          "self-start opacity-70",
+          labelSize,
+          "font-mono tracking-widest"
+        )}
+      >
+        {label}
+        {computed && <span className="ms-1 text-emerald-400">●</span>}
+      </span>
+      <span
+        aria-live="polite"
+        className={clsx(
+          "flex items-baseline justify-between gap-2 num",
+          flash && "animate-led-flash"
+        )}
+      >
+        <span>{fmtLED(value, unit)}</span>
+        <span className={clsx("opacity-80", unitSize)}>{unit}</span>
+      </span>
+    </El>
+  );
+}
+
+function Stepper({
+  value,
+  onChange,
+  step,
+  min = 0,
+  disabled,
+}: {
+  value: number | null;
+  onChange: (v: number) => void;
+  step: number;
+  min?: number;
+  disabled?: boolean;
+}) {
+  const bump = (delta: number) => {
+    const base = value ?? 0;
+    const next = Math.max(min, +(base + delta).toPrecision(6));
+    onChange(next);
+  };
+  return (
+    <div className="inline-flex overflow-hidden rounded-xl border border-border">
+      <button
+        type="button"
+        onClick={() => bump(-step)}
+        disabled={disabled}
+        aria-label="הקטן"
+        className="grid h-9 w-9 place-items-center text-text-muted transition-colors hover:bg-surface-2 hover:text-primary-700 disabled:opacity-40"
+      >
+        <Minus className="h-4 w-4" />
+      </button>
+      <div className="grid h-9 w-14 place-items-center border-x border-border bg-surface-2/50 text-[11px] font-mono text-text-subtle">
+        ±{step}
       </div>
-      <ResultCard
-        title="תוצאה"
-        empty="הכנס שני ערכים כדי לחשב את השלישי."
-        result={
-          result
-            ? { label: result.key, value: result.value.toFixed(4), unit: result.unit }
-            : null
-        }
-      />
-      <div className="md:col-span-2">
-        <p className="text-xs text-text-subtle">
-          נוסחה: V = I × R  ·  I = V ÷ R  ·  R = V ÷ I. הזן שני ערכים והשלישי יחושב אוטומטית.
-        </p>
-      </div>
+      <button
+        type="button"
+        onClick={() => bump(step)}
+        disabled={disabled}
+        aria-label="הגדל"
+        className="grid h-9 w-9 place-items-center text-text-muted transition-colors hover:bg-surface-2 hover:text-primary-700 disabled:opacity-40"
+      >
+        <Plus className="h-4 w-4" />
+      </button>
+    </div>
+  );
+}
+
+function PresetChips({
+  presets,
+  onPick,
+}: {
+  presets: { label: string; value: number }[];
+  onPick: (v: number) => void;
+}) {
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {presets.map((p) => (
+        <button
+          key={p.label}
+          type="button"
+          className="chip"
+          onClick={() => onPick(p.value)}
+        >
+          {p.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function KeyPad({
+  onKey,
+}: {
+  onKey: (k: "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "." | "back" | "clear") => void;
+}) {
+  const keys: (
+    | "1"
+    | "2"
+    | "3"
+    | "4"
+    | "5"
+    | "6"
+    | "7"
+    | "8"
+    | "9"
+    | "0"
+    | "."
+    | "back"
+  )[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0", "back"];
+  return (
+    <div className="grid grid-cols-3 gap-2 rounded-2xl border border-border bg-surface-2/50 p-3">
+      {keys.map((k) => (
+        <button
+          key={k}
+          type="button"
+          onClick={() => onKey(k)}
+          className="grid h-11 place-items-center rounded-lg border border-border bg-surface text-lg font-bold text-text transition-transform hover:-translate-y-0.5 hover:border-primary-300 hover:bg-primary-50 active:translate-y-0"
+        >
+          {k === "back" ? <Delete className="h-5 w-5" /> : k}
+        </button>
+      ))}
     </div>
   );
 }
 
 // -----------------------------------------------------------------------------
-// Resistor combinations (series / parallel)
+// Ohm's law — triangular calculator with three LED displays
 // -----------------------------------------------------------------------------
-function ResistorCombo({ mode }: { mode: "series" | "parallel" }) {
-  const [values, setValues] = useState<string[]>(["", ""]);
-  const update = (idx: number, v: string) => {
-    setValues((prev) => prev.map((x, i) => (i === idx ? v : x)));
-  };
-  const add = () => setValues((prev) => [...prev, ""]);
-  const remove = (idx: number) =>
-    setValues((prev) => (prev.length > 2 ? prev.filter((_, i) => i !== idx) : prev));
+type OhmField = "v" | "i" | "r";
 
-  const result = useMemo(() => {
-    const nums = values.map((v) => parseFloat(v)).filter((n) => !isNaN(n) && n > 0);
-    if (nums.length < 2) return null;
-    if (mode === "series") return nums.reduce((s, n) => s + n, 0);
-    return 1 / nums.reduce((s, n) => s + 1 / n, 0);
-  }, [values, mode]);
+const OHM_STEPS: Record<OhmField, number> = { v: 1, i: 0.1, r: 100 };
+const OHM_PRESETS: Record<OhmField, { label: string; value: number }[]> = {
+  v: [
+    { label: "5V", value: 5 },
+    { label: "12V", value: 12 },
+    { label: "24V", value: 24 },
+    { label: "230V", value: 230 },
+  ],
+  i: [
+    { label: "10mA", value: 0.01 },
+    { label: "100mA", value: 0.1 },
+    { label: "1A", value: 1 },
+    { label: "5A", value: 5 },
+  ],
+  r: [
+    { label: "1kΩ", value: 1000 },
+    { label: "4.7kΩ", value: 4700 },
+    { label: "10kΩ", value: 10_000 },
+    { label: "100kΩ", value: 100_000 },
+  ],
+};
+
+function OhmsLaw() {
+  const [v, setV] = useState<number | null>(null);
+  const [i, setI] = useState<number | null>(null);
+  const [r, setR] = useState<number | null>(null);
+  const [active, setActive] = useState<OhmField>("v");
+  const [tick, setTick] = useState(0);
+
+  const setters: Record<OhmField, (n: number | null) => void> = {
+    v: setV,
+    i: setI,
+    r: setR,
+  };
+  const values: Record<OhmField, number | null> = { v, i, r };
+
+  // Auto-compute the missing value when the other two are known
+  const derived = useMemo<{ field: OhmField; value: number; formula: string } | null>(() => {
+    const filled: OhmField[] = (Object.keys(values) as OhmField[]).filter(
+      (k) => values[k] != null
+    );
+    if (filled.length !== 2) return null;
+    if (v == null && i != null && r != null) return { field: "v", value: i * r, formula: "V = I × R" };
+    if (i == null && v != null && r != null && r !== 0) return { field: "i", value: v / r, formula: "I = V ÷ R" };
+    if (r == null && v != null && i != null && i !== 0) return { field: "r", value: v / i, formula: "R = V ÷ I" };
+    return null;
+  }, [v, i, r, values]);
+
+  const displayValue = (f: OhmField): number | null => {
+    if (values[f] != null) return values[f];
+    if (derived?.field === f) return derived.value;
+    return null;
+  };
+
+  const setField = (f: OhmField, val: number | null) => {
+    setters[f](val);
+    setTick((t) => t + 1);
+  };
+  const handleKey = (k: Parameters<Parameters<typeof KeyPad>[0]["onKey"]>[0]) => {
+    if (k === "clear") {
+      setField(active, null);
+      return;
+    }
+    const cur = values[active];
+    const s = cur == null ? "" : String(cur);
+    let next = s;
+    if (k === "back") next = s.slice(0, -1);
+    else if (k === ".") next = s.includes(".") ? s : s === "" ? "0." : s + ".";
+    else next = s + k;
+    const parsed = next === "" || next === "." ? null : Number(next);
+    if (Number.isFinite(parsed) || parsed === null) setField(active, parsed);
+  };
+
+  const reset = () => {
+    setV(null); setI(null); setR(null); setActive("v"); setTick((t) => t + 1);
+  };
 
   return (
     <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_260px]">
       <div>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {values.map((v, i) => (
-            <div key={i} className="flex items-end gap-2">
-              <NumberInput
-                label={`R${i + 1}`}
-                unit="Ω"
-                value={v}
-                onChange={(nv) => update(i, nv)}
-              />
-              {values.length > 2 && (
-                <button
-                  type="button"
-                  onClick={() => remove(i)}
-                  className="mb-1 rounded-lg border border-border px-2 py-1 text-xs text-text-muted hover:text-danger"
-                  aria-label={`הסר R${i + 1}`}
-                >
-                  ×
-                </button>
-              )}
-            </div>
-          ))}
+        {/* Triangle diagram with 3 LED displays */}
+        <div className="relative mx-auto aspect-square w-full max-w-md">
+          <svg
+            viewBox="0 0 320 300"
+            aria-hidden
+            className="absolute inset-0 h-full w-full"
+          >
+            <defs>
+              <linearGradient id="ohm-triangle" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#F59E0B" stopOpacity="0.7" />
+                <stop offset="100%" stopColor="#F97316" stopOpacity="0.4" />
+              </linearGradient>
+            </defs>
+            <polygon
+              points="160,20 300,260 20,260"
+              fill="none"
+              stroke="url(#ohm-triangle)"
+              strokeWidth="3"
+              strokeLinejoin="round"
+              strokeDasharray="6 6"
+            />
+            <text
+              x="160"
+              y="155"
+              textAnchor="middle"
+              fill="#F59E0B"
+              className="font-mono"
+              fontSize="26"
+              fontWeight="800"
+              opacity="0.85"
+            >
+              V = I × R
+            </text>
+          </svg>
+          <div className="absolute left-1/2 top-0 w-32 -translate-x-1/2">
+            <DigitalDisplay
+              value={displayValue("v")}
+              unit="V"
+              color="amber"
+              label="V — מתח"
+              active={active === "v"}
+              onClick={() => setActive("v")}
+              computed={derived?.field === "v"}
+              flashKey={derived?.field === "v" ? tick : undefined}
+              size="sm"
+            />
+          </div>
+          <div className="absolute bottom-0 right-0 w-32">
+            <DigitalDisplay
+              value={displayValue("i")}
+              unit="A"
+              color="amber"
+              label="I — זרם"
+              active={active === "i"}
+              onClick={() => setActive("i")}
+              computed={derived?.field === "i"}
+              flashKey={derived?.field === "i" ? tick : undefined}
+              size="sm"
+            />
+          </div>
+          <div className="absolute bottom-0 left-0 w-32">
+            <DigitalDisplay
+              value={displayValue("r")}
+              unit="Ω"
+              color="amber"
+              label="R — התנגדות"
+              active={active === "r"}
+              onClick={() => setActive("r")}
+              computed={derived?.field === "r"}
+              flashKey={derived?.field === "r" ? tick : undefined}
+              size="sm"
+            />
+          </div>
         </div>
+
+        {/* Formula readout when computed */}
+        {derived && (
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-800">
+            <Check className="h-3.5 w-3.5" />
+            חושב אוטומטית: {derived.formula}
+          </div>
+        )}
+      </div>
+
+      {/* Control column */}
+      <aside className="space-y-4">
+        <div className="rounded-2xl border border-border bg-surface p-4">
+          <div className="text-xs font-semibold text-text-subtle">
+            עורך:{" "}
+            <span className="text-text">
+              {{ v: "מתח (V)", i: "זרם (I)", r: "התנגדות (R)" }[active]}
+            </span>
+          </div>
+          <div className="mt-3 flex items-center justify-between gap-3">
+            <Stepper
+              value={values[active]}
+              onChange={(n) => setField(active, n)}
+              step={OHM_STEPS[active]}
+            />
+            <button
+              type="button"
+              onClick={() => setField(active, null)}
+              className="rounded-lg border border-border px-2 py-1 text-xs text-text-muted hover:text-danger"
+            >
+              נקה
+            </button>
+          </div>
+          <div className="mt-3">
+            <PresetChips
+              presets={OHM_PRESETS[active]}
+              onPick={(n) => setField(active, n)}
+            />
+          </div>
+        </div>
+
+        <KeyPad onKey={handleKey} />
+
         <button
           type="button"
-          onClick={add}
-          className="mt-3 rounded-lg border border-dashed border-border px-3 py-2 text-sm text-text-muted hover:border-primary-300 hover:text-primary-700"
+          onClick={reset}
+          className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-2 text-sm font-semibold text-text-muted hover:border-danger hover:text-danger"
         >
-          + הוסף נגד
+          <RotateCcw className="h-4 w-4" />
+          איפוס
+        </button>
+      </aside>
+
+      <p className="md:col-span-2 text-xs text-text-subtle">
+        הזן שני ערכים והשלישי יחושב אוטומטית. לחץ על תצוגה כדי לערוך אותה — עם המקלדת, ה־Stepper, או הקדם־קבועים.
+      </p>
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Series / Parallel — schematic-style calculator
+// -----------------------------------------------------------------------------
+
+const R_PRESETS = [
+  { label: "220Ω", value: 220 },
+  { label: "1kΩ", value: 1000 },
+  { label: "4.7kΩ", value: 4700 },
+  { label: "10kΩ", value: 10_000 },
+  { label: "100kΩ", value: 100_000 },
+  { label: "1MΩ", value: 1_000_000 },
+];
+
+function ResistorCombo({ mode }: { mode: "series" | "parallel" }) {
+  const [values, setValues] = useState<(number | null)[]>([null, null]);
+  const [active, setActive] = useState(0);
+  const color: LedColor = mode === "series" ? "emerald" : "fuchsia";
+  const tone = mode === "series" ? "emerald" : "fuchsia";
+
+  const update = (idx: number, v: number | null) =>
+    setValues((prev) => prev.map((x, i) => (i === idx ? v : x)));
+  const add = () => {
+    setValues((prev) => [...prev, null]);
+    setActive(values.length);
+  };
+  const remove = (idx: number) => {
+    if (values.length <= 2) return;
+    setValues((prev) => prev.filter((_, i) => i !== idx));
+    setActive((a) => Math.max(0, Math.min(a, values.length - 2)));
+  };
+  const reset = () => {
+    setValues([null, null]);
+    setActive(0);
+  };
+
+  const nums = values.filter((n): n is number => n != null && n > 0);
+  const result = useMemo(() => {
+    if (nums.length < 2) return null;
+    if (mode === "series") return nums.reduce((s, n) => s + n, 0);
+    return 1 / nums.reduce((s, n) => s + 1 / n, 0);
+  }, [nums, mode]);
+
+  const handleKey = (k: Parameters<Parameters<typeof KeyPad>[0]["onKey"]>[0]) => {
+    const cur = values[active];
+    const s = cur == null ? "" : String(cur);
+    let next = s;
+    if (k === "back") next = s.slice(0, -1);
+    else if (k === "clear") next = "";
+    else if (k === ".") next = s.includes(".") ? s : s === "" ? "0." : s + ".";
+    else next = s + k;
+    const parsed = next === "" || next === "." ? null : Number(next);
+    if (Number.isFinite(parsed) || parsed === null) update(active, parsed);
+  };
+
+  return (
+    <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_260px]">
+      <div>
+        <SchematicPanel
+          mode={mode}
+          values={values}
+          active={active}
+          onSelect={setActive}
+          onRemove={remove}
+          onAdd={add}
+          onEdit={update}
+          color={color}
+          result={result}
+        />
+      </div>
+
+      <aside className="space-y-4">
+        <div className="rounded-2xl border border-border bg-surface p-4">
+          <div className="text-xs font-semibold text-text-subtle">
+            עורך: <span className="text-text">R{active + 1}</span>
+          </div>
+          <div className="mt-3 flex items-center justify-between gap-3">
+            <Stepper
+              value={values[active]}
+              onChange={(n) => update(active, n)}
+              step={100}
+            />
+            <button
+              type="button"
+              onClick={() => update(active, null)}
+              className="rounded-lg border border-border px-2 py-1 text-xs text-text-muted hover:text-danger"
+            >
+              נקה
+            </button>
+          </div>
+          <div className="mt-3">
+            <PresetChips presets={R_PRESETS} onPick={(n) => update(active, n)} />
+          </div>
+        </div>
+
+        <KeyPad onKey={handleKey} />
+
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={add}
+            className={clsx(
+              "inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5",
+              tone === "emerald"
+                ? "bg-gradient-to-l from-emerald-500 to-teal-500"
+                : "bg-gradient-to-l from-fuchsia-500 to-violet-500"
+            )}
+          >
+            <Plus className="h-4 w-4" />
+            הוסף נגד
+          </button>
+          <button
+            type="button"
+            onClick={reset}
+            className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-border bg-surface px-3 py-2 text-sm font-semibold text-text-muted hover:border-danger hover:text-danger"
+            aria-label="איפוס"
+          >
+            <RotateCcw className="h-4 w-4" />
+          </button>
+        </div>
+      </aside>
+
+      <p className="md:col-span-2 text-xs text-text-subtle">
+        {mode === "series"
+          ? "בטור: R_total = R1 + R2 + … + Rn. הזרם זהה בכל הנגדים; המתחים מצטברים."
+          : "במקביל: 1 / R_total = 1/R1 + 1/R2 + … + 1/Rn. המתח זהה על כל הנגדים; הזרמים מצטברים."}
+      </p>
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Schematic renderer (SVG resistor bodies + wires) with LED displays per resistor
+// -----------------------------------------------------------------------------
+function SchematicPanel({
+  mode,
+  values,
+  active,
+  onSelect,
+  onRemove,
+  onAdd,
+  color,
+  result,
+}: {
+  mode: "series" | "parallel";
+  values: (number | null)[];
+  active: number;
+  onSelect: (i: number) => void;
+  onRemove: (i: number) => void;
+  onAdd: () => void;
+  onEdit: (i: number, v: number | null) => void;
+  color: LedColor;
+  result: number | null;
+}) {
+  const count = values.length;
+  const displayGrid =
+    mode === "series"
+      ? "grid gap-3 sm:gap-4"
+      : "grid gap-3 sm:gap-4";
+  const gridCols =
+    count <= 2 ? "sm:grid-cols-2" : count === 3 ? "sm:grid-cols-3" : "sm:grid-cols-4";
+
+  return (
+    <div className="rounded-3xl border border-border bg-surface p-4 sm:p-5">
+      {/* SVG schematic */}
+      <div className="overflow-x-auto">
+        <svg
+          viewBox={mode === "series" ? `0 0 ${100 + count * 90} 120` : `0 0 ${140 + count * 90} 160`}
+          className="mx-auto block h-32 w-full max-w-2xl"
+          aria-hidden
+        >
+          <defs>
+            <linearGradient id={`wire-${mode}`} x1="0" y1="0" x2="1" y2="0">
+              <stop
+                offset="0%"
+                stopColor={color === "emerald" ? "#10B981" : "#D946EF"}
+              />
+              <stop
+                offset="100%"
+                stopColor={color === "emerald" ? "#14B8A6" : "#8B5CF6"}
+              />
+            </linearGradient>
+          </defs>
+          {mode === "series" ? (
+            <SeriesSchematic count={count} />
+          ) : (
+            <ParallelSchematic count={count} />
+          )}
+        </svg>
+      </div>
+
+      {/* Resistor value inputs — LED displays, one per resistor */}
+      <div className={clsx("mt-5", displayGrid, gridCols)}>
+        {values.map((v, i) => (
+          <div key={i} className="flex items-start gap-2">
+            <div className="flex-1">
+              <DigitalDisplay
+                value={v}
+                unit="Ω"
+                color={color}
+                label={`R${i + 1}`}
+                active={i === active}
+                onClick={() => onSelect(i)}
+                size="sm"
+              />
+            </div>
+            {count > 2 && (
+              <button
+                type="button"
+                onClick={() => onRemove(i)}
+                aria-label={`הסר R${i + 1}`}
+                className="mt-4 grid h-8 w-8 place-items-center rounded-lg border border-border text-text-subtle transition-colors hover:border-danger hover:text-danger"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={onAdd}
+          className={clsx(
+            "flex min-h-[76px] flex-col items-center justify-center gap-1 rounded-2xl border-2 border-dashed text-xs font-semibold transition-colors",
+            color === "emerald"
+              ? "border-emerald-300 text-emerald-700 hover:border-emerald-500 hover:bg-emerald-50"
+              : "border-fuchsia-300 text-fuchsia-700 hover:border-fuchsia-500 hover:bg-fuchsia-50"
+          )}
+        >
+          <Plus className="h-5 w-5" />
+          הוסף נגד
         </button>
       </div>
-      <ResultCard
-        title={mode === "series" ? "R Total (טור)" : "R Total (מקבילי)"}
-        empty="הכנס לפחות שני ערכים חיוביים."
-        result={
-          result != null
-            ? { label: "R", value: formatOhms(result), unit: result < 1000 ? "Ω" : "" }
-            : null
-        }
-      />
-      <div className="md:col-span-2">
-        <p className="text-xs text-text-subtle">
-          {mode === "series"
-            ? "בטור: R_total = R1 + R2 + ... + Rn"
-            : "במקביל: 1 / R_total = 1/R1 + 1/R2 + ... + 1/Rn"}
-        </p>
-      </div>
-    </div>
-  );
-}
 
-function formatOhms(n: number): string {
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(3) + " MΩ";
-  if (n >= 1_000) return (n / 1_000).toFixed(3) + " kΩ";
-  return n.toFixed(3);
-}
-
-function NumberInput({
-  label,
-  unit,
-  value,
-  onChange,
-}: {
-  label: string;
-  unit: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <label className="flex flex-col gap-1">
-      <span className="text-xs font-medium text-text-subtle">{label}</span>
-      <div className="flex items-center gap-2 rounded-xl border border-border bg-surface-2/40 px-3 py-2.5 focus-within:border-primary-500">
-        <input
-          type="number"
-          step="any"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-transparent text-base text-text placeholder:text-text-subtle focus:outline-none num"
-          placeholder="0"
+      {/* Total */}
+      <div className="mt-5">
+        <DigitalDisplay
+          value={result}
+          unit="Ω"
+          color={color}
+          label={mode === "series" ? "R_TOTAL (טור)" : "R_TOTAL (מקבילי)"}
+          size="lg"
+          computed
+          flashKey={result ?? "none"}
         />
-        <span className="text-sm text-text-subtle num">{unit}</span>
       </div>
-    </label>
+    </div>
   );
 }
 
-function ResultCard({
-  title,
-  result,
-  empty,
+function SeriesSchematic({ count }: { count: number }) {
+  const spacing = 90;
+  const startX = 40;
+  const y = 60;
+  const endX = startX + count * spacing;
+  const parts: React.ReactElement[] = [];
+  // Left wire
+  parts.push(
+    <line key="left" x1="0" y1={y} x2={startX - 10} y2={y} stroke={`url(#wire-series)`} strokeWidth="3" strokeLinecap="round" />
+  );
+  for (let i = 0; i < count; i++) {
+    const cx = startX + i * spacing;
+    // Resistor body (zigzag between cx-30 and cx+30)
+    parts.push(<Resistor key={`r${i}`} cx={cx} cy={y} label={`R${i + 1}`} />);
+    // Wire to next
+    parts.push(
+      <line
+        key={`w${i}`}
+        x1={cx + 30}
+        y1={y}
+        x2={cx + spacing - 30}
+        y2={y}
+        stroke={`url(#wire-series)`}
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+    );
+  }
+  // Right end wire
+  parts.push(
+    <line key="right" x1={endX - 30} y1={y} x2={endX + 10} y2={y} stroke={`url(#wire-series)`} strokeWidth="3" strokeLinecap="round" />
+  );
+  // Terminal dots
+  parts.push(<circle key="d1" cx="0" cy={y} r="5" fill="#10B981" />);
+  parts.push(<circle key="d2" cx={endX + 10} cy={y} r="5" fill="#14B8A6" />);
+  return <g>{parts}</g>;
+}
+
+function ParallelSchematic({ count }: { count: number }) {
+  const spacing = 90;
+  const startX = 60;
+  const topY = 40;
+  const botY = 120;
+  const endX = startX + (count - 1) * spacing;
+  const parts: React.ReactElement[] = [];
+  // Top and bottom rails
+  parts.push(
+    <line key="top" x1="10" y1={topY} x2={endX + 40} y2={topY} stroke={`url(#wire-parallel)`} strokeWidth="3" strokeLinecap="round" />
+  );
+  parts.push(
+    <line key="bot" x1="10" y1={botY} x2={endX + 40} y2={botY} stroke={`url(#wire-parallel)`} strokeWidth="3" strokeLinecap="round" />
+  );
+  // Vertical resistors between rails
+  for (let i = 0; i < count; i++) {
+    const cx = startX + i * spacing;
+    parts.push(<Resistor key={`rp${i}`} cx={cx} cy={(topY + botY) / 2} label={`R${i + 1}`} vertical />);
+    parts.push(
+      <line
+        key={`up${i}`}
+        x1={cx}
+        y1={topY}
+        x2={cx}
+        y2={(topY + botY) / 2 - 25}
+        stroke={`url(#wire-parallel)`}
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+    );
+    parts.push(
+      <line
+        key={`dn${i}`}
+        x1={cx}
+        y1={(topY + botY) / 2 + 25}
+        x2={cx}
+        y2={botY}
+        stroke={`url(#wire-parallel)`}
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+    );
+  }
+  parts.push(<circle key="d1" cx="10" cy={topY} r="5" fill="#D946EF" />);
+  parts.push(<circle key="d2" cx="10" cy={botY} r="5" fill="#8B5CF6" />);
+  return <g>{parts}</g>;
+}
+
+function Resistor({
+  cx,
+  cy,
+  label,
+  vertical,
 }: {
-  title: string;
-  result: { label: string; value: string; unit: string } | null;
-  empty: string;
+  cx: number;
+  cy: number;
+  label: string;
+  vertical?: boolean;
 }) {
+  // Zigzag between cx-25 and cx+25 (horizontal) or cy-25..cy+25 (vertical)
+  const len = 50;
+  const zig = 8;
+  const segments = 6;
+  const pts: string[] = [];
+  for (let i = 0; i <= segments; i++) {
+    const t = (i / segments) * len - len / 2;
+    const off = i % 2 === 0 ? -zig : zig;
+    if (vertical) pts.push(`${cx + off},${cy + t}`);
+    else pts.push(`${cx + t},${cy + off}`);
+  }
   return (
-    <div className="rounded-2xl border border-primary-100 bg-primary-50/60 p-5">
-      <div className="text-xs font-semibold text-primary-700">{title}</div>
-      {result ? (
-        <div className="mt-2">
-          <span className="text-3xl font-extrabold text-primary-900 num">
-            {result.value}
-          </span>
-          <span className="ms-2 text-lg font-semibold text-primary-700 num">
-            {result.unit}
-          </span>
-        </div>
-      ) : (
-        <p className="mt-2 text-sm text-text-muted">{empty}</p>
-      )}
-    </div>
+    <g>
+      <polyline
+        points={pts.join(" ")}
+        fill="none"
+        stroke="#0F172A"
+        strokeWidth="2.5"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+      <text
+        x={vertical ? cx + 22 : cx}
+        y={vertical ? cy : cy - 18}
+        textAnchor={vertical ? "start" : "middle"}
+        fontSize="12"
+        fontWeight="700"
+        fill="#475569"
+      >
+        {label}
+      </text>
+    </g>
   );
 }

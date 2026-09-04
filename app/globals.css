@@ -184,3 +184,112 @@ body { overflow-x: hidden; }
     radial-gradient(48rem 26rem at 18% 12%, rgba(6, 182, 212, 0.22), transparent 55%),
     radial-gradient(38rem 22rem at 50% 100%, rgba(245, 158, 11, 0.12), transparent 60%);
 }
+
+/* ---------------------------------------------------------------------------
+ * Motion — subtle "living" animations for the hero logo and category cards
+ * -------------------------------------------------------------------------*/
+@keyframes hero-float {
+  0%   { transform: translateY(0)     rotate(-3deg); }
+  50%  { transform: translateY(-8px)  rotate(3deg); }
+  100% { transform: translateY(0)     rotate(-3deg); }
+}
+@keyframes halo-pulse {
+  0%   { transform: scale(1);    opacity: 0.55; }
+  50%  { transform: scale(1.06); opacity: 0.85; }
+  100% { transform: scale(1);    opacity: 0.55; }
+}
+@keyframes led-flash {
+  0%   { opacity: 0.35; }
+  40%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.animate-hero-float { animation: hero-float 9s ease-in-out infinite; }
+.animate-halo-pulse { animation: halo-pulse 5s ease-in-out infinite; }
+.animate-led-flash  { animation: led-flash 0.35s ease-out both; }
+
+/* Diagonal shine sweep for cards on hover — pseudo-element trick */
+.card-shine {
+  position: relative;
+}
+.card-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.35) 46%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.35) 54%,
+    transparent 80%
+  );
+  transform: translateX(120%);
+  transition: transform 0.9s ease;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+}
+.card-shine:hover::after {
+  transform: translateX(-120%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-shine::after { display: none; }
+  .animate-hero-float,
+  .animate-halo-pulse,
+  .animate-led-flash { animation: none; }
+}
+
+/* ---------------------------------------------------------------------------
+ * Calculator — LED / segment-display feel
+ * -------------------------------------------------------------------------*/
+.led-display {
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 60%),
+    linear-gradient(180deg, #0B1220 0%, #05070F 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.6),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.05);
+  color: var(--joy-amber);
+  font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  text-shadow:
+    0 0 6px currentColor,
+    0 0 14px color-mix(in oklab, currentColor 45%, transparent);
+}
+.led-display[data-color="amber"]   { color: #FBBF24; }
+.led-display[data-color="emerald"] { color: #34D399; }
+.led-display[data-color="fuchsia"] { color: #E879F9; }
+.led-display[data-color="cyan"]    { color: #22D3EE; }
+
+/* Chip button used across the calculator (presets, keypad) */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.25rem;
+  padding: 0 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.chip:hover {
+  transform: translateY(-1px);
+  background: var(--primary-50);
+  border-color: color-mix(in oklab, var(--primary-500) 30%, transparent);
+  color: var(--primary-700);
+}
+.chip:active { transform: translateY(0); }
+.chip[data-selected="true"] {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+  color: white;
+}

@@ -66,11 +66,11 @@ export default function Home() {
               </dl>
             </div>
 
-            {/* logo */}
+            {/* logo — living micro-animation */}
             <div className="relative hidden md:block">
               <div
                 aria-hidden
-                className="absolute -inset-6 rounded-full bg-gradient-to-br from-fuchsia-200 via-amber-200 to-cyan-200 opacity-60 blur-2xl"
+                className="absolute -inset-6 rounded-full bg-gradient-to-br from-fuchsia-200 via-amber-200 to-cyan-200 opacity-60 blur-2xl motion-safe:animate-halo-pulse"
               />
               <Image
                 src="/images/mark.png"
@@ -78,7 +78,7 @@ export default function Home() {
                 width={240}
                 height={240}
                 priority
-                className="relative mx-auto h-auto w-56 drop-shadow-xl"
+                className="relative mx-auto h-auto w-56 drop-shadow-xl motion-safe:animate-hero-float"
               />
             </div>
           </div>
@@ -203,22 +203,22 @@ function ToolCard({
   return (
     <Link
       href={href}
-      className="group relative overflow-hidden rounded-2xl border border-border bg-surface p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+      className="group card-shine relative overflow-hidden rounded-2xl border border-border bg-surface p-5 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-primary-200 hover:shadow-xl hover:shadow-primary-500/10"
     >
       <div
         aria-hidden
-        className={`pointer-events-none absolute -top-14 -left-14 h-32 w-32 rounded-full bg-gradient-to-br ${gradient} opacity-15 blur-2xl transition-opacity group-hover:opacity-30`}
+        className={`pointer-events-none absolute -top-14 -left-14 h-32 w-32 rounded-full bg-gradient-to-br ${gradient} opacity-15 blur-2xl transition-all duration-500 ease-out group-hover:scale-125 group-hover:opacity-40`}
       />
       <div className="relative flex items-start gap-4">
         <div
-          className={`grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-md`}
+          className={`grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br ${gradient} text-white shadow-md transition-transform duration-300 ease-out group-hover:rotate-6 group-hover:scale-110`}
         >
           {icon}
         </div>
         <div className="flex-1">
           <div className="flex items-center gap-1.5 font-bold text-text">
             {title}
-            <ArrowLeft className="h-4 w-4 text-text-subtle transition-transform group-hover:-translate-x-1 group-hover:text-primary-600" />
+            <ArrowLeft className="h-4 w-4 text-text-subtle transition-all duration-300 ease-out group-hover:-translate-x-1.5 group-hover:text-primary-600" />
           </div>
           <p className="mt-1 text-sm text-text-muted">{description}</p>
         </div>

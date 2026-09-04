@@ -25,7 +25,7 @@ export function Header() {
             width={40}
             height={40}
             priority
-            className="h-9 w-9 shrink-0 transition-transform group-hover:rotate-6"
+            className="h-9 w-9 shrink-0 will-change-transform transition-transform duration-500 ease-out group-hover:rotate-[35deg] group-hover:scale-115 group-hover:drop-shadow-[0_6px_18px_rgba(217,70,239,0.35)]"
           />
           <span className="flex flex-col leading-none">
             <span className="text-base font-extrabold tracking-tight text-primary-900">
@@ -52,9 +52,9 @@ export function Header() {
         <div className="mr-auto flex items-center gap-2">
           <Link
             href="/search"
-            className="hidden md:inline-flex items-center gap-2 rounded-lg border border-border bg-surface-2/60 px-3 py-2 text-sm text-text-subtle transition-colors hover:border-border-strong hover:text-text"
+            className="hidden md:inline-flex items-center gap-2 rounded-lg border border-border-strong bg-white px-3 py-2 text-sm font-medium text-text-muted shadow-sm transition-colors hover:border-primary-400 hover:bg-primary-50/40 hover:text-text"
           >
-            <Search className="h-4 w-4" />
+            <Search className="h-4 w-4 text-primary-500" />
             <span>חיפוש במאגר…</span>
           </Link>
           <Link
