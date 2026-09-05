@@ -110,7 +110,7 @@ export default async function SubjectPage({ params }: { params: Params }) {
           </p>
           <Link
             href="/"
-            className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary-700"
+            className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary-700 dark:text-primary-300"
           >
             חזרה לדף הבית
             <ArrowLeft className="h-4 w-4" />
@@ -122,10 +122,10 @@ export default async function SubjectPage({ params }: { params: Params }) {
             <Link
               key={it.key}
               href={it.href}
-              className="group flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary-200 hover:shadow-md"
+              className="group flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary-200 hover:shadow-md dark:hover:border-primary-400/40"
             >
               <div className="flex items-start justify-between">
-                <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary-50 text-primary-600">
+                <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-300">
                   {it.icon}
                 </div>
                 <span className="text-xs font-semibold text-text-subtle num">
@@ -136,7 +136,7 @@ export default async function SubjectPage({ params }: { params: Params }) {
                 <h3 className="text-lg font-bold text-text">{it.title}</h3>
                 <p className="mt-1 text-sm text-text-muted">{it.description}</p>
               </div>
-              <div className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary-700 group-hover:text-primary-900">
+              <div className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary-700 group-hover:text-primary-900 dark:text-primary-300 dark:group-hover:text-white">
                 עיון
                 <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
               </div>

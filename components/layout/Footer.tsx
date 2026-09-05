@@ -46,7 +46,7 @@ export function Footer() {
                 className="h-9 w-9"
               />
               <div className="flex flex-col leading-none">
-                <span className="text-base font-extrabold text-primary-900">
+                <span className="text-base font-extrabold text-primary-900 dark:text-white">
                   אבי יומטוביאן
                 </span>
                 <span className="text-xs font-semibold text-accent-600">
@@ -67,7 +67,7 @@ export function Footer() {
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      className="text-sm text-text-muted transition-colors hover:text-primary-700"
+                      className="text-sm text-text-muted transition-colors hover:text-primary-700 dark:hover:text-primary-300"
                     >
                       {l.label}
                     </Link>

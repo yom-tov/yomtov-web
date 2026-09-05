@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { Menu, Search, X } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
   { href: "/electricity", label: "חשמל" },
@@ -28,7 +29,7 @@ export function Header() {
             className="h-9 w-9 shrink-0 will-change-transform transition-transform duration-500 ease-out group-hover:rotate-[35deg] group-hover:scale-115 group-hover:drop-shadow-[0_6px_18px_rgba(217,70,239,0.35)]"
           />
           <span className="flex flex-col leading-none">
-            <span className="text-base font-extrabold tracking-tight text-primary-900">
+            <span className="text-base font-extrabold tracking-tight text-primary-900 dark:text-white">
               אבי יומטוביאן
             </span>
             <span className="text-[11px] font-semibold text-accent-600">
@@ -58,11 +59,12 @@ export function Header() {
         <div className="mr-auto flex items-center gap-2">
           <Link
             href="/search"
-            className="hidden md:inline-flex items-center gap-2 rounded-lg border border-border-strong bg-white px-3 py-2 text-sm font-medium text-text-muted shadow-sm transition-colors hover:border-primary-400 hover:bg-primary-50/40 hover:text-text"
+            className="hidden md:inline-flex items-center gap-2 rounded-lg border border-border-strong bg-white px-3 py-2 text-sm font-medium text-text-muted shadow-sm transition-colors hover:border-primary-400 hover:bg-primary-50/40 hover:text-text dark:bg-surface dark:hover:bg-surface-2"
           >
             <Search className="h-4 w-4 text-primary-500" />
             <span>חיפוש במאגר…</span>
           </Link>
+          <ThemeToggle />
           <Link
             href="/search"
             className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-text-muted hover:bg-surface-2"

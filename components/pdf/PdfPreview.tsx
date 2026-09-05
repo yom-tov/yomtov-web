@@ -12,7 +12,7 @@ export function PdfPreview({ src, title }: { src: string; title: string }) {
           href={src}
           target="_blank"
           rel="noopener"
-          className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-text-muted hover:bg-surface hover:text-primary-700"
+          className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-text-muted hover:bg-surface hover:text-primary-700 dark:hover:text-primary-300"
           aria-label="פתח PDF בכרטיסייה חדשה"
         >
           <Maximize2 className="h-3.5 w-3.5" />

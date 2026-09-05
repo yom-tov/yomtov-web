@@ -13,7 +13,7 @@ export function ExamCard({ exam }: { exam: Exam }) {
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary-200 hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-3">
-        <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary-50 text-primary-600">
+        <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-300">
           <FileText className="h-5 w-5" strokeWidth={2} />
         </div>
         <Badge tone={exam.source === "mahat" ? "primary" : "accent"}>
@@ -35,13 +35,13 @@ export function ExamCard({ exam }: { exam: Exam }) {
             {formatSize(exam.exam.sizeBytes)}
           </span>
           {exam.solution && (
-            <span className="inline-flex items-center gap-1 text-emerald-600">
+            <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
               <Sparkles className="h-3.5 w-3.5" />
               פתרון
             </span>
           )}
         </div>
-        <span className="inline-flex items-center gap-1 text-primary-600 transition-colors group-hover:text-primary-700">
+        <span className="inline-flex items-center gap-1 text-primary-600 transition-colors group-hover:text-primary-700 dark:text-primary-300 dark:group-hover:text-primary-200">
           לפריט
           <ChevronLeft className="h-4 w-4" />
         </span>

@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* Manual, class-based dark mode (not tied to prefers-color-scheme). The
+ * toggle in the header adds/removes `.dark` on <html>; this tells Tailwind's
+ * `dark:` variant to key off that class instead of the OS setting, so the
+ * default (no class) render is byte-for-byte the existing light design. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* -----------------------------------------------------------------------------
  * Design tokens
  * ---------------------------------------------------------------------------*/
@@ -50,7 +56,40 @@
   --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
   --shadow-md: 0 4px 12px -2px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.05);
   --shadow-lg: 0 12px 32px -8px rgb(15 23 42 / 0.14), 0 6px 12px -6px rgb(15 23 42 / 0.08);
+
+  /* Calculator schematic ink — the resistor symbol body/leads and its R1/R2
+     label are drawn with hardcoded SVG attributes (fill/stroke can't read
+     Tailwind's dark: variant), so they read these two CSS vars instead. */
+  --calc-ink: #0F172A;
+  --calc-value: #1E3AA8;
 }
+
+/* Dark theme — only the neutral/surface tokens flip. Brand colors
+ * (primary/accent/joy) stay the same across both themes: they're vivid
+ * enough to read on light OR dark surfaces, and keeping them fixed means
+ * gradients, buttons and icons never need a separate dark variant. Picked
+ * a navy-tinted dark (not pure black) so it still feels like *this* site's
+ * brand rather than a generic dark-mode reskin. */
+:root.dark {
+  --bg: #0A1122;
+  --surface: #121B30;
+  --surface-2: #1B2540;
+  --border: #29365A;
+  --border-strong: #3C4C77;
+  --text: #EDF1FF;
+  --text-muted: #AEB9DC;
+  --text-subtle: #8894BB;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 16px -2px rgb(0 0 0 / 0.45), 0 2px 6px -2px rgb(0 0 0 / 0.3);
+  --shadow-lg: 0 16px 40px -8px rgb(0 0 0 / 0.55), 0 8px 16px -6px rgb(0 0 0 / 0.35);
+
+  /* Resistor symbol ink: near-black is invisible on the dark schematic
+     panel, so flip to a light body + light-blue value on dark. */
+  --calc-ink: #E7ECFC;
+  --calc-value: #8FB2FF;
+}
+:root.dark { color-scheme: dark; }
 
 @theme inline {
   --color-bg: var(--bg);
@@ -189,6 +228,14 @@ body { overflow-x: hidden; }
     radial-gradient(48rem 26rem at 18% 12%, rgba(6, 182, 212, 0.22), transparent 55%),
     radial-gradient(38rem 22rem at 50% 100%, rgba(245, 158, 11, 0.12), transparent 60%);
 }
+:root.dark .hero-halo {
+  /* Same three brand hues, boosted opacity so they still glow against a
+     dark page instead of washing out. */
+  background:
+    radial-gradient(56rem 30rem at 78% -6%, rgba(217, 70, 239, 0.30), transparent 60%),
+    radial-gradient(48rem 26rem at 18% 12%, rgba(6, 182, 212, 0.32), transparent 55%),
+    radial-gradient(38rem 22rem at 50% 100%, rgba(245, 158, 11, 0.20), transparent 60%);
+}
 
 /* ---------------------------------------------------------------------------
  * Motion - subtle "living" animations for the hero logo and category cards
@@ -300,6 +347,13 @@ body { overflow-x: hidden; }
   background: var(--primary-50);
   border-color: color-mix(in oklab, var(--primary-500) 30%, transparent);
   color: var(--primary-700);
+}
+:root.dark .chip:hover {
+  /* var(--primary-50) is a near-white tint — great on a light chip,
+     illegible as a hover fill on a dark one. Use a translucent brand
+     tint over the dark surface instead, with light text on top. */
+  background: color-mix(in oklab, var(--primary-500) 28%, var(--surface));
+  color: var(--primary-100);
 }
 .chip:active { transform: translateY(0); }
 .chip[data-selected="true"] {

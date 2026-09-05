@@ -21,7 +21,7 @@ export function SubjectCard({
   return (
     <Link
       href={`/${subject.id}`}
-      className="group card-shine relative overflow-hidden rounded-3xl border border-border bg-surface p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-primary-200 hover:shadow-xl hover:shadow-primary-500/10"
+      className="group card-shine relative overflow-hidden rounded-3xl border border-border bg-surface p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-primary-200 hover:shadow-xl hover:shadow-primary-500/10 dark:hover:border-primary-400/40"
     >
       {/* top colored strip */}
       <div
@@ -47,7 +47,7 @@ export function SubjectCard({
         </h3>
         <p className="mt-2 text-sm leading-6 text-text-muted">{subject.description}</p>
         {stats && (
-          <div className="mt-4 inline-flex rounded-full border border-border bg-surface-2/60 px-3 py-1 text-xs font-semibold text-text-muted num transition-colors group-hover:border-primary-200 group-hover:bg-primary-50 group-hover:text-primary-700">
+          <div className="mt-4 inline-flex rounded-full border border-border bg-surface-2/60 px-3 py-1 text-xs font-semibold text-text-muted num transition-colors group-hover:border-primary-200 group-hover:bg-primary-50 group-hover:text-primary-700 dark:group-hover:border-primary-400/30 dark:group-hover:bg-primary-500/10 dark:group-hover:text-primary-200">
             {stats}
           </div>
         )}

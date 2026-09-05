@@ -18,7 +18,7 @@ const variants: Record<Variant, string> = {
   primary:
     "bg-primary-600 text-white shadow-md hover:bg-primary-700 active:bg-primary-900",
   secondary:
-    "bg-surface text-primary-700 border border-primary-200 hover:bg-primary-50",
+    "bg-surface text-primary-700 border border-primary-200 hover:bg-primary-50 dark:text-primary-200 dark:border-primary-400/30 dark:hover:bg-primary-500/10",
   ghost: "bg-transparent text-text hover:bg-surface-2",
   outline:
     "bg-transparent text-text border border-border-strong hover:bg-surface-2",

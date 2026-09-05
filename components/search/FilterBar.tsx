@@ -38,7 +38,7 @@ export function FilterBar({
               className={clsx(
                 "h-10 min-w-32 rounded-lg border border-border bg-surface px-3 text-sm text-text",
                 "focus:border-primary-500 focus:outline-none",
-                values[f.key] && "border-primary-400 bg-primary-50/40"
+                values[f.key] && "border-primary-400 bg-primary-50/40 dark:bg-primary-500/10"
               )}
             >
               <option value="">הכל</option>

@@ -14,7 +14,7 @@ export function AssignmentCard({ assignment }: { assignment: Assignment }) {
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary-200 hover:shadow-md"
     >
       <div className="flex items-start justify-between gap-3">
-        <div className="grid h-11 w-11 place-items-center rounded-xl bg-indigo-50 text-indigo-600">
+        <div className="grid h-11 w-11 place-items-center rounded-xl bg-indigo-50 text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-300">
           <NotebookPen className="h-5 w-5" />
         </div>
         <Badge tone="neutral">
@@ -29,7 +29,7 @@ export function AssignmentCard({ assignment }: { assignment: Assignment }) {
           <FileText className="h-3.5 w-3.5" />
           {formatSize(primary?.sizeBytes)}
         </span>
-        <span className="inline-flex items-center gap-1 text-primary-600 transition-colors group-hover:text-primary-700">
+        <span className="inline-flex items-center gap-1 text-primary-600 transition-colors group-hover:text-primary-700 dark:text-primary-300 dark:group-hover:text-primary-200">
           לפריט
           <ChevronLeft className="h-4 w-4" />
         </span>

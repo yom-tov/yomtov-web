@@ -3,6 +3,7 @@ import { Heebo } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { ThemeScript } from "@/components/layout/ThemeScript";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -48,7 +49,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="he"
       dir="rtl"
       className={`${heebo.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        <ThemeScript />
+      </head>
       <body className="min-h-full flex flex-col bg-bg text-text">
         <a
           href="#main"

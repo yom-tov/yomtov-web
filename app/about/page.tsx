@@ -69,10 +69,14 @@ export default function AboutPage() {
 }
 
 const TONES = {
-  primary: "border-primary-100 bg-primary-50/70 text-primary-800",
-  accent: "border-cyan-100 bg-cyan-50/70 text-cyan-800",
-  fuchsia: "border-fuchsia-100 bg-fuchsia-50/70 text-fuchsia-800",
-  emerald: "border-emerald-100 bg-emerald-50/70 text-emerald-800",
+  primary:
+    "border-primary-100 bg-primary-50/70 text-primary-800 dark:border-primary-400/25 dark:bg-primary-500/10 dark:text-primary-200",
+  accent:
+    "border-cyan-100 bg-cyan-50/70 text-cyan-800 dark:border-cyan-400/25 dark:bg-cyan-500/10 dark:text-cyan-200",
+  fuchsia:
+    "border-fuchsia-100 bg-fuchsia-50/70 text-fuchsia-800 dark:border-fuchsia-400/25 dark:bg-fuchsia-500/10 dark:text-fuchsia-200",
+  emerald:
+    "border-emerald-100 bg-emerald-50/70 text-emerald-800 dark:border-emerald-400/25 dark:bg-emerald-500/10 dark:text-emerald-200",
 } as const;
 
 function Stat({

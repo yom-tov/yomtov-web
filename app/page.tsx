@@ -24,7 +24,7 @@ export default function Home() {
         <div className="container-page relative py-16 md:py-24">
           <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_260px] md:items-center">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-200 bg-white/70 px-3 py-1 text-xs font-semibold text-fuchsia-700 backdrop-blur">
+              <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-200 bg-white/70 px-3 py-1 text-xs font-semibold text-fuchsia-700 backdrop-blur dark:border-fuchsia-400/30 dark:bg-fuchsia-500/10 dark:text-fuchsia-300">
                 <Sparkles className="h-3.5 w-3.5" />
                 מאגר לימוד לחשמל ואלקטרוניקה
               </div>
@@ -154,7 +154,7 @@ export default function Home() {
           </div>
           <Link
             href="/exams"
-            className="hidden md:inline-flex items-center gap-1 text-sm font-semibold text-primary-700 hover:text-primary-900"
+            className="hidden md:inline-flex items-center gap-1 text-sm font-semibold text-primary-700 hover:text-primary-900 dark:text-primary-300 dark:hover:text-white"
           >
             לכל המבחנים
             <ArrowLeft className="h-4 w-4" />
@@ -171,9 +171,12 @@ export default function Home() {
 }
 
 const PILL_TONES = {
-  primary: "border-primary-100 bg-primary-50/80 text-primary-800",
-  cyan: "border-cyan-100 bg-cyan-50/80 text-cyan-800",
-  fuchsia: "border-fuchsia-100 bg-fuchsia-50/80 text-fuchsia-800",
+  primary:
+    "border-primary-100 bg-primary-50/80 text-primary-800 dark:border-primary-400/25 dark:bg-primary-500/10 dark:text-primary-200",
+  cyan:
+    "border-cyan-100 bg-cyan-50/80 text-cyan-800 dark:border-cyan-400/25 dark:bg-cyan-500/10 dark:text-cyan-200",
+  fuchsia:
+    "border-fuchsia-100 bg-fuchsia-50/80 text-fuchsia-800 dark:border-fuchsia-400/25 dark:bg-fuchsia-500/10 dark:text-fuchsia-200",
 } as const;
 
 function StatPill({

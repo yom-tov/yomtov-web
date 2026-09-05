@@ -947,7 +947,11 @@ function Resistor({
     ? `M ${cx},${cy + half} L ${cx},${cy + half + LEAD_LEN}`
     : `M ${cx + half},${cy} L ${cx + half + LEAD_LEN},${cy}`;
 
-  const stroke = "#0F172A";
+  // CSS vars (not hardcoded hex) so the resistor symbol stays legible when
+  // the schematic panel flips to its dark surface — see --calc-ink in
+  // globals.css. SVG presentation attributes accept var() the same way a
+  // CSS property would.
+  const stroke = "var(--calc-ink)";
   const strokeWidth = 2.75;
 
   // Horizontal resistor: label on top of body, value below the body.
@@ -982,7 +986,7 @@ function Resistor({
         direction="ltr"
         fontSize={labelFontSize}
         fontWeight="800"
-        fill="#0F172A"
+        fill="var(--calc-ink)"
       >
         {label}
       </text>
@@ -993,7 +997,7 @@ function Resistor({
         direction="ltr"
         fontSize={valueFontSize}
         fontWeight="700"
-        fill="#1E3AA8"
+        fill="var(--calc-value)"
         style={{ fontVariantNumeric: "tabular-nums" }}
       >
         {value}

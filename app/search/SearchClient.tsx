@@ -69,7 +69,7 @@ export function SearchClient() {
                   <button
                     type="button"
                     onClick={() => setQ(s)}
-                    className="rounded-full border border-border bg-surface px-3 py-1 text-xs hover:border-primary-300 hover:text-primary-700"
+                    className="rounded-full border border-border bg-surface px-3 py-1 text-xs hover:border-primary-300 hover:text-primary-700 dark:hover:text-primary-300"
                   >
                     {s}
                   </button>
@@ -94,7 +94,7 @@ export function SearchClient() {
                     href={r.url}
                     className="group flex items-center gap-4 rounded-xl border border-border bg-surface px-4 py-3 hover:border-primary-200 hover:shadow-sm"
                   >
-                    <div className="grid h-10 w-10 place-items-center rounded-lg bg-primary-50 text-primary-600">
+                    <div className="grid h-10 w-10 place-items-center rounded-lg bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-300">
                       {r.type === "assignment" ? (
                         <NotebookPen className="h-4.5 w-4.5" />
                       ) : (

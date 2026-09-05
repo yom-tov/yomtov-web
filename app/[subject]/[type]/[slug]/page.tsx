@@ -229,7 +229,7 @@ export default async function ItemPage({
               className="rounded-2xl border border-border bg-surface p-4"
             >
               <div className="flex items-start justify-between gap-3">
-                <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary-50 text-primary-600">
+                <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-300">
                   <FileText className="h-4.5 w-4.5" />
                 </div>
                 {f.role === "solution" ? (

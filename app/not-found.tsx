@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="container-page py-24 text-center">
       <div className="mx-auto max-w-md">
-        <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-primary-50 text-primary-700">
+        <div className="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-primary-50 text-primary-700 dark:bg-primary-500/15 dark:text-primary-300">
           <Search className="h-7 w-7" />
         </div>
         <h1 className="mt-6 text-3xl font-extrabold text-text">
