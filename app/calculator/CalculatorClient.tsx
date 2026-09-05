@@ -688,6 +688,7 @@ function SchematicPanel({
   const seriesWidth = 60 + count * seriesSpacing + 60;
   const parallelSpacing = 150;
   const parallelWidth = 40 + (count - 1) * parallelSpacing + 100 + 40;
+  const gradientWidth = mode === "series" ? seriesWidth : parallelWidth;
 
   return (
     <div className="rounded-3xl border border-border bg-surface p-4 sm:p-5">
@@ -706,7 +707,23 @@ function SchematicPanel({
           aria-hidden
         >
           <defs>
-            <linearGradient id={`wire-${mode}`} x1="0" y1="0" x2="1" y2="0">
+            {/* gradientUnits must be userSpaceOnUse here: our wires are
+                perfectly horizontal <line> elements, which have a
+                zero-height bounding box. The SVG spec says a gradient
+                using the default objectBoundingBox units on a shape with
+                a degenerate (zero-area) bounding box must not be
+                rendered — Chrome honors that and silently drops the
+                stroke, so every "wire" disappeared. userSpaceOnUse with
+                explicit absolute coordinates sidesteps the degenerate
+                bbox entirely. */}
+            <linearGradient
+              id={`wire-${mode}`}
+              gradientUnits="userSpaceOnUse"
+              x1="0"
+              y1="0"
+              x2={gradientWidth}
+              y2="0"
+            >
               <stop
                 offset="0%"
                 stopColor={color === "emerald" ? "#10B981" : "#D946EF"}
