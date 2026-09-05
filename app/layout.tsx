@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Heebo } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
@@ -43,6 +43,19 @@ export const metadata: Metadata = {
     siteName: "אבי יומטוביאן",
   },
   robots: { index: true, follow: true },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "אבי יומטוביאן",
+  },
+};
+
+// Separate from `metadata` since Next.js 14+ — themeColor/colorScheme moved
+// out of the Metadata object into their own export.
+export const viewport: Viewport = {
+  themeColor: "#1E3AA8",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
