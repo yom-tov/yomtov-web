@@ -1,5 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Mail } from "lucide-react";
+
+const CONTACT_EMAIL = "yomtov7.site@gmail.com";
 
 const SECTIONS = [
   {
@@ -23,6 +26,7 @@ const SECTIONS = [
     links: [
       { href: "/search", label: "חיפוש" },
       { href: "/about", label: "אודות" },
+      { href: "/accessibility", label: "הצהרת נגישות" },
     ],
   },
 ];
@@ -58,6 +62,13 @@ export function Footer() {
               מאגר לימוד לסטודנטים ללימודי חשמל ואלקטרוניקה - מבחני מה&quot;ט,
               מבחני משרד החינוך, מטלות, מעבדות ומחשבונים.
             </p>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="mt-4 inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-primary-700 dark:hover:text-primary-300"
+            >
+              <Mail className="h-4 w-4" />
+              {CONTACT_EMAIL}
+            </a>
           </div>
           {SECTIONS.map((s) => (
             <div key={s.title}>

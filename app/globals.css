@@ -326,6 +326,72 @@ body { overflow-x: hidden; }
 .led-display[data-color="fuchsia"] { color: #E879F9; }
 .led-display[data-color="cyan"]    { color: #22D3EE; }
 
+/* ---------------------------------------------------------------------------
+ * Accessibility widget — opt-in per-visitor adjustments, toggled from
+ * AccessibilityWidget.tsx and applied as attributes on <html> (mirrors the
+ * dark-mode class pattern). All default to "off": a fresh visit renders
+ * identically to before this feature existed.
+ * -------------------------------------------------------------------------*/
+/* Font size: percentage of the root 16px, so every rem-based Tailwind size
+   scales with it automatically. */
+html[data-a11y-fontsize="110"] { font-size: 110%; }
+html[data-a11y-fontsize="120"] { font-size: 120%; }
+html[data-a11y-fontsize="130"] { font-size: 130%; }
+html[data-a11y-fontsize="140"] { font-size: 140%; }
+
+/* High contrast: pure black/white, overriding just the neutral tokens —
+   the same trick dark mode uses, so every bg-surface/text-text/border-*
+   utility in the app re-themes with no per-component changes needed. */
+:root[data-a11y-contrast="high"] {
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-2: #FFFFFF;
+  --border: #000000;
+  --border-strong: #000000;
+  --text: #000000;
+  --text-muted: #000000;
+  --text-subtle: #1A1A1A;
+}
+:root.dark[data-a11y-contrast="high"] {
+  --bg: #000000;
+  --surface: #000000;
+  --surface-2: #000000;
+  --border: #FFFFFF;
+  --border-strong: #FFFFFF;
+  --text: #FFFFFF;
+  --text-muted: #FFFFFF;
+  --text-subtle: #E5E5E5;
+}
+/* Decorative colored backgrounds fight the whole point of high contrast —
+   drop them so text always sits on a flat, predictable surface. */
+html[data-a11y-contrast="high"] .hero-halo,
+html[data-a11y-contrast="high"] .card-shine::after {
+  background: none !important;
+}
+
+/* Underline every link, regardless of its own hover-only underline styling. */
+html[data-a11y-underline-links="true"] a {
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+
+/* Freeze motion harder than prefers-reduced-motion does — near-zero
+   duration (not `none`) keeps end-state styles correct without a jump. */
+html[data-a11y-stop-animations="true"] *,
+html[data-a11y-stop-animations="true"] *::before,
+html[data-a11y-stop-animations="true"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* Plain, high-legibility font stack in place of Heebo. */
+html[data-a11y-readable-font="true"] body {
+  font-family: Arial, "Segoe UI", Tahoma, sans-serif !important;
+  letter-spacing: 0.01em;
+}
+
 /* Chip button used across the calculator (presets, keypad) */
 .chip {
   display: inline-flex;

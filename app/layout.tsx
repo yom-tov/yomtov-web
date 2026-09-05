@@ -4,6 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ThemeScript } from "@/components/layout/ThemeScript";
+import { AccessibilityScript } from "@/components/layout/AccessibilityScript";
+import { AccessibilityWidget } from "@/components/layout/AccessibilityWidget";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -53,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <head>
         <ThemeScript />
+        <AccessibilityScript />
       </head>
       <body className="min-h-full flex flex-col bg-bg text-text">
         <a
@@ -66,6 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </main>
         <Footer />
+        <AccessibilityWidget />
       </body>
     </html>
   );

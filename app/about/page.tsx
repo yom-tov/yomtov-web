@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { Mail } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { counts } from "@/lib/content";
+
+const CONTACT_EMAIL = "yomtov7.site@gmail.com";
 
 export const metadata: Metadata = {
   title: "אודות",
@@ -42,8 +45,15 @@ export default function AboutPage() {
               <Link href="/search" className="prose-link">
                 התחל בחיפוש
               </Link>{" "}
-              או פנה ליוצר האתר.
+              או צור קשר ישירות במייל.
             </p>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-text transition-colors hover:border-primary-300 hover:text-primary-700 dark:hover:text-primary-300"
+            >
+              <Mail className="h-4 w-4" />
+              {CONTACT_EMAIL}
+            </a>
           </div>
         </div>
         <aside className="md:pt-4">
