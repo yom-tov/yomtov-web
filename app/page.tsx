@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import {
   ArrowLeft,
   Beaker,
@@ -11,6 +12,14 @@ import {
 import { SubjectCard } from "@/components/cards/SubjectCard";
 import { ExamCard } from "@/components/cards/ExamCard";
 import { subjects, counts, recentExams, examsFor } from "@/lib/content";
+
+// `absolute` bypasses the root layout's "%s | אבי יומטוביאן" title
+// template — the home page (and only the home page) shows just the brand
+// line in the browser tab, with none of the default description tail or
+// the "| אבי יומטוביאן" suffix that every other page keeps.
+export const metadata: Metadata = {
+  title: { absolute: "אבי יומטוביאן - פשוט להבין!" },
+};
 
 export default function Home() {
   const stats = counts();
