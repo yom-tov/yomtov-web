@@ -47,7 +47,7 @@ export function LabsListClient({ items }: { items: Lab[] }) {
           <thead className="bg-surface-2/60 text-right">
             <tr>
               <Th>כותרת</Th>
-              <Th>קבצים</Th>
+              <Th>YouTube ID</Th>
               <Th className="w-0">פעולות</Th>
             </tr>
           </thead>
@@ -58,7 +58,7 @@ export function LabsListClient({ items }: { items: Lab[] }) {
                   <div className="font-semibold text-text">{l.title}</div>
                   <div className="mt-0.5 font-mono text-[11px] text-text-subtle">{l.slug}</div>
                 </Td>
-                <Td className="num">{l.files.length}</Td>
+                <Td><span className="font-mono text-[11px] text-text-subtle">{l.youtubeId}</span></Td>
                 <Td>
                   <div className="flex gap-1">
                     <Link

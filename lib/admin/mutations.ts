@@ -400,46 +400,26 @@ export async function updateSubject(id: SubjectId, input: SubjectUpdateInput): P
 }
 
 // ---------------------------------------------------------------------------
-// Labs
+// Labs (YouTube videos — no file blobs involved)
 // ---------------------------------------------------------------------------
-function labPdfPath(slug: string, idx: number): string {
-  const suffix = idx === 0 ? ".pdf" : `-${idx + 1}.pdf`;
-  return `public/pdfs/labs/${slug}${suffix}`;
-}
-
 export async function createLab(input: LabCreateInput): Promise<CommitResult> {
   const { data: labs } = await readLabs();
   if (labs.find((l) => l.slug === input.slug)) {
     throw new Error(`DUPLICATE: lab slug "${input.slug}" already exists`);
   }
-  const writes: FileWrite[] = [];
-  const blobsToDelete: string[] = [];
-  const filesForJson: Lab["files"] = [];
-  for (let i = 0; i < input.files.length; i++) {
-    const f = input.files[i];
-    const p = labPdfPath(input.slug, i);
-    const bytes = await fetchBlob(f.url);
-    writes.push({ path: p, kind: "binary", content: bytes });
-    filesForJson.push({
-      url: "",
-      path: "/" + p.replace(/^public\//, ""),
-      sizeBytes: f.sizeBytes,
-      id: f.pathname,
-    });
-    blobsToDelete.push(f.url);
-  }
+  const maxOrder = labs.reduce((m, l) => Math.max(m, l.order), 0);
   const newLab: Lab = {
     id: buildLabId(input.slug),
     slug: input.slug,
     title: input.title,
-    description: input.description,
-    files: filesForJson,
+    youtubeId: input.youtubeId,
+    order: maxOrder + 1,
   };
-  const nextLabs = [...labs, newLab];
-  writes.push({ path: CONTENT_PATHS.labs, kind: "text", content: stringifyJson(nextLabs) });
-  const commit = await commitFiles(writes, `admin: add lab ${input.slug}`);
-  await cleanupBlobs(blobsToDelete);
-  return commit;
+  const nextLabs = [newLab, ...labs];
+  const writes: FileWrite[] = [
+    { path: CONTENT_PATHS.labs, kind: "text", content: stringifyJson(nextLabs) },
+  ];
+  return commitFiles(writes, `admin: add lab ${input.slug}`);
 }
 
 export async function updateLab(id: string, input: LabUpdateInput): Promise<CommitResult> {
@@ -447,48 +427,13 @@ export async function updateLab(id: string, input: LabUpdateInput): Promise<Comm
   const idx = labs.findIndex((l) => l.id === id);
   if (idx === -1) throw new Error(`NOT_FOUND: lab ${id}`);
   const cur = labs[idx];
-
-  const writes: FileWrite[] = [];
-  const blobsToDelete: string[] = [];
-  const filesForJson: Lab["files"] = input.keepExistingFiles ? [...cur.files] : [];
-
-  if (!input.keepExistingFiles) {
-    cur.files.forEach((_, i) => {
-      writes.push({ path: labPdfPath(cur.slug, i), kind: "delete" });
-    });
-  }
-
-  if (input.files && input.files.length) {
-    const startIdx = filesForJson.length;
-    for (let i = 0; i < input.files.length; i++) {
-      const f = input.files[i];
-      const targetIdx = startIdx + i;
-      const p = labPdfPath(cur.slug, targetIdx);
-      const bytes = await fetchBlob(f.url);
-      writes.push({ path: p, kind: "binary", content: bytes });
-      filesForJson.push({
-        url: "",
-        path: "/" + p.replace(/^public\//, ""),
-        sizeBytes: f.sizeBytes,
-        id: f.pathname,
-      });
-      blobsToDelete.push(f.url);
-    }
-  }
-
-  const updated: Lab = {
-    ...cur,
-    title: input.title,
-    description: input.description,
-    files: filesForJson,
-  };
+  const updated: Lab = { ...cur, title: input.title, youtubeId: input.youtubeId };
   const nextLabs = [...labs];
   nextLabs[idx] = updated;
-
-  writes.push({ path: CONTENT_PATHS.labs, kind: "text", content: stringifyJson(nextLabs) });
-  const commit = await commitFiles(writes, `admin: update lab ${cur.slug}`);
-  await cleanupBlobs(blobsToDelete);
-  return commit;
+  const writes: FileWrite[] = [
+    { path: CONTENT_PATHS.labs, kind: "text", content: stringifyJson(nextLabs) },
+  ];
+  return commitFiles(writes, `admin: update lab ${cur.slug}`);
 }
 
 export async function deleteLab(id: string): Promise<CommitResult> {
@@ -498,10 +443,6 @@ export async function deleteLab(id: string): Promise<CommitResult> {
   const cur = labs[idx];
   const nextLabs = labs.filter((_, i) => i !== idx);
   const writes: FileWrite[] = [
-    ...cur.files.map((_, i) => ({
-      path: labPdfPath(cur.slug, i),
-      kind: "delete" as const,
-    })),
     { path: CONTENT_PATHS.labs, kind: "text", content: stringifyJson(nextLabs) },
   ];
   return commitFiles(writes, `admin: delete lab ${cur.slug}`);

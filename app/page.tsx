@@ -141,7 +141,7 @@ export default function Home() {
             href="/labs"
             icon={<Beaker className="h-5 w-5" />}
             title="מעבדות"
-            description="חומרי לימוד ופרוטוקולים למעבדות פרקטיות."
+            description="סרטוני הדרכה קצרים למעבדות פרקטיות — סקופ, מולטימטר ועוד."
             gradient="from-emerald-500 to-cyan-500"
           />
           <ToolCard

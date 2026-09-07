@@ -50,8 +50,8 @@ export interface Lab {
   id: string;
   slug: string;
   title: string;
-  description?: string;
-  files: FileRef[];
+  youtubeId: string;
+  order: number;
 }
 
 export type SearchItem =

@@ -77,15 +77,12 @@ export type SubjectUpdateInput = z.infer<typeof SubjectUpdateSchema>;
 export const LabCreateSchema = z.object({
   slug: z.string().regex(/^[a-z0-9\-]{2,60}$/),
   title: z.string().min(1).max(200),
-  description: z.string().max(500).optional(),
-  files: z.array(blobRefSchema).min(1).max(6),
+  youtubeId: z.string().min(5).max(20),
 });
 export type LabCreateInput = z.infer<typeof LabCreateSchema>;
 
 export const LabUpdateSchema = z.object({
   title: z.string().min(1).max(200),
-  description: z.string().max(500).optional(),
-  files: z.array(blobRefSchema).max(6).optional(),
-  keepExistingFiles: z.boolean().default(true),
+  youtubeId: z.string().min(5).max(20),
 });
 export type LabUpdateInput = z.infer<typeof LabUpdateSchema>;

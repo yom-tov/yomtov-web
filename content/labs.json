@@ -1,1 +1,156 @@
-[]
+[
+  {
+    "id": "lab-22",
+    "slug": "bad-cable-op-amp",
+    "title": "מה קורה למגבר שרת שכבל מתח ההזנה שלו דפוק",
+    "youtubeId": "YXwEF7y6-us",
+    "order": 22
+  },
+  {
+    "id": "lab-21",
+    "slug": "check-cable-disconnect",
+    "title": "איך בודקים אם יש נתק בכבל",
+    "youtubeId": "NCIv6SAdzuU",
+    "order": 21
+  },
+  {
+    "id": "lab-20",
+    "slug": "measure-current-ammeter-2",
+    "title": "איך מודדים זרם עם אמפרמטר — חלק 2",
+    "youtubeId": "rb5rhzFBuK0",
+    "order": 20
+  },
+  {
+    "id": "lab-19",
+    "slug": "measure-current-ammeter-1",
+    "title": "איך מודדים זרם עם אמפרמטר — חלק 1",
+    "youtubeId": "LvyAuruHOBw",
+    "order": 19
+  },
+  {
+    "id": "lab-18",
+    "slug": "measure-time-constant-scope",
+    "title": "איך מודדים קבוע זמן באמצעות הסקופ",
+    "youtubeId": "Nyy__Dndmfg",
+    "order": 18
+  },
+  {
+    "id": "lab-17",
+    "slug": "measure-dc-level-easy",
+    "title": "איך ניתן למדוד רמת DC (\"שיפוד\") בקלי קלות",
+    "youtubeId": "4MnOCLGmAeo",
+    "order": 17
+  },
+  {
+    "id": "lab-16",
+    "slug": "measure-phase-difference-scope",
+    "title": "איך מודדים הפרש מופע בסקופ בקלי קלות",
+    "youtubeId": "1wW83IL6I-c",
+    "order": 16
+  },
+  {
+    "id": "lab-15",
+    "slug": "measure-voltage-scope-easy",
+    "title": "איך מודדים מתח בסקופ בקלי קלות",
+    "youtubeId": "0wAHt8lyPls",
+    "order": 15
+  },
+  {
+    "id": "lab-14",
+    "slug": "measure-low-frequency-scope",
+    "title": "איך מודדים תדר נמוך בסקופ",
+    "youtubeId": "JhmiPZOtlz8",
+    "order": 14
+  },
+  {
+    "id": "lab-13",
+    "slug": "reset-multimeter",
+    "title": "איך מאפסים את המולטי-מטר",
+    "youtubeId": "3m9KRPr3Y4c",
+    "order": 13
+  },
+  {
+    "id": "lab-12",
+    "slug": "connect-two-supplies-op-amp",
+    "title": "איך מחברים שני ספקים זהים למגבר שרת",
+    "youtubeId": "1a8xcroKmqg",
+    "order": 12
+  },
+  {
+    "id": "lab-11",
+    "slug": "cursor-markers-scope",
+    "title": "איך עובדים עם \"סמנים\" (cursor) בסקופ",
+    "youtubeId": "RFnMusUCpps",
+    "order": 11
+  },
+  {
+    "id": "lab-10",
+    "slug": "measure-dc-amplitude-scope",
+    "title": "איך מודדים רמת DC (\"שיפוד\") ואמפליטודה בסקופ",
+    "youtubeId": "cA9oB_I4aOM",
+    "order": 10
+  },
+  {
+    "id": "lab-09",
+    "slug": "channel-noise-scope",
+    "title": "איך הרעש בערוץ מסוים משפיע על הערוץ השני בסקופ",
+    "youtubeId": "vpv0nzFs2_Y",
+    "order": 9
+  },
+  {
+    "id": "lab-08",
+    "slug": "disconnect-supply-op-amp",
+    "title": "איך מנתקים בצורה חכמה מתחי הזנה ממגבר שרת",
+    "youtubeId": "TOAttdPfDuM",
+    "order": 8
+  },
+  {
+    "id": "lab-07",
+    "slug": "measure-period-scope",
+    "title": "איך מודדים זמן מחזור בסקופ",
+    "youtubeId": "QECzaOr6Yw8",
+    "order": 7
+  },
+  {
+    "id": "lab-06",
+    "slug": "coupling-function-scope",
+    "title": "איך עובדים עם פונקציית הצימוד (Coupling) בסקופ",
+    "youtubeId": "qDt2CFqbq04",
+    "order": 6
+  },
+  {
+    "id": "lab-05",
+    "slug": "connect-two-supplies-op-amp-no-subs",
+    "title": "איך מחברים שני ספקים זהים למגבר שרת",
+    "youtubeId": "dIE3dxBFCIo",
+    "order": 5
+  },
+  {
+    "id": "lab-04",
+    "slug": "use-resistance-meter",
+    "title": "איך עובדים עם מד התנגדות",
+    "youtubeId": "7IHi4nMDDIU",
+    "order": 4
+  },
+  {
+    "id": "lab-03",
+    "slug": "use-current-meter",
+    "title": "איך עובדים עם מד זרם",
+    "youtubeId": "4nOhf-NTbWc",
+    "order": 3
+  },
+  {
+    "id": "lab-02",
+    "slug": "use-voltage-meter",
+    "title": "איך עובדים עם מד מתח",
+    "youtubeId": "BMjaTjXF0Qc",
+    "order": 2
+  },
+  {
+    "id": "lab-01",
+    "slug": "use-signal-generator",
+    "title": "איך עובדים עם מחולל אותות",
+    "youtubeId": "jTGZFcgGxwI",
+    "order": 1
+  }
+]
