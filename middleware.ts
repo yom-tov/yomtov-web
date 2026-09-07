@@ -36,8 +36,24 @@ function isAdminPublic(path: string): boolean {
   return false;
 }
 
+// The site moved from the Vercel-assigned domain to a real custom domain.
+// Only production traffic is forced onto it — preview deployment URLs (each
+// carries its own unique host) must keep working unredirected for review.
+const CANONICAL_HOST = "www.yomtovian.com";
+
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
+
+  if (process.env.VERCEL_ENV === "production") {
+    const host = req.headers.get("host") || "";
+    if (host && host !== CANONICAL_HOST) {
+      const url = req.nextUrl.clone();
+      url.protocol = "https";
+      url.hostname = CANONICAL_HOST;
+      url.port = "";
+      return NextResponse.redirect(url, 308);
+    }
+  }
 
   // 1) Admin auth gate — runs first, before any redirect table lookup.
   if (isAdminPath(path) && !isAdminPublic(path)) {
