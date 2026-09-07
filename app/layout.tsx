@@ -16,7 +16,7 @@ const heebo = Heebo({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yomtov-web.vercel.app"),
+  metadataBase: new URL("https://www.yomtovian.com"),
   title: {
     default: "אבי יומטוביאן - פשוט להבין! מבחנים, מטלות ומעבדות לחשמל ואלקטרוניקה",
     template: "%s | אבי יומטוביאן",

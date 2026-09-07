@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { exams, assignments, subjects, SOURCE_SLUG } from "@/lib/content";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://yomtov-web.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.yomtovian.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
