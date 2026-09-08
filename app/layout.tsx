@@ -38,7 +38,6 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "he_IL",
-    title: "אבי יומטוביאן - פשוט להבין!",
     description:
       "מאגר מקצועי של מבחני מה\"ט ומשרד החינוך, מטלות, מעבדות ומחשבונים לסטודנטים ללימודי חשמל ואלקטרוניקה.",
     siteName: "אבי יומטוביאן",
