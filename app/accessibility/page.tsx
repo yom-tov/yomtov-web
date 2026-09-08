@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { Mail, ShieldCheck, Accessibility as AccessibilityIcon } from "lucide-react";
+import { Mail, ShieldCheck, Accessibility as AccessibilityIcon, Crown, Code2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "הצהרת נגישות",
@@ -82,6 +82,34 @@ export default function AccessibilityPage() {
               {CONTACT_EMAIL}
             </a>
           </section>
+
+          <div className="overflow-hidden rounded-2xl border border-primary-200/60 bg-gradient-to-br from-primary-50/80 via-surface to-accent-50/50 shadow-lg shadow-primary-500/5 dark:border-primary-400/20 dark:from-primary-500/10 dark:via-surface dark:to-accent-500/5 dark:shadow-primary-500/10">
+            <div className="border-b border-primary-100/60 bg-primary-50/50 px-6 py-3 dark:border-primary-400/15 dark:bg-primary-500/5">
+              <h3 className="text-sm font-bold text-primary-800 dark:text-primary-200">
+                צוות האתר
+              </h3>
+            </div>
+            <div className="divide-y divide-primary-100/40 dark:divide-primary-400/10">
+              <div className="flex items-center gap-4 px-6 py-4">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-600 dark:bg-primary-500/15 dark:text-primary-300">
+                  <Crown className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="text-xs font-semibold text-text-subtle">בעלים ומנהל האתר</div>
+                  <div className="text-base font-bold text-text">אבי יומטוביאן</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 px-6 py-4">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-100 text-accent-600 dark:bg-accent-500/15 dark:text-accent-300">
+                  <Code2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="text-xs font-semibold text-text-subtle">פיתוח, עיצוב ובניית האתר</div>
+                  <div className="text-base font-bold text-text">סער כהן</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
