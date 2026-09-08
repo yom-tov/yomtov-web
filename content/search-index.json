@@ -270,14 +270,14 @@
     "url": "/electricity/mahat-exams/summer-2015"
   },
   {
-    "id": "electricity/exam-mahat/summer-2015-b",
+    "id": "analog/exam-mahat/summer-2015-b",
     "type": "exam-mahat",
     "title": "תקבילית קיץ 2015",
-    "subject": "electricity",
+    "subject": "analog",
     "year": 2015,
     "season": "summer",
     "version": "b",
-    "url": "/electricity/mahat-exams/summer-2015-b"
+    "url": "/analog/mahat-exams/summer-2015-b"
   },
   {
     "id": "electricity/exam-education/2015-b",
@@ -330,24 +330,24 @@
     "url": "/electricity/mahat-exams/summer-2012"
   },
   {
-    "id": "electricity/exam-mahat/summer-2012-b",
+    "id": "analog/exam-mahat/summer-2012-b",
     "type": "exam-mahat",
     "title": "תקבילית קיץ 2012",
-    "subject": "electricity",
+    "subject": "analog",
     "year": 2012,
     "season": "summer",
     "version": "b",
-    "url": "/electricity/mahat-exams/summer-2012-b"
+    "url": "/analog/mahat-exams/summer-2012-b"
   },
   {
-    "id": "electricity/exam-mahat/spring-2012-combined",
+    "id": "analog/exam-mahat/spring-2012-combined",
     "type": "exam-mahat",
     "title": "תקבילית אביב 2012",
-    "subject": "electricity",
+    "subject": "analog",
     "year": 2012,
     "season": "spring",
     "version": "combined",
-    "url": "/electricity/mahat-exams/spring-2012-combined"
+    "url": "/analog/mahat-exams/spring-2012-combined"
   },
   {
     "id": "electricity/exam-mahat/summer-2011",
@@ -360,24 +360,24 @@
     "url": "/electricity/mahat-exams/summer-2011"
   },
   {
-    "id": "electricity/exam-mahat/summer-2011-b",
+    "id": "analog/exam-mahat/summer-2011-b",
     "type": "exam-mahat",
     "title": "תקבילית קיץ 2011",
-    "subject": "electricity",
+    "subject": "analog",
     "year": 2011,
     "season": "summer",
     "version": "b",
-    "url": "/electricity/mahat-exams/summer-2011-b"
+    "url": "/analog/mahat-exams/summer-2011-b"
   },
   {
-    "id": "electricity/exam-mahat/spring-2011-combined",
+    "id": "analog/exam-mahat/spring-2011-combined",
     "type": "exam-mahat",
     "title": "תקבילית אביב 2011",
-    "subject": "electricity",
+    "subject": "analog",
     "year": 2011,
     "season": "spring",
     "version": "combined",
-    "url": "/electricity/mahat-exams/spring-2011-combined"
+    "url": "/analog/mahat-exams/spring-2011-combined"
   },
   {
     "id": "electricity/exam-mahat/summer-2010",

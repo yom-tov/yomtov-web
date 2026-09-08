@@ -675,9 +675,9 @@
     "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2015"
   },
   {
-    "id": "electricity/exam-mahat/summer-2015-b",
+    "id": "analog/exam-mahat/summer-2015-b",
     "slug": "summer-2015-b",
-    "subject": "electricity",
+    "subject": "analog",
     "source": "mahat",
     "title": "תקבילית קיץ 2015",
     "year": 2015,
@@ -686,13 +686,13 @@
     "topic": "analog",
     "exam": {
       "url": "https://docs.wixstatic.com/ugd/c511a2_219fd13da37f403282afdb1b4fcc9e78.pdf",
-      "path": "/pdfs/mahat/electricity/summer-2015-b.pdf",
+      "path": "/pdfs/mahat/analog/summer-2015-b.pdf",
       "sizeBytes": 1625800,
       "id": "c511a2_219fd13da37f403282afdb1b4fcc9e78.pdf"
     },
     "solution": {
       "url": "https://docs.wixstatic.com/ugd/c511a2_2e79e2bce183444e8c92c388dd03feb9.pdf",
-      "path": "/pdfs/mahat/electricity/summer-2015-b-solution.pdf",
+      "path": "/pdfs/mahat/analog/summer-2015-b-solution.pdf",
       "sizeBytes": 7030617,
       "id": "c511a2_2e79e2bce183444e8c92c388dd03feb9.pdf"
     },
@@ -825,9 +825,9 @@
     "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2012"
   },
   {
-    "id": "electricity/exam-mahat/summer-2012-b",
+    "id": "analog/exam-mahat/summer-2012-b",
     "slug": "summer-2012-b",
-    "subject": "electricity",
+    "subject": "analog",
     "source": "mahat",
     "title": "תקבילית קיץ 2012",
     "year": 2012,
@@ -836,13 +836,13 @@
     "topic": "analog",
     "exam": {
       "url": "https://docs.wixstatic.com/ugd/c511a2_b47d699270194a9d9ad0037254ea1e7e.pdf",
-      "path": "/pdfs/mahat/electricity/summer-2012-b.pdf",
+      "path": "/pdfs/mahat/analog/summer-2012-b.pdf",
       "sizeBytes": 122706,
       "id": "c511a2_b47d699270194a9d9ad0037254ea1e7e.pdf"
     },
     "solution": {
       "url": "https://docs.wixstatic.com/ugd/c511a2_e24f83b7aeb44f06b533dcaf39aac7b0.pdf",
-      "path": "/pdfs/mahat/electricity/summer-2012-b-solution.pdf",
+      "path": "/pdfs/mahat/analog/summer-2012-b-solution.pdf",
       "sizeBytes": 6052432,
       "id": "c511a2_e24f83b7aeb44f06b533dcaf39aac7b0.pdf"
     },
@@ -850,9 +850,9 @@
     "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%A7%D7%99%D7%A5-2012"
   },
   {
-    "id": "electricity/exam-mahat/spring-2012-combined",
+    "id": "analog/exam-mahat/spring-2012-combined",
     "slug": "spring-2012-combined",
-    "subject": "electricity",
+    "subject": "analog",
     "source": "mahat",
     "title": "תקבילית אביב 2012",
     "year": 2012,
@@ -861,13 +861,13 @@
     "topic": "analog",
     "exam": {
       "url": "https://docs.wixstatic.com/ugd/c511a2_7bfa6763faf44fcf9265006a19d2f8b3.pdf",
-      "path": "/pdfs/mahat/electricity/spring-2012-combined.pdf",
+      "path": "/pdfs/mahat/analog/spring-2012-combined.pdf",
       "sizeBytes": 1793018,
       "id": "c511a2_7bfa6763faf44fcf9265006a19d2f8b3.pdf"
     },
     "solution": {
       "url": "https://docs.wixstatic.com/ugd/c511a2_63ccf8fd03c548a5a9181b7b394f6822.pdf",
-      "path": "/pdfs/mahat/electricity/spring-2012-combined-solution.pdf",
+      "path": "/pdfs/mahat/analog/spring-2012-combined-solution.pdf",
       "sizeBytes": 5033306,
       "id": "c511a2_63ccf8fd03c548a5a9181b7b394f6822.pdf"
     },
@@ -900,9 +900,9 @@
     "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%A7%D7%99%D7%A5-2011"
   },
   {
-    "id": "electricity/exam-mahat/summer-2011-b",
+    "id": "analog/exam-mahat/summer-2011-b",
     "slug": "summer-2011-b",
-    "subject": "electricity",
+    "subject": "analog",
     "source": "mahat",
     "title": "תקבילית קיץ 2011",
     "year": 2011,
@@ -911,13 +911,13 @@
     "topic": "analog",
     "exam": {
       "url": "https://docs.wixstatic.com/ugd/c511a2_5a99acf1bf8a48a28ecb0f4640970c3b.pdf",
-      "path": "/pdfs/mahat/electricity/summer-2011-b.pdf",
+      "path": "/pdfs/mahat/analog/summer-2011-b.pdf",
       "sizeBytes": 1626010,
       "id": "c511a2_5a99acf1bf8a48a28ecb0f4640970c3b.pdf"
     },
     "solution": {
       "url": "https://docs.wixstatic.com/ugd/c511a2_dd9d8b95dda440439b3d143892e49f29.pdf",
-      "path": "/pdfs/mahat/electricity/summer-2011-b-solution.pdf",
+      "path": "/pdfs/mahat/analog/summer-2011-b-solution.pdf",
       "sizeBytes": 3696000,
       "id": "c511a2_dd9d8b95dda440439b3d143892e49f29.pdf"
     },
@@ -925,9 +925,9 @@
     "originalDetailUrl": "https://www.e-tv.site/tests-mahat/%D7%AA%D7%A7%D7%91%D7%99%D7%9C%D7%99%D7%AA-%D7%A7%D7%99%D7%A5-2011"
   },
   {
-    "id": "electricity/exam-mahat/spring-2011-combined",
+    "id": "analog/exam-mahat/spring-2011-combined",
     "slug": "spring-2011-combined",
-    "subject": "electricity",
+    "subject": "analog",
     "source": "mahat",
     "title": "תקבילית אביב 2011",
     "year": 2011,
@@ -936,13 +936,13 @@
     "topic": "analog",
     "exam": {
       "url": "https://docs.wixstatic.com/ugd/c511a2_aec427cde134477aa6c7673733e42493.pdf",
-      "path": "/pdfs/mahat/electricity/spring-2011-combined.pdf",
+      "path": "/pdfs/mahat/analog/spring-2011-combined.pdf",
       "sizeBytes": 115820,
       "id": "c511a2_aec427cde134477aa6c7673733e42493.pdf"
     },
     "solution": {
       "url": "https://docs.wixstatic.com/ugd/c511a2_c90a01f900e44f94833efaefd1807fa1.pdf",
-      "path": "/pdfs/mahat/electricity/spring-2011-combined-solution.pdf",
+      "path": "/pdfs/mahat/analog/spring-2011-combined-solution.pdf",
       "sizeBytes": 4930501,
       "id": "c511a2_c90a01f900e44f94833efaefd1807fa1.pdf"
     },
