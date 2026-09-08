@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ClipboardCheck, GraduationCap, NotebookPen } from "lucide-react";
+import { ArrowLeft, ClipboardCheck, GraduationCap, NotebookPen, Wrench, Building2 } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { ExamCard } from "@/components/cards/ExamCard";
 import { AssignmentCard } from "@/components/cards/AssignmentCard";
@@ -40,6 +40,8 @@ export default async function SubjectPage({ params }: { params: Params }) {
 
   const mahat = examsFor(subject, "mahat");
   const edu = examsFor(subject, "education");
+  const tech = examsFor(subject, "technician");
+  const elecSys = examsFor(subject, "electrical-systems");
   const asg = assignmentsFor(subject);
 
   const items: {
@@ -68,6 +70,26 @@ export default async function SubjectPage({ params }: { params: Params }) {
       href: `/${subject}/ministry-exams`,
       count: edu.length,
       icon: <ClipboardCheck className="h-5 w-5" />,
+    });
+  }
+  if (tech.length > 0) {
+    items.push({
+      key: "technician",
+      title: "טכנאי חשמל",
+      description: "מבחני הסמכה לטכנאי חשמל",
+      href: `/${subject}/technician-exams`,
+      count: tech.length,
+      icon: <Wrench className="h-5 w-5" />,
+    });
+  }
+  if (elecSys.length > 0) {
+    items.push({
+      key: "electrical-systems",
+      title: "מערכות חשמל",
+      description: "מבחני מערכות חשמל",
+      href: `/${subject}/electrical-systems-exams`,
+      count: elecSys.length,
+      icon: <Building2 className="h-5 w-5" />,
     });
   }
   if (asg.length > 0) {

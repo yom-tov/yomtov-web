@@ -657,5 +657,125 @@
     "title": "FET",
     "subject": "analog",
     "url": "/analog/assignments/fet"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2025-a",
+    "type": "exam-mahat",
+    "title": "קיץ 2025 א",
+    "subject": "electricity",
+    "year": 2025,
+    "season": "summer",
+    "version": "a",
+    "url": "/electricity/mahat-exams/summer-2025-a"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2025-b",
+    "type": "exam-mahat",
+    "title": "קיץ 2025 ב",
+    "subject": "electricity",
+    "year": 2025,
+    "season": "summer",
+    "version": "b",
+    "url": "/electricity/mahat-exams/summer-2025-b"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2026-a",
+    "type": "exam-mahat",
+    "title": "אביב 2026 א",
+    "subject": "electricity",
+    "year": 2026,
+    "season": "spring",
+    "version": "a",
+    "url": "/electricity/mahat-exams/spring-2026-a"
+  },
+  {
+    "id": "electricity/exam-mahat/spring-2026-b",
+    "type": "exam-mahat",
+    "title": "אביב 2026 ב",
+    "subject": "electricity",
+    "year": 2026,
+    "season": "spring",
+    "version": "b",
+    "url": "/electricity/mahat-exams/spring-2026-b"
+  },
+  {
+    "id": "electricity/exam-mahat/summer-2026-a",
+    "type": "exam-mahat",
+    "title": "קיץ 2026 א",
+    "subject": "electricity",
+    "year": 2026,
+    "season": "summer",
+    "version": "a",
+    "url": "/electricity/mahat-exams/summer-2026-a"
+  },
+  {
+    "id": "electricity/exam-technician/2024-combined",
+    "type": "exam-technician",
+    "title": "טכנאי חשמל 2024",
+    "subject": "electricity",
+    "year": 2024,
+    "season": null,
+    "version": "combined",
+    "url": "/electricity/technician-exams/2024-combined"
+  },
+  {
+    "id": "electricity/exam-technician/2025-combined",
+    "type": "exam-technician",
+    "title": "טכנאי חשמל 2025",
+    "subject": "electricity",
+    "year": 2025,
+    "season": null,
+    "version": "combined",
+    "url": "/electricity/technician-exams/2025-combined"
+  },
+  {
+    "id": "electricity/exam-electrical-systems/2014-combined",
+    "type": "exam-electrical-systems",
+    "title": "מערכות חשמל 2014",
+    "subject": "electricity",
+    "year": 2014,
+    "season": null,
+    "version": "combined",
+    "url": "/electricity/electrical-systems-exams/2014-combined"
+  },
+  {
+    "id": "electricity/exam-electrical-systems/2018-combined",
+    "type": "exam-electrical-systems",
+    "title": "מערכות חשמל 2018",
+    "subject": "electricity",
+    "year": 2018,
+    "season": null,
+    "version": "combined",
+    "url": "/electricity/electrical-systems-exams/2018-combined"
+  },
+  {
+    "id": "electricity/exam-electrical-systems/2025-combined",
+    "type": "exam-electrical-systems",
+    "title": "מערכות חשמל 2025",
+    "subject": "electricity",
+    "year": 2025,
+    "season": null,
+    "version": "combined",
+    "url": "/electricity/electrical-systems-exams/2025-combined"
+  },
+  {
+    "id": "electricity/exam-electrical-systems/2026-combined",
+    "type": "exam-electrical-systems",
+    "title": "מערכות חשמל 2026",
+    "subject": "electricity",
+    "year": 2026,
+    "season": null,
+    "version": "combined",
+    "url": "/electricity/electrical-systems-exams/2026-combined"
+  },
+  {
+    "id": "electricity/exam-education/2026-combined",
+    "type": "exam-education",
+    "title": "מבחן 2026",
+    "subject": "electricity",
+    "year": 2026,
+    "season": null,
+    "version": "combined",
+    "url": "/electricity/ministry-exams/2026-combined"
   }
 ]

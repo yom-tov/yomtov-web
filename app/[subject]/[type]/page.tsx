@@ -14,7 +14,7 @@ import type { SubjectId } from "@/types/content";
 import { ExamListClient } from "./ExamListClient";
 import { AssignmentListClient } from "./AssignmentListClient";
 
-const VALID_TYPES = ["mahat-exams", "ministry-exams", "assignments"] as const;
+const VALID_TYPES = ["mahat-exams", "ministry-exams", "technician-exams", "electrical-systems-exams", "assignments"] as const;
 type ListType = (typeof VALID_TYPES)[number];
 
 export function generateStaticParams() {

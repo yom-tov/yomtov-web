@@ -24,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     });
-    for (const t of ["mahat-exams", "ministry-exams", "assignments"]) {
+    for (const t of ["mahat-exams", "ministry-exams", "technician-exams", "electrical-systems-exams", "assignments"]) {
       out.push({
         url: `${BASE_URL}/${s.id}/${t}`,
         lastModified: now,

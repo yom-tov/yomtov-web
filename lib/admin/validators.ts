@@ -3,7 +3,7 @@ import { z } from "zod";
 const currentYear = new Date().getFullYear();
 
 const subjectSchema = z.enum(["electricity", "analog", "digital"]);
-const sourceSchema = z.enum(["mahat", "education"]);
+const sourceSchema = z.enum(["mahat", "education", "technician", "electrical-systems"]);
 const seasonSchema = z.enum(["summer", "spring", "winter", "fall"]).nullable();
 const versionSchema = z.enum(["a", "b", "combined"]).nullable();
 

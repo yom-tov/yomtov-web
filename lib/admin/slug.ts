@@ -122,6 +122,8 @@ export const SUBJECT_LABEL_HE: Record<SubjectId, string> = {
 export const SOURCE_LABEL_HE: Record<ExamSource, string> = {
   mahat: 'מבחני מה"ט',
   education: "מבחני משרד החינוך",
+  technician: "מבחני טכנאי חשמל",
+  "electrical-systems": "מבחני מערכות חשמל",
 };
 
 // Build the display title an exam should carry when the admin creates one

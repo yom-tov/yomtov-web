@@ -20,15 +20,22 @@ import { ExamCard } from "@/components/cards/ExamCard";
 import { AssignmentCard } from "@/components/cards/AssignmentCard";
 import { PdfPreview } from "@/components/pdf/PdfPreview";
 
-const VALID_TYPES = ["mahat-exams", "ministry-exams", "assignments"] as const;
+const VALID_TYPES = ["mahat-exams", "ministry-exams", "technician-exams", "electrical-systems-exams", "assignments"] as const;
 type ListType = (typeof VALID_TYPES)[number];
+
+const SOURCE_TO_SLUG: Record<string, string> = {
+  mahat: "mahat-exams",
+  education: "ministry-exams",
+  technician: "technician-exams",
+  "electrical-systems": "electrical-systems-exams",
+};
 
 export function generateStaticParams() {
   const params: { subject: string; type: string; slug: string }[] = [];
   for (const e of exams) {
     params.push({
       subject: e.subject,
-      type: e.source === "mahat" ? "mahat-exams" : "ministry-exams",
+      type: SOURCE_TO_SLUG[e.source] || "mahat-exams",
       slug: e.slug,
     });
   }

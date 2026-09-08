@@ -103,15 +103,21 @@ export const SUBJECT_TITLE_HE: Record<SubjectId, string> = {
 export const SOURCE_TITLE_HE: Record<ExamSource, string> = {
   mahat: 'מבחני מה"ט',
   education: "מבחני משרד החינוך",
+  technician: "טכנאי חשמל",
+  "electrical-systems": "מערכות חשמל",
 };
 
 export const SOURCE_SLUG: Record<ExamSource, string> = {
   mahat: "mahat-exams",
   education: "ministry-exams",
+  technician: "technician-exams",
+  "electrical-systems": "electrical-systems-exams",
 };
 
 export function sourceFromSlug(slug: string): ExamSource | null {
   if (slug === "mahat-exams") return "mahat";
   if (slug === "ministry-exams") return "education";
+  if (slug === "technician-exams") return "technician";
+  if (slug === "electrical-systems-exams") return "electrical-systems";
   return null;
 }
