@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const out: MetadataRoute.Sitemap = [];
 
-  const statics = ["", "/search", "/exams", "/labs", "/calculator", "/about"];
+  const statics = ["", "/search", "/exams", "/labs", "/calculator", "/about", "/psychometric"];
   for (const p of statics) {
     out.push({
       url: `${BASE_URL}${p || "/"}`,

@@ -11,6 +11,7 @@ const SECTIONS = [
       { href: "/electricity", label: "חשמל" },
       { href: "/analog", label: "אלקטרוניקה תקבילית" },
       { href: "/digital", label: "אלקטרוניקה ספרתית" },
+      { href: "/psychometric", label: "פסיכומטרי" },
     ],
   },
   {

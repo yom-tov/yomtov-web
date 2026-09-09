@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import {
   ArrowLeft,
   Beaker,
+  Brain,
   Calculator,
   ClipboardCheck,
   Search,
@@ -108,7 +109,7 @@ export default function Home() {
             <p className="mt-1 text-sm text-text-muted">בחר תחום כדי לראות את כל התכנים</p>
           </div>
         </div>
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {subjects.map((s) => {
             const nMahat = examsFor(s.id, "mahat").length;
             const nEdu = examsFor(s.id, "education").length;
@@ -124,6 +125,34 @@ export default function Home() {
               />
             );
           })}
+          <Link
+            href="/psychometric"
+            className="group card-shine relative overflow-hidden rounded-3xl border border-border bg-surface p-6 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1.5 hover:scale-[1.02] hover:border-primary-200 hover:shadow-xl hover:shadow-primary-500/10 dark:hover:border-primary-400/40"
+          >
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-1 bg-gradient-to-l from-sky-500 via-blue-500 to-indigo-500"
+            />
+            <div
+              className="pointer-events-none absolute -top-16 -left-16 h-44 w-44 rounded-full bg-gradient-to-br from-sky-500 via-blue-500 to-indigo-500 opacity-20 blur-2xl transition-all duration-500 ease-out group-hover:scale-125 group-hover:opacity-45"
+              aria-hidden
+            />
+            <div className="relative flex items-start justify-between">
+              <div className="grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-sky-500 via-blue-500 to-indigo-500 text-white shadow-md transition-transform duration-300 ease-out group-hover:rotate-6 group-hover:scale-110">
+                <Brain className="h-7 w-7" strokeWidth={2.2} />
+              </div>
+              <ArrowLeft className="h-5 w-5 text-text-subtle transition-all duration-300 ease-out group-hover:-translate-x-1.5 group-hover:text-primary-600" />
+            </div>
+            <div className="relative mt-6">
+              <h3 className="text-2xl font-extrabold text-text">פסיכומטרי</h3>
+              <p className="mt-2 text-sm leading-6 text-text-muted">
+                הכנה לפסיכומטרי ופסיכוטכני — סרטון הכנה מקיף.
+              </p>
+              <div className="mt-4 inline-flex rounded-full border border-border bg-surface-2/60 px-3 py-1 text-xs font-semibold text-text-muted num transition-colors group-hover:border-primary-200 group-hover:bg-primary-50 group-hover:text-primary-700 dark:group-hover:border-primary-400/30 dark:group-hover:bg-primary-500/10 dark:group-hover:text-primary-200">
+                סרטון הדרכה
+              </div>
+            </div>
+          </Link>
         </div>
       </section>
 

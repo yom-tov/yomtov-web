@@ -9,6 +9,7 @@ const NAV = [
   { href: "/electricity", label: "חשמל" },
   { href: "/analog", label: "אלקטרוניקה תקבילית" },
   { href: "/digital", label: "אלקטרוניקה ספרתית" },
+  { href: "/psychometric", label: "פסיכומטרי" },
   { href: "/labs", label: "מעבדות" },
   { href: "/calculator", label: "מחשבון" },
   { href: "/exams", label: "מבחנים" },
