@@ -10,10 +10,12 @@ import {
   ImageIcon,
   MonitorPlay,
   Code2,
+  Cpu,
 } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { labs } from "@/lib/content";
 import LabsClient from "./LabsClient";
+import CircuitSimulator from "./CircuitSimulator";
 
 export const metadata: Metadata = {
   title: "מעבדות",
@@ -90,6 +92,17 @@ const guides = [
     label: "צפה בסרטון",
     labelIcon: ExternalLink,
   },
+  {
+    title: "סימולטור מעגלים",
+    description: "סימולטור מעגלים אינטראקטיבי — בנו, בדקו ולמדו מעגלים בזמן אמת.",
+    href: "/simulator",
+    icon: Cpu,
+    gradient: "from-lime-500 to-green-600",
+    bgLight: "bg-lime-50 dark:bg-lime-500/10",
+    textColor: "text-lime-700 dark:text-lime-300",
+    label: "פתח סימולטור",
+    labelIcon: ExternalLink,
+  },
 ];
 
 export default function LabsPage() {
@@ -107,6 +120,24 @@ export default function LabsPage() {
           חומרי עזר וסרטוני הדרכה קצרים למעבדות פרקטיות בחשמל ואלקטרוניקה.
         </p>
       </header>
+
+      {/* ── Circuit Simulator ── */}
+      <section className="mt-8">
+        <div className="flex items-center gap-2">
+          <Cpu className="h-5 w-5 text-primary-600" />
+          <h2 className="text-xl font-bold text-text">סימולטור מעגלים</h2>
+        </div>
+        <p className="mt-1 text-sm text-text-muted">
+          סימולטור מעגלים אינטראקטיבי — בנו מעגלים, הריצו סימולציה וצפו
+          בתוצאות בזמן אמת.
+        </p>
+        <div className="mt-4">
+          <CircuitSimulator />
+        </div>
+      </section>
+
+      {/* ── Divider ── */}
+      <div className="mt-10 border-t border-border" />
 
       {/* ── Reference Materials ── */}
       <section className="mt-8">

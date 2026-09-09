@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { getSubject } from "@/lib/content";
+import FourierEmbed from "./FourierEmbed";
 import MathVideos from "./MathVideos";
 
 export const metadata: Metadata = {
@@ -45,7 +46,34 @@ export default function MathPage() {
         </p>
       </header>
 
+      {/* Fourier simulator */}
       <section className="mt-8">
+        <div className="flex items-center gap-2">
+          <svg
+            className="h-5 w-5 text-indigo-500"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <path d="M2 12c0-3 2.5-6 4-6s2.5 3 4 3 2.5-6 4-6 2.5 3 4 3 2.5-6 4-6" />
+          </svg>
+          <h2 className="text-xl font-bold text-text">סימולטור פורייה</h2>
+        </div>
+        <p className="mt-1 text-sm text-text-muted">
+          סימולטור אינטראקטיבי — בנו גלים מהרמוניות וגלו את הקשר בין תחום הזמן
+          לתחום התדר.
+        </p>
+        <div className="mt-4">
+          <FourierEmbed />
+        </div>
+      </section>
+
+      {/* Video tutorials */}
+      <section className="mt-10">
         <div className="flex items-center gap-2">
           <svg
             className="h-5 w-5 text-red-500"
