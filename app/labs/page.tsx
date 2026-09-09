@@ -8,6 +8,8 @@ import {
   FileText,
   ExternalLink,
   ImageIcon,
+  MonitorPlay,
+  Code2,
 } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { labs } from "@/lib/content";
@@ -65,6 +67,28 @@ const guides = [
     textColor: "text-blue-700 dark:text-blue-300",
     label: "צפה בתמונה",
     labelIcon: ImageIcon,
+  },
+  {
+    title: "מבוא ל-Matlab",
+    description: "מדריך מבוא לסביבת Matlab — התקנה, ממשק, פקודות בסיסיות וגרפים.",
+    href: "/pdfs/labs/matlab-intro.pdf",
+    icon: Code2,
+    gradient: "from-violet-500 to-purple-600",
+    bgLight: "bg-violet-50 dark:bg-violet-500/10",
+    textColor: "text-violet-700 dark:text-violet-300",
+    label: "צפה ב-PDF",
+    labelIcon: ExternalLink,
+  },
+  {
+    title: "התפלגות נורמלית",
+    description: "סרטון הדמייה מוחשית של עקומת ההתפלגות הנורמלית (גאוסיאנית).",
+    href: "/pdfs/labs/normal-distribution.mp4",
+    icon: MonitorPlay,
+    gradient: "from-cyan-500 to-sky-600",
+    bgLight: "bg-cyan-50 dark:bg-cyan-500/10",
+    textColor: "text-cyan-700 dark:text-cyan-300",
+    label: "צפה בסרטון",
+    labelIcon: ExternalLink,
   },
 ];
 
