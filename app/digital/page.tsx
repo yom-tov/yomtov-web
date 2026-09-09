@@ -3,6 +3,7 @@ import { ArrowLeft, NotebookPen } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { AssignmentCard } from "@/components/cards/AssignmentCard";
 import { assignmentsFor, getSubject } from "@/lib/content";
+import ShortsRow from "./ShortsRow";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,6 +11,16 @@ export const metadata: Metadata = {
   description:
     "לוגיקה בוליאנית, שערים, מונים, זיכרונות ומעגלים ספרתיים — חומרי לימוד, נוסחאות וסיכומים.",
 };
+
+const MAIN_VIDEO_ID = "1ouRvKKXfio";
+
+const SHORTS = [
+  { id: "mfcqflS8bEA", title: "NAND Gate: CMOS" },
+  { id: "ZFOSpk8Vse4", title: "NOR Gate: CMOS" },
+  { id: "UYRTlpNrLD4", title: "AND Gate: CMOS" },
+  { id: "BWlV8JhFSaE", title: "OR Gate: CMOS" },
+  { id: "1Sw5cXon-K8", title: "NOT Gate: CMOS" },
+];
 
 export default function DigitalPage() {
   const s = getSubject("digital")!;
@@ -35,6 +46,32 @@ export default function DigitalPage() {
         </p>
       </header>
 
+      {/* Main video — 70% width */}
+      <section className="mt-10">
+        <div className="mx-auto w-full max-w-3xl">
+          <div className="overflow-hidden rounded-2xl border border-border shadow-lg">
+            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+              <iframe
+                className="absolute inset-0 h-full w-full"
+                src={`https://www.youtube.com/embed/${MAIN_VIDEO_ID}`}
+                title="סרטון אלקטרוניקה ספרתית"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Shorts row */}
+      <section className="mt-10">
+        <h2 className="text-xl font-extrabold text-text">
+          סרטונים קצרים באלקטרוניקה
+        </h2>
+        <ShortsRow shorts={SHORTS} />
+      </section>
+
+      {/* Assignments */}
       <section className="mt-10">
         <h2 className="text-xl font-extrabold text-text">
           אלקטרוניקה ספרתית
