@@ -16,7 +16,7 @@ import type { Metadata } from "next";
 
 export function generateStaticParams() {
   return subjects
-    .filter((s) => s.id !== "digital")
+    .filter((s) => s.id !== "digital" && s.id !== "math" && s.id !== "physics")
     .map((s) => ({ subject: s.id }));
 }
 

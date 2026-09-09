@@ -22,5 +22,21 @@
     "icon": "Binary",
     "color": "from-emerald-500 via-teal-500 to-cyan-500",
     "hebrewOriginalPath": "/אלקטרוניקה-ספרתית"
+  },
+  {
+    "id": "math",
+    "hebrewTitle": "מתמטיקה",
+    "description": "אלגברה, חשבון דיפרנציאלי ואינטגרלי, משוואות דיפרנציאליות ומתמטיקה הנדסית.",
+    "icon": "Sigma",
+    "color": "from-blue-500 via-indigo-500 to-violet-500",
+    "hebrewOriginalPath": ""
+  },
+  {
+    "id": "physics",
+    "hebrewTitle": "פיסיקה",
+    "description": "מכניקה, חשמל ומגנטיות, גלים, אופטיקה ופיסיקה מודרנית.",
+    "icon": "Atom",
+    "color": "from-sky-500 via-cyan-500 to-teal-500",
+    "hebrewOriginalPath": ""
   }
 ]

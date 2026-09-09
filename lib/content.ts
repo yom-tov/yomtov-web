@@ -98,6 +98,8 @@ export const SUBJECT_TITLE_HE: Record<SubjectId, string> = {
   electricity: "חשמל",
   analog: "אלקטרוניקה תקבילית",
   digital: "אלקטרוניקה ספרתית",
+  math: "מתמטיקה",
+  physics: "פיסיקה",
 };
 
 export const SOURCE_TITLE_HE: Record<ExamSource, string> = {

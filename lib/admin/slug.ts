@@ -29,6 +29,8 @@ const SUBJECT_MAP: Record<string, SubjectId> = {
   תקבילית: "analog",
   ספרתית: "digital",
   חשמל: "electricity",
+  מתמטיקה: "math",
+  פיסיקה: "physics",
 };
 
 export function parseExamTitle(title: string): {
@@ -118,6 +120,8 @@ export const SUBJECT_LABEL_HE: Record<SubjectId, string> = {
   electricity: "חשמל",
   analog: "אלקטרוניקה תקבילית",
   digital: "אלקטרוניקה ספרתית",
+  math: "מתמטיקה",
+  physics: "פיסיקה",
 };
 export const SOURCE_LABEL_HE: Record<ExamSource, string> = {
   mahat: 'מבחני מה"ט',

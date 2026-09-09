@@ -1,4 +1,4 @@
-export type SubjectId = "electricity" | "analog" | "digital";
+export type SubjectId = "electricity" | "analog" | "digital" | "math" | "physics";
 export type Season = "summer" | "spring" | "winter" | "fall" | null;
 export type ExamVersion = "a" | "b" | "combined" | null;
 export type ExamSource = "mahat" | "education" | "technician" | "electrical-systems";

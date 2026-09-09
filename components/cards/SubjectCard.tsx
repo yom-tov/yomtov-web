@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { Zap, CircuitBoard, Binary, ArrowLeft } from "lucide-react";
+import { Zap, CircuitBoard, Binary, Sigma, Atom, ArrowLeft } from "lucide-react";
 import type { Subject } from "@/types/content";
 
 const ICONS: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
   Zap,
   CircuitBoard,
   Binary,
+  Sigma,
+  Atom,
 };
 
 export function SubjectCard({

@@ -7,8 +7,10 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const NAV = [
   { href: "/electricity", label: "חשמל" },
-  { href: "/analog", label: "אלקטרוניקה תקבילית" },
-  { href: "/digital", label: "אלקטרוניקה ספרתית" },
+  { href: "/analog", label: "תקבילית" },
+  { href: "/digital", label: "ספרתית" },
+  { href: "/math", label: "מתמטיקה" },
+  { href: "/physics", label: "פיסיקה" },
   { href: "/psychometric", label: "פסיכומטרי" },
   { href: "/labs", label: "מעבדות" },
   { href: "/calculator", label: "מחשבון" },
