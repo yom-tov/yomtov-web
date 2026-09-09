@@ -601,5 +601,73 @@
     ],
     "originalListUrl": "https://www.e-tv.site/assignments-analog-electronics",
     "originalDetailUrl": "https://www.e-tv.site/assignments-analog-electronics/fet"
+  },
+  {
+    "id": "digital/assignments/karnaugh-map",
+    "slug": "karnaugh-map",
+    "subject": "digital",
+    "title": "מפת קרנו",
+    "topic": null,
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/assignments/digital/karnaugh-map.jpg",
+        "sizeBytes": 46242,
+        "id": ""
+      }
+    ],
+    "originalListUrl": "",
+    "originalDetailUrl": null
+  },
+  {
+    "id": "digital/assignments/mux-decoder-encoder",
+    "slug": "mux-decoder-encoder",
+    "subject": "digital",
+    "title": "מרבב, מפענח, מקודד ומפלג",
+    "topic": null,
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/assignments/digital/mux-decoder-encoder.pdf",
+        "sizeBytes": 648731,
+        "id": ""
+      }
+    ],
+    "originalListUrl": "",
+    "originalDetailUrl": null
+  },
+  {
+    "id": "digital/assignments/formula-sheet",
+    "slug": "formula-sheet",
+    "subject": "digital",
+    "title": "נוסחאון בספרתית",
+    "topic": null,
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/assignments/digital/formula-sheet.pdf",
+        "sizeBytes": 24903517,
+        "id": ""
+      }
+    ],
+    "originalListUrl": "",
+    "originalDetailUrl": null
+  },
+  {
+    "id": "digital/assignments/digital-textbook-2010",
+    "slug": "digital-textbook-2010",
+    "subject": "digital",
+    "title": "ספר לימוד ספרתית",
+    "topic": null,
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/assignments/digital/digital-textbook-2010.pdf",
+        "sizeBytes": 11192938,
+        "id": ""
+      }
+    ],
+    "originalListUrl": "",
+    "originalDetailUrl": null
   }
 ]

@@ -777,5 +777,33 @@
     "season": null,
     "version": "combined",
     "url": "/electricity/ministry-exams/2026-combined"
+  },
+  {
+    "id": "digital/assignments/karnaugh-map",
+    "type": "assignment",
+    "title": "מפת קרנו",
+    "subject": "digital",
+    "url": "/digital/assignments/karnaugh-map"
+  },
+  {
+    "id": "digital/assignments/mux-decoder-encoder",
+    "type": "assignment",
+    "title": "מרבב, מפענח, מקודד ומפלג",
+    "subject": "digital",
+    "url": "/digital/assignments/mux-decoder-encoder"
+  },
+  {
+    "id": "digital/assignments/formula-sheet",
+    "type": "assignment",
+    "title": "נוסחאון בספרתית",
+    "subject": "digital",
+    "url": "/digital/assignments/formula-sheet"
+  },
+  {
+    "id": "digital/assignments/digital-textbook-2010",
+    "type": "assignment",
+    "title": "ספר לימוד ספרתית",
+    "subject": "digital",
+    "url": "/digital/assignments/digital-textbook-2010"
   }
 ]

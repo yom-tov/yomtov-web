@@ -15,7 +15,9 @@ import type { SubjectId } from "@/types/content";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
-  return subjects.map((s) => ({ subject: s.id }));
+  return subjects
+    .filter((s) => s.id !== "digital")
+    .map((s) => ({ subject: s.id }));
 }
 
 type Params = Promise<{ subject: string }>;
