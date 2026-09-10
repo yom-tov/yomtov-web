@@ -4,9 +4,6 @@ import { useState } from "react";
 import {
   Calculator,
   Hash,
-  Variable,
-  Grid3X3,
-  BarChart3,
   Atom,
   FlaskConical,
   Zap,
@@ -15,9 +12,6 @@ import {
 import { clsx } from "clsx";
 import { ScientificCalc } from "./ScientificCalc";
 import { BaseConverter } from "./BaseConverter";
-import { EquationSolver } from "./EquationSolver";
-import { MatrixCalc } from "./MatrixCalc";
-import { StatsCalc } from "./StatsCalc";
 import { ConstantsLib } from "./ConstantsLib";
 import { UnitConverter } from "./UnitConverter";
 import { EngineeringCalc } from "./EngineeringCalc";
@@ -25,9 +19,6 @@ import { EngineeringCalc } from "./EngineeringCalc";
 type Tab =
   | "scientific"
   | "base"
-  | "equations"
-  | "matrix"
-  | "stats"
   | "constants"
   | "converter"
   | "engineering"
@@ -37,9 +28,6 @@ const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: "ecalc", label: "מחשבון — eCalc", icon: SquareFunction },
   { id: "scientific", label: "מחשבון מדעי", icon: Calculator },
   { id: "base", label: "בסיסי מספרים", icon: Hash },
-  { id: "equations", label: "משוואות", icon: Variable },
-  { id: "matrix", label: "מטריצות", icon: Grid3X3 },
-  { id: "stats", label: "סטטיסטיקה", icon: BarChart3 },
   { id: "constants", label: "קבועים פיזיקליים", icon: Atom },
   { id: "converter", label: "ממיר יחידות", icon: FlaskConical },
   { id: "engineering", label: "חוק אוהם", icon: Zap },
@@ -77,7 +65,6 @@ export function CalculatorClient() {
       </div>
 
       {/* Tab content */}
-      {tab === "scientific" && <ScientificCalc />}
       {tab === "ecalc" && (
         <div className="flex justify-center">
           <div className="overflow-hidden rounded-2xl border border-border shadow-lg bg-[#f0f0f0]">
@@ -91,10 +78,8 @@ export function CalculatorClient() {
           </div>
         </div>
       )}
+      {tab === "scientific" && <ScientificCalc />}
       {tab === "base" && <BaseConverter />}
-      {tab === "equations" && <EquationSolver />}
-      {tab === "matrix" && <MatrixCalc />}
-      {tab === "stats" && <StatsCalc />}
       {tab === "constants" && <ConstantsLib />}
       {tab === "converter" && <UnitConverter />}
       {tab === "engineering" && <EngineeringCalc />}
