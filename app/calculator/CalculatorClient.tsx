@@ -10,6 +10,7 @@ import {
   Atom,
   FlaskConical,
   Zap,
+  SquareFunction,
 } from "lucide-react";
 import { clsx } from "clsx";
 import { ScientificCalc } from "./ScientificCalc";
@@ -29,9 +30,11 @@ type Tab =
   | "stats"
   | "constants"
   | "converter"
-  | "engineering";
+  | "engineering"
+  | "ecalc";
 
 const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
+  { id: "ecalc", label: "מחשבון — eCalc", icon: SquareFunction },
   { id: "scientific", label: "מחשבון מדעי", icon: Calculator },
   { id: "base", label: "בסיסי מספרים", icon: Hash },
   { id: "equations", label: "משוואות", icon: Variable },
@@ -43,7 +46,7 @@ const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
 ];
 
 export function CalculatorClient() {
-  const [tab, setTab] = useState<Tab>("scientific");
+  const [tab, setTab] = useState<Tab>("ecalc");
 
   return (
     <div>
@@ -75,6 +78,19 @@ export function CalculatorClient() {
 
       {/* Tab content */}
       {tab === "scientific" && <ScientificCalc />}
+      {tab === "ecalc" && (
+        <div className="flex justify-center">
+          <div className="overflow-hidden rounded-2xl border border-border shadow-lg bg-[#f0f0f0]">
+            <iframe
+              src="/ecalc/index.html"
+              title="מחשבון מדעי — eCalc"
+              className="border-0"
+              style={{ width: "740px", height: "570px", maxWidth: "100%" }}
+              allow="fullscreen"
+            />
+          </div>
+        </div>
+      )}
       {tab === "base" && <BaseConverter />}
       {tab === "equations" && <EquationSolver />}
       {tab === "matrix" && <MatrixCalc />}
