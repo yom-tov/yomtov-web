@@ -2,35 +2,27 @@
 
 import { useState } from "react";
 import {
-  Calculator,
   Hash,
   Atom,
   FlaskConical,
-  Zap,
   SquareFunction,
 } from "lucide-react";
 import { clsx } from "clsx";
-import { ScientificCalc } from "./ScientificCalc";
 import { BaseConverter } from "./BaseConverter";
 import { ConstantsLib } from "./ConstantsLib";
 import { UnitConverter } from "./UnitConverter";
-import { EngineeringCalc } from "./EngineeringCalc";
 
 type Tab =
-  | "scientific"
   | "base"
   | "constants"
   | "converter"
-  | "engineering"
   | "ecalc";
 
 const TABS: { id: Tab; label: string; icon: React.ElementType }[] = [
   { id: "ecalc", label: "מחשבון — eCalc", icon: SquareFunction },
-  { id: "scientific", label: "מחשבון מדעי", icon: Calculator },
   { id: "base", label: "בסיסי מספרים", icon: Hash },
   { id: "constants", label: "קבועים פיזיקליים", icon: Atom },
   { id: "converter", label: "ממיר יחידות", icon: FlaskConical },
-  { id: "engineering", label: "חוק אוהם", icon: Zap },
 ];
 
 export function CalculatorClient() {
@@ -78,11 +70,9 @@ export function CalculatorClient() {
           </div>
         </div>
       )}
-      {tab === "scientific" && <ScientificCalc />}
       {tab === "base" && <BaseConverter />}
       {tab === "constants" && <ConstantsLib />}
       {tab === "converter" && <UnitConverter />}
-      {tab === "engineering" && <EngineeringCalc />}
     </div>
   );
 }
