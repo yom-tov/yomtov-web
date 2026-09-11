@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { AssignmentCard } from "@/components/cards/AssignmentCard";
 import { assignmentsFor, getSubject } from "@/lib/content";
 import ShortsRow from "./ShortsRow";
+import DigitalSimulator from "./DigitalSimulator";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -69,6 +70,19 @@ export default function DigitalPage() {
           סרטונים קצרים באלקטרוניקה
         </h2>
         <ShortsRow shorts={SHORTS} />
+      </section>
+
+      {/* Circuit Simulator */}
+      <section className="mt-10">
+        <h2 className="text-xl font-extrabold text-text">
+          סימולטור מעגלים ספרתיים
+        </h2>
+        <p className="mt-1 text-sm text-text-muted">
+          מפענח BCD ל-7 מקטעים — לחצו על המתגים כדי לשנות את הספרה המוצגת
+        </p>
+        <div className="mt-4">
+          <DigitalSimulator />
+        </div>
       </section>
 
       {/* Assignments */}
