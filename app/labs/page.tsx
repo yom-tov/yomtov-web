@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { labs } from "@/lib/content";
+import { getAssetUrl } from "@/lib/pdf-url";
 import LabsClient from "./LabsClient";
 import CircuitSimulator from "./CircuitSimulator";
 
@@ -27,7 +28,7 @@ const guides = [
   {
     title: "הנחיות בטיחות במעבדה",
     description: "13 כללי בטיחות חובה לפני כל עבודה במעבדת חשמל ואלקטרוניקה.",
-    href: "/pdfs/labs/safety-guidelines.pdf",
+    href: getAssetUrl("/pdfs/labs/safety-guidelines.pdf"),
     icon: ShieldCheck,
     gradient: "from-rose-500 to-red-600",
     bgLight: "bg-rose-50 dark:bg-rose-500/10",
@@ -38,7 +39,7 @@ const guides = [
   {
     title: "קוד צבעים לנגדים",
     description: "טבלת קוד צבעים מלאה — 4, 5 ו-6 פסים, כולל מכפיל וסבילות.",
-    href: "/pdfs/labs/resistor-color-code.pdf",
+    href: getAssetUrl("/pdfs/labs/resistor-color-code.pdf"),
     icon: Palette,
     gradient: "from-amber-500 to-orange-500",
     bgLight: "bg-amber-50 dark:bg-amber-500/10",
@@ -50,7 +51,7 @@ const guides = [
     title: "קבלים וסלילים",
     description:
       "מדריך קריאת ערכים, קודי קבלים, טבלת המרה, וקוד צבעים לסלילים.",
-    href: "/pdfs/labs/capacitors-inductors.pdf",
+    href: getAssetUrl("/pdfs/labs/capacitors-inductors.pdf"),
     icon: CircuitBoard,
     gradient: "from-emerald-500 to-teal-500",
     bgLight: "bg-emerald-50 dark:bg-emerald-500/10",
@@ -73,7 +74,7 @@ const guides = [
   {
     title: "מבוא ל-Matlab",
     description: "מדריך מבוא לסביבת Matlab — התקנה, ממשק, פקודות בסיסיות וגרפים.",
-    href: "/pdfs/labs/matlab-intro.pdf",
+    href: getAssetUrl("/pdfs/labs/matlab-intro.pdf"),
     icon: Code2,
     gradient: "from-violet-500 to-purple-600",
     bgLight: "bg-violet-50 dark:bg-violet-500/10",

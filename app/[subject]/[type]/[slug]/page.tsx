@@ -19,6 +19,7 @@ import type { SubjectId } from "@/types/content";
 import { ExamCard } from "@/components/cards/ExamCard";
 import { AssignmentCard } from "@/components/cards/AssignmentCard";
 import { PdfPreview } from "@/components/pdf/PdfPreview";
+import { getAssetUrl } from "@/lib/pdf-url";
 
 const VALID_TYPES = ["mahat-exams", "ministry-exams", "technician-exams", "electrical-systems-exams", "assignments"] as const;
 type ListType = (typeof VALID_TYPES)[number];
@@ -103,7 +104,7 @@ export default async function ItemPage({
       label: exam.title,
       role: "primary",
       url: exam.exam.url,
-      path: exam.exam.path,
+      path: getAssetUrl(exam.exam.path),
       sizeBytes: exam.exam.sizeBytes,
     });
     if (exam.solution) {
@@ -111,7 +112,7 @@ export default async function ItemPage({
         label: `פתרון - ${exam.title}`,
         role: "solution",
         url: exam.solution.url,
-        path: exam.solution.path,
+        path: getAssetUrl(exam.solution.path),
         sizeBytes: exam.solution.sizeBytes,
       });
     }
@@ -121,7 +122,7 @@ export default async function ItemPage({
         label: idx === 0 ? assignment.title : `נספח ${idx + 1}`,
         role: idx === 0 ? "primary" : "solution",
         url: f.url,
-        path: f.path,
+        path: getAssetUrl(f.path),
         sizeBytes: f.sizeBytes,
       });
     });
@@ -160,7 +161,7 @@ export default async function ItemPage({
         },
         associatedMedia: {
           "@type": "MediaObject",
-          contentUrl: exam.exam.path,
+          contentUrl: getAssetUrl(exam.exam.path),
           encodingFormat: "application/pdf",
         },
       }
