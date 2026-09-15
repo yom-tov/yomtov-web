@@ -1,12 +1,9 @@
 // High-level admin mutations. Each function:
 //   1) Reads the current relevant content files from GitHub
 //   2) Fetches any newly-uploaded PDFs from Vercel Blob
-//   3) Builds a FileWrite[] describing all changes
-//   4) Commits them atomically via commitFiles()
+//   3) Uploads PDFs to Cloudflare R2 (not git — saves deployment storage)
+//   4) Commits JSON-only changes atomically via commitFiles()
 //   5) Deletes the transient blobs
-//
-// The atomic-commit contract means the site never sees a state where the
-// JSON knows about a PDF that isn't in the tree yet, or vice-versa.
 
 import { del } from "@vercel/blob";
 import type {
@@ -32,6 +29,7 @@ import {
   labId as buildLabId,
   CONTENT_PATHS,
 } from "./content-io";
+import { uploadToR2, deleteFromR2, gitPathToR2Key } from "./r2";
 import { examSlug, assignmentSlug } from "./slug";
 import type {
   ExamCreateInput,
@@ -89,9 +87,14 @@ export async function createExam(input: ExamCreateInput): Promise<CommitResult> 
     ? examPdfPath({ subject: input.subject, source: input.source, slug }, "solution")
     : null;
 
-  // Fetch PDFs from Blob
+  // Fetch PDFs from Blob and upload to R2
   const examBytes = await fetchBlob(input.exam.url);
-  const solutionBytes = input.solution ? await fetchBlob(input.solution.url) : null;
+  await uploadToR2(gitPathToR2Key(examFilePath), examBytes);
+
+  if (input.solution && solutionFilePath) {
+    const solutionBytes = await fetchBlob(input.solution.url);
+    await uploadToR2(gitPathToR2Key(solutionFilePath), solutionBytes);
+  }
 
   const newExam: Exam = {
     id,
@@ -125,13 +128,9 @@ export async function createExam(input: ExamCreateInput): Promise<CommitResult> 
   const searchIndex = buildSearchIndex(nextExams, assignments);
 
   const writes: FileWrite[] = [
-    { path: examFilePath, kind: "binary", content: examBytes },
     { path: CONTENT_PATHS.exams, kind: "text", content: stringifyJson(nextExams) },
     { path: CONTENT_PATHS.searchIndex, kind: "text", content: stringifyJson(searchIndex) },
   ];
-  if (solutionBytes && solutionFilePath) {
-    writes.push({ path: solutionFilePath, kind: "binary", content: solutionBytes });
-  }
 
   const commit = await commitFiles(writes, `admin: add ${input.source} exam ${slug}`);
   await cleanupBlobs(
@@ -180,13 +179,12 @@ export async function updateExam(id: string, input: ExamUpdateInput): Promise<Co
     topic: input.topic ?? null,
   };
 
-  const writes: FileWrite[] = [];
   const blobsToDelete: string[] = [];
 
-  // Exam file replacement
+  // Exam file replacement — upload to R2
   if (input.exam) {
     const bytes = await fetchBlob(input.exam.url);
-    writes.push({ path: examFilePath, kind: "binary", content: bytes });
+    await uploadToR2(gitPathToR2Key(examFilePath), bytes);
     updated.exam = {
       ...cur.exam,
       sizeBytes: input.exam.sizeBytes,
@@ -195,13 +193,13 @@ export async function updateExam(id: string, input: ExamUpdateInput): Promise<Co
     blobsToDelete.push(input.exam.url);
   }
 
-  // Solution: replace, delete, or leave alone
+  // Solution: replace (upload to R2), delete (from R2), or leave alone
   if (input.deleteSolution && cur.solution) {
-    writes.push({ path: solutionFilePath, kind: "delete" });
+    await deleteFromR2(gitPathToR2Key(solutionFilePath));
     updated.solution = null;
   } else if (input.solution) {
     const bytes = await fetchBlob(input.solution.url);
-    writes.push({ path: solutionFilePath, kind: "binary", content: bytes });
+    await uploadToR2(gitPathToR2Key(solutionFilePath), bytes);
     updated.solution = {
       url: "",
       path: "/" + solutionFilePath.replace(/^public\//, ""),
@@ -215,8 +213,10 @@ export async function updateExam(id: string, input: ExamUpdateInput): Promise<Co
   nextExams[idx] = updated;
   const searchIndex = buildSearchIndex(nextExams, assignments);
 
-  writes.push({ path: CONTENT_PATHS.exams, kind: "text", content: stringifyJson(nextExams) });
-  writes.push({ path: CONTENT_PATHS.searchIndex, kind: "text", content: stringifyJson(searchIndex) });
+  const writes: FileWrite[] = [
+    { path: CONTENT_PATHS.exams, kind: "text", content: stringifyJson(nextExams) },
+    { path: CONTENT_PATHS.searchIndex, kind: "text", content: stringifyJson(searchIndex) },
+  ];
 
   const commit = await commitFiles(writes, `admin: update ${cur.source} exam ${cur.slug}`);
   await cleanupBlobs(blobsToDelete);
@@ -235,14 +235,16 @@ export async function deleteExam(id: string): Promise<CommitResult> {
   const nextExams = exams.filter((_, i) => i !== idx);
   const searchIndex = buildSearchIndex(nextExams, assignments);
 
+  // Delete PDFs from R2
+  await deleteFromR2(gitPathToR2Key(examPdfPath(cur, "exam")));
+  if (cur.solution) {
+    await deleteFromR2(gitPathToR2Key(examPdfPath(cur, "solution")));
+  }
+
   const writes: FileWrite[] = [
-    { path: examPdfPath(cur, "exam"), kind: "delete" },
     { path: CONTENT_PATHS.exams, kind: "text", content: stringifyJson(nextExams) },
     { path: CONTENT_PATHS.searchIndex, kind: "text", content: stringifyJson(searchIndex) },
   ];
-  if (cur.solution) {
-    writes.push({ path: examPdfPath(cur, "solution"), kind: "delete" });
-  }
 
   return commitFiles(writes, `admin: delete ${cur.source} exam ${cur.slug}`);
 }
@@ -262,15 +264,15 @@ export async function createAssignment(input: AssignmentCreateInput): Promise<Co
   if (dup) throw new Error(`DUPLICATE: assignment slug "${slug}" already exists`);
 
   const id = buildAssignmentId(input.subject, slug);
-  const writes: FileWrite[] = [];
   const blobsToDelete: string[] = [];
   const filesForJson: Assignment["files"] = [];
 
+  // Upload PDFs to R2
   for (let i = 0; i < input.files.length; i++) {
     const f = input.files[i];
     const p = assignmentPdfPath({ subject: input.subject, slug }, i);
     const bytes = await fetchBlob(f.url);
-    writes.push({ path: p, kind: "binary", content: bytes });
+    await uploadToR2(gitPathToR2Key(p), bytes);
     filesForJson.push({
       url: "",
       path: "/" + p.replace(/^public\//, ""),
@@ -293,8 +295,10 @@ export async function createAssignment(input: AssignmentCreateInput): Promise<Co
   const nextAssignments = [...assignments, newA];
   const searchIndex = buildSearchIndex(exams, nextAssignments);
 
-  writes.push({ path: CONTENT_PATHS.assignments, kind: "text", content: stringifyJson(nextAssignments) });
-  writes.push({ path: CONTENT_PATHS.searchIndex, kind: "text", content: stringifyJson(searchIndex) });
+  const writes: FileWrite[] = [
+    { path: CONTENT_PATHS.assignments, kind: "text", content: stringifyJson(nextAssignments) },
+    { path: CONTENT_PATHS.searchIndex, kind: "text", content: stringifyJson(searchIndex) },
+  ];
 
   const commit = await commitFiles(writes, `admin: add assignment ${slug}`);
   await cleanupBlobs(blobsToDelete);
@@ -314,15 +318,14 @@ export async function updateAssignment(id: string, input: AssignmentUpdateInput)
     throw new Error("SUBJECT_CHANGE: not supported; delete + recreate.");
   }
 
-  const writes: FileWrite[] = [];
   const blobsToDelete: string[] = [];
   const filesForJson: Assignment["files"] = input.keepExistingFiles ? [...cur.files] : [];
 
   if (!input.keepExistingFiles) {
-    // Wipe existing files from repo
-    cur.files.forEach((f, i) => {
-      writes.push({ path: assignmentPdfPath(cur, i), kind: "delete" });
-    });
+    // Delete existing files from R2
+    await Promise.allSettled(
+      cur.files.map((_, i) => deleteFromR2(gitPathToR2Key(assignmentPdfPath(cur, i)))),
+    );
   }
 
   if (input.files && input.files.length) {
@@ -332,7 +335,7 @@ export async function updateAssignment(id: string, input: AssignmentUpdateInput)
       const targetIdx = startIdx + i;
       const p = assignmentPdfPath(cur, targetIdx);
       const bytes = await fetchBlob(f.url);
-      writes.push({ path: p, kind: "binary", content: bytes });
+      await uploadToR2(gitPathToR2Key(p), bytes);
       filesForJson.push({
         url: "",
         path: "/" + p.replace(/^public\//, ""),
@@ -353,8 +356,10 @@ export async function updateAssignment(id: string, input: AssignmentUpdateInput)
   nextAssignments[idx] = updated;
   const searchIndex = buildSearchIndex(exams, nextAssignments);
 
-  writes.push({ path: CONTENT_PATHS.assignments, kind: "text", content: stringifyJson(nextAssignments) });
-  writes.push({ path: CONTENT_PATHS.searchIndex, kind: "text", content: stringifyJson(searchIndex) });
+  const writes: FileWrite[] = [
+    { path: CONTENT_PATHS.assignments, kind: "text", content: stringifyJson(nextAssignments) },
+    { path: CONTENT_PATHS.searchIndex, kind: "text", content: stringifyJson(searchIndex) },
+  ];
 
   const commit = await commitFiles(writes, `admin: update assignment ${cur.slug}`);
   await cleanupBlobs(blobsToDelete);
@@ -371,11 +376,13 @@ export async function deleteAssignment(id: string): Promise<CommitResult> {
   const cur = assignments[idx];
   const nextAssignments = assignments.filter((_, i) => i !== idx);
   const searchIndex = buildSearchIndex(exams, nextAssignments);
+
+  // Delete PDFs from R2
+  await Promise.allSettled(
+    cur.files.map((_, i) => deleteFromR2(gitPathToR2Key(assignmentPdfPath(cur, i)))),
+  );
+
   const writes: FileWrite[] = [
-    ...cur.files.map((_, i) => ({
-      path: assignmentPdfPath(cur, i),
-      kind: "delete" as const,
-    })),
     { path: CONTENT_PATHS.assignments, kind: "text", content: stringifyJson(nextAssignments) },
     { path: CONTENT_PATHS.searchIndex, kind: "text", content: stringifyJson(searchIndex) },
   ];
