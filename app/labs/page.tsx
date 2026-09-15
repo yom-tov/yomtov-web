@@ -63,7 +63,7 @@ const guides = [
     title: "טבלת קודי קבלים",
     description:
       "טבלת המרה מלאה בין פיקופראד, ננופראד, מיקרופראד וקוד קבלים.",
-    href: "/pdfs/labs/capacitor-codes.jpeg",
+    href: "/labs/capacitor-codes.jpeg",
     icon: Table2,
     gradient: "from-blue-500 to-indigo-500",
     bgLight: "bg-blue-50 dark:bg-blue-500/10",
@@ -85,7 +85,7 @@ const guides = [
   {
     title: "התפלגות נורמלית",
     description: "סרטון הדמייה מוחשית של עקומת ההתפלגות הנורמלית (גאוסיאנית).",
-    href: "/pdfs/labs/normal-distribution.mp4",
+    href: "/labs/normal-distribution.mp4",
     icon: MonitorPlay,
     gradient: "from-cyan-500 to-sky-600",
     bgLight: "bg-cyan-50 dark:bg-cyan-500/10",
