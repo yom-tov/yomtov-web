@@ -88,7 +88,7 @@ export default function DigitalPage() {
       {/* Assignments */}
       <section className="mt-10">
         <h2 className="text-xl font-extrabold text-text">
-          אלקטרוניקה ספרתית
+          נוסחאונים וסיכומים
         </h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {asg.slice().reverse().map((a) => (
