@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ClipboardCheck, GraduationCap, NotebookPen, Wrench, Building2 } from "lucide-react";
+import { ArrowLeft, ClipboardCheck, GraduationCap, NotebookPen, Wrench, Building2, FileText } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { ExamCard } from "@/components/cards/ExamCard";
-import { AssignmentCard } from "@/components/cards/AssignmentCard";
+import { FormulaCard } from "@/components/cards/FormulaCard";
 import {
   assignmentsFor,
   examsFor,
+  formulasFor,
   getSubject,
   subjects,
   SUBJECT_TITLE_HE,
@@ -45,6 +46,7 @@ export default async function SubjectPage({ params }: { params: Params }) {
   const tech = examsFor(subject, "technician");
   const elecSys = examsFor(subject, "electrical-systems");
   const asg = assignmentsFor(subject);
+  const fml = formulasFor(subject);
 
   const items: {
     key: string;
@@ -102,6 +104,16 @@ export default async function SubjectPage({ params }: { params: Params }) {
       href: `/${subject}/assignments`,
       count: asg.length,
       icon: <NotebookPen className="h-5 w-5" />,
+    });
+  }
+  if (fml.length > 0) {
+    items.push({
+      key: "formulas",
+      title: "נוסחאונים וסיכומים",
+      description: "נוסחאונים, סיכומים וחומרי עזר למבחנים",
+      href: `/${subject}/formulas`,
+      count: fml.length,
+      icon: <FileText className="h-5 w-5" />,
     });
   }
 
@@ -182,16 +194,19 @@ export default async function SubjectPage({ params }: { params: Params }) {
         </section>
       )}
 
-      {asg.length > 0 && (
+      {fml.length > 0 && (
         <section className="mt-14">
-          <h2 className="text-xl font-extrabold text-text">מטלות מומלצות</h2>
+          <h2 className="text-xl font-extrabold text-text">
+            נוסחאונים וסיכומים
+          </h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {asg.slice(0, 3).map((a) => (
-              <AssignmentCard key={a.id} assignment={a} />
+            {fml.map((f) => (
+              <FormulaCard key={f.id} formula={f} />
             ))}
           </div>
         </section>
       )}
+
     </div>
   );
 }

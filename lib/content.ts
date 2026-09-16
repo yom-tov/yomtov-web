@@ -1,12 +1,14 @@
 import subjectsRaw from "@/content/subjects.json";
 import examsRaw from "@/content/exams.json";
 import assignmentsRaw from "@/content/assignments.json";
+import formulasRaw from "@/content/formulas.json";
 import labsRaw from "@/content/labs.json";
 import searchIndexRaw from "@/content/search-index.json";
 import type {
   Subject,
   Exam,
   Assignment,
+  Formula,
   Lab,
   SubjectId,
   ExamSource,
@@ -16,6 +18,7 @@ import type {
 export const subjects = subjectsRaw as Subject[];
 export const exams = examsRaw as Exam[];
 export const assignments = assignmentsRaw as Assignment[];
+export const formulas = formulasRaw as Formula[];
 export const labs = labsRaw as Lab[];
 export const searchIndex = searchIndexRaw as SearchItem[];
 
@@ -29,6 +32,10 @@ export function examsFor(subject: SubjectId, source: ExamSource): Exam[] {
 
 export function assignmentsFor(subject: SubjectId): Assignment[] {
   return assignments.filter((a) => a.subject === subject);
+}
+
+export function formulasFor(subject: SubjectId): Formula[] {
+  return formulas.filter((f) => f.subject === subject);
 }
 
 export function findExam(
@@ -46,6 +53,13 @@ export function findAssignment(
   slug: string
 ): Assignment | undefined {
   return assignments.find((a) => a.subject === subject && a.slug === slug);
+}
+
+export function findFormula(
+  subject: SubjectId,
+  slug: string
+): Formula | undefined {
+  return formulas.find((f) => f.subject === subject && f.slug === slug);
 }
 
 export function recentExams(limit = 6): Exam[] {

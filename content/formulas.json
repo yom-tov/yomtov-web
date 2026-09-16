@@ -1,0 +1,72 @@
+[
+  {
+    "id": "electricity/formulas/review-voltages-currents-thevenin",
+    "slug": "review-voltages-currents-thevenin",
+    "subject": "electricity",
+    "title": "חזרה על מתחים, זרמים ותבנין",
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/formulas/electricity/review-voltages-currents-thevenin.pdf",
+        "sizeBytes": 3596591,
+        "id": "review-voltages-currents-thevenin"
+      }
+    ]
+  },
+  {
+    "id": "electricity/formulas/emf-spring-2024-q10",
+    "slug": "emf-spring-2024-q10",
+    "subject": "electricity",
+    "title": "כא\"מ מושרה — אביב 2024, שאלה 10",
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/formulas/electricity/emf-spring-2024-q10.pdf",
+        "sizeBytes": 518945,
+        "id": "emf-spring-2024-q10"
+      }
+    ]
+  },
+  {
+    "id": "electricity/formulas/formula-sheet-mahat-2009",
+    "slug": "formula-sheet-mahat-2009",
+    "subject": "electricity",
+    "title": "נוסחאון מה\"ט בחשמל — 2009",
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/formulas/electricity/formula-sheet-mahat-2009.pdf",
+        "sizeBytes": 17399091,
+        "id": "formula-sheet-mahat-2009"
+      }
+    ]
+  },
+  {
+    "id": "electricity/formulas/formula-sheet-mahat-2017",
+    "slug": "formula-sheet-mahat-2017",
+    "subject": "electricity",
+    "title": "נוסחאון מה\"ט בחשמל — 2017",
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/formulas/electricity/formula-sheet-mahat-2017.pdf",
+        "sizeBytes": 1905859,
+        "id": "formula-sheet-mahat-2017"
+      }
+    ]
+  },
+  {
+    "id": "electricity/formulas/ac-fundamentals-exercises",
+    "slug": "ac-fundamentals-exercises",
+    "subject": "electricity",
+    "title": "תרגילים עם נוסחאות יסוד ב-AC",
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/formulas/electricity/ac-fundamentals-exercises.pdf",
+        "sizeBytes": 8295665,
+        "id": "ac-fundamentals-exercises"
+      }
+    ]
+  }
+]

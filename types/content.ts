@@ -46,6 +46,14 @@ export interface Assignment {
   originalDetailUrl: string | null;
 }
 
+export interface Formula {
+  id: string;
+  slug: string;
+  subject: SubjectId;
+  title: string;
+  files: FileRef[];
+}
+
 export interface Lab {
   id: string;
   slug: string;
@@ -68,6 +76,13 @@ export type SearchItem =
   | {
       id: string;
       type: "assignment";
+      title: string;
+      subject: SubjectId;
+      url: string;
+    }
+  | {
+      id: string;
+      type: "formula";
       title: string;
       subject: SubjectId;
       url: string;

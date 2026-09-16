@@ -805,5 +805,40 @@
     "title": "ספר לימוד ספרתית",
     "subject": "digital",
     "url": "/digital/assignments/digital-textbook-2010"
+  },
+  {
+    "id": "electricity/formulas/review-voltages-currents-thevenin",
+    "type": "formula",
+    "title": "חזרה על מתחים, זרמים ותבנין",
+    "subject": "electricity",
+    "url": "/electricity/formulas/review-voltages-currents-thevenin"
+  },
+  {
+    "id": "electricity/formulas/emf-spring-2024-q10",
+    "type": "formula",
+    "title": "כא\"מ מושרה — אביב 2024, שאלה 10",
+    "subject": "electricity",
+    "url": "/electricity/formulas/emf-spring-2024-q10"
+  },
+  {
+    "id": "electricity/formulas/formula-sheet-mahat-2009",
+    "type": "formula",
+    "title": "נוסחאון מה\"ט בחשמל — 2009",
+    "subject": "electricity",
+    "url": "/electricity/formulas/formula-sheet-mahat-2009"
+  },
+  {
+    "id": "electricity/formulas/formula-sheet-mahat-2017",
+    "type": "formula",
+    "title": "נוסחאון מה\"ט בחשמל — 2017",
+    "subject": "electricity",
+    "url": "/electricity/formulas/formula-sheet-mahat-2017"
+  },
+  {
+    "id": "electricity/formulas/ac-fundamentals-exercises",
+    "type": "formula",
+    "title": "תרגילים עם נוסחאות יסוד ב-AC",
+    "subject": "electricity",
+    "url": "/electricity/formulas/ac-fundamentals-exercises"
   }
 ]

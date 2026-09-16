@@ -11,6 +11,7 @@ const TYPE_LABEL: Record<string, string> = {
   "exam-mahat": 'מבחן מה"ט',
   "exam-education": "מבחן מ״החינוך",
   assignment: "מטלה",
+  formula: "נוסחאון",
 };
 
 export function SearchClient() {
@@ -97,6 +98,8 @@ export function SearchClient() {
                     <div className="grid h-10 w-10 place-items-center rounded-lg bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-300">
                       {r.type === "assignment" ? (
                         <NotebookPen className="h-4.5 w-4.5" />
+                      ) : r.type === "formula" ? (
+                        <FileText className="h-4.5 w-4.5" />
                       ) : (
                         <FileText className="h-4.5 w-4.5" />
                       )}

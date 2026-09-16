@@ -6,9 +6,11 @@ import { Badge } from "@/components/ui/Badge";
 import {
   exams,
   assignments,
+  formulas,
   examSubtitle,
   findAssignment,
   findExam,
+  findFormula,
   formatSize,
   getSubject,
   sourceFromSlug,
@@ -18,10 +20,11 @@ import {
 import type { SubjectId } from "@/types/content";
 import { ExamCard } from "@/components/cards/ExamCard";
 import { AssignmentCard } from "@/components/cards/AssignmentCard";
+import { FormulaCard } from "@/components/cards/FormulaCard";
 import { PdfPreview } from "@/components/pdf/PdfPreview";
 import { getAssetUrl } from "@/lib/pdf-url";
 
-const VALID_TYPES = ["mahat-exams", "ministry-exams", "technician-exams", "electrical-systems-exams", "assignments"] as const;
+const VALID_TYPES = ["mahat-exams", "ministry-exams", "technician-exams", "electrical-systems-exams", "assignments", "formulas"] as const;
 type ListType = (typeof VALID_TYPES)[number];
 
 const SOURCE_TO_SLUG: Record<string, string> = {
@@ -43,6 +46,9 @@ export function generateStaticParams() {
   for (const a of assignments) {
     params.push({ subject: a.subject, type: "assignments", slug: a.slug });
   }
+  for (const f of formulas) {
+    params.push({ subject: f.subject, type: "formulas", slug: f.slug });
+  }
   return params;
 }
 
@@ -57,9 +63,12 @@ export async function generateMetadata(
   const s = getSubject(subject);
   if (!s) return {};
   const src = sourceFromSlug(type);
-  const item = src
-    ? findExam(subject, src, slug)
-    : findAssignment(subject, slug);
+  const item =
+    type === "formulas"
+      ? findFormula(subject, slug)
+      : src
+        ? findExam(subject, src, slug)
+        : findAssignment(subject, slug);
   if (!item) return {};
   const title =
     "source" in item ? `${item.title} - ${SOURCE_TITLE_HE[item.source]}` : item.title;
@@ -80,16 +89,20 @@ export default async function ItemPage({
 
   const src = sourceFromSlug(type);
   const isAssignment = type === "assignments";
-  const exam = !isAssignment && src ? findExam(subject, src, slug) : null;
+  const isFormula = type === "formulas";
+  const exam = !isAssignment && !isFormula && src ? findExam(subject, src, slug) : null;
   const assignment = isAssignment ? findAssignment(subject, slug) : null;
-  const item = exam || assignment;
+  const formula = isFormula ? findFormula(subject, slug) : null;
+  const item = exam || assignment || formula;
   if (!item) notFound();
 
-  const listTitle = isAssignment
-    ? "עבודות ותרגולים"
-    : src
-      ? SOURCE_TITLE_HE[src]
-      : "";
+  const listTitle = isFormula
+    ? "נוסחאונים וסיכומים"
+    : isAssignment
+      ? "עבודות ותרגולים"
+      : src
+        ? SOURCE_TITLE_HE[src]
+        : "";
   const listHref = `/${subject}/${type}`;
 
   const files: {
@@ -126,6 +139,16 @@ export default async function ItemPage({
         sizeBytes: f.sizeBytes,
       });
     });
+  } else if (formula) {
+    formula.files.forEach((f, idx) => {
+      files.push({
+        label: idx === 0 ? formula.title : `נספח ${idx + 1}`,
+        role: idx === 0 ? "primary" : "extra",
+        url: f.url,
+        path: getAssetUrl(f.path),
+        sizeBytes: f.sizeBytes,
+      });
+    });
   }
 
   // related items - same subject/type, exclude current
@@ -142,7 +165,11 @@ export default async function ItemPage({
       ? assignments
           .filter((a) => a.subject === assignment.subject && a.id !== assignment.id)
           .slice(0, 3)
-      : [];
+      : formula
+        ? formulas
+            .filter((f) => f.subject === formula.subject && f.id !== formula.id)
+            .slice(0, 3)
+        : [];
 
   const subtitle = exam ? examSubtitle(exam) : "";
 
@@ -168,10 +195,10 @@ export default async function ItemPage({
     : {
         "@context": "https://schema.org",
         "@type": "LearningResource",
-        name: assignment!.title,
+        name: (assignment || formula)!.title,
         inLanguage: "he",
         educationalLevel: "post-secondary",
-        learningResourceType: "Assignment",
+        learningResourceType: isFormula ? "Formula Sheet" : "Assignment",
         about: SUBJECT_TITLE_HE[subject],
       };
 
@@ -287,8 +314,10 @@ export default async function ItemPage({
             {related.map((r) =>
               "source" in r ? (
                 <ExamCard key={r.id} exam={r} />
+              ) : "files" in r && isFormula ? (
+                <FormulaCard key={r.id} formula={r as typeof formulas[number]} />
               ) : (
-                <AssignmentCard key={r.id} assignment={r} />
+                <AssignmentCard key={r.id} assignment={r as typeof assignments[number]} />
               )
             )}
           </div>

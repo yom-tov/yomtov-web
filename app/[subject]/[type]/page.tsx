@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import {
   assignmentsFor,
   examsFor,
+  formulasFor,
   getSubject,
   sourceFromSlug,
   SOURCE_TITLE_HE,
@@ -13,8 +14,9 @@ import {
 import type { SubjectId } from "@/types/content";
 import { ExamListClient } from "./ExamListClient";
 import { AssignmentListClient } from "./AssignmentListClient";
+import { FormulaListClient } from "./FormulaListClient";
 
-const VALID_TYPES = ["mahat-exams", "ministry-exams", "technician-exams", "electrical-systems-exams", "assignments"] as const;
+const VALID_TYPES = ["mahat-exams", "ministry-exams", "technician-exams", "electrical-systems-exams", "assignments", "formulas"] as const;
 type ListType = (typeof VALID_TYPES)[number];
 
 export function generateStaticParams() {
@@ -37,7 +39,13 @@ export async function generateMetadata(
   if (!s || !(VALID_TYPES as readonly string[]).includes(type)) return {};
   const src = sourceFromSlug(type);
   const kind =
-    type === "assignments" ? "עבודות ותרגולים" : src ? SOURCE_TITLE_HE[src] : "";
+    type === "formulas"
+      ? "נוסחאונים וסיכומים"
+      : type === "assignments"
+        ? "עבודות ותרגולים"
+        : src
+          ? SOURCE_TITLE_HE[src]
+          : "";
   return {
     title: `${kind} - ${s.hebrewTitle}`,
     description: `${kind} בתחום ${s.hebrewTitle}. מאגר מקצועי מקוטלג לפי שנה ומועד.`,
@@ -55,17 +63,22 @@ export default async function ListPage({
 
   const src = sourceFromSlug(type);
   const isAssignments = type === "assignments";
-  const title = isAssignments
-    ? "עבודות ותרגולים"
-    : src
-      ? SOURCE_TITLE_HE[src]
-      : "";
+  const isFormulas = type === "formulas";
+  const title = isFormulas
+    ? "נוסחאונים וסיכומים"
+    : isAssignments
+      ? "עבודות ותרגולים"
+      : src
+        ? SOURCE_TITLE_HE[src]
+        : "";
 
-  const items = isAssignments
-    ? assignmentsFor(subject)
-    : src
-      ? examsFor(subject, src)
-      : [];
+  const items = isFormulas
+    ? formulasFor(subject)
+    : isAssignments
+      ? assignmentsFor(subject)
+      : src
+        ? examsFor(subject, src)
+        : [];
 
   if (items.length === 0) notFound();
 
@@ -88,7 +101,9 @@ export default async function ListPage({
       </header>
 
       <div className="mt-8">
-        {isAssignments ? (
+        {isFormulas ? (
+          <FormulaListClient items={items as ReturnType<typeof formulasFor>} />
+        ) : isAssignments ? (
           <AssignmentListClient items={items as ReturnType<typeof assignmentsFor>} />
         ) : (
           <ExamListClient items={items as ReturnType<typeof examsFor>} />
