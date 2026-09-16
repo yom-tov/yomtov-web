@@ -59,12 +59,11 @@ export function CalculatorClient() {
       {/* Tab content */}
       {tab === "ecalc" && (
         <div className="flex justify-center">
-          <div className="overflow-hidden rounded-2xl border border-border shadow-lg bg-[#f0f0f0]">
+          <div className="w-full max-w-[740px] overflow-hidden rounded-2xl border border-border shadow-lg bg-[#f0f0f0]">
             <iframe
               src="/ecalc/index.html"
               title="מחשבון מדעי — eCalc"
-              className="border-0"
-              style={{ width: "740px", height: "570px", maxWidth: "100%" }}
+              className="block h-[570px] w-full border-0 sm:h-[570px]"
               allow="fullscreen"
             />
           </div>

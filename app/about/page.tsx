@@ -56,45 +56,45 @@ export default function AboutPage() {
             </a>
 
             <div className="mt-10 overflow-hidden rounded-2xl border border-primary-200/60 bg-gradient-to-br from-primary-50/80 via-surface to-accent-50/50 shadow-lg shadow-primary-500/5 dark:border-primary-400/20 dark:from-primary-500/10 dark:via-surface dark:to-accent-500/5 dark:shadow-primary-500/10">
-              <div className="border-b border-primary-100/60 bg-primary-50/50 px-7 py-4 dark:border-primary-400/15 dark:bg-primary-500/5">
+              <div className="border-b border-primary-100/60 bg-primary-50/50 px-4 py-3 sm:px-7 sm:py-4 dark:border-primary-400/15 dark:bg-primary-500/5">
                 <h3 className="text-base font-bold text-primary-800 dark:text-primary-200">
                   צוות האתר
                 </h3>
               </div>
               <div className="divide-y-2 divide-primary-200 dark:divide-primary-400/30">
-                <div className="flex items-center gap-5 px-7 py-5">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-600 dark:bg-primary-500/15 dark:text-primary-300">
-                    <Crown className="h-6 w-6" />
+                <div className="flex items-center gap-3 px-4 py-4 sm:gap-5 sm:px-7 sm:py-5">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-600 sm:h-12 sm:w-12 dark:bg-primary-500/15 dark:text-primary-300">
+                    <Crown className="h-5 w-5 sm:h-6 sm:w-6" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="text-sm font-semibold text-text-subtle">בעלים ומנהל האתר</div>
-                    <div className="flex items-center justify-between gap-2">
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
                       <div className="text-lg font-bold text-text">אבי יומטוביאן</div>
                       <a
                         href="mailto:yomtov7.site@gmail.com"
                         dir="ltr"
-                        className="inline-flex items-center gap-1.5 text-[17px] font-semibold text-primary-600 transition-colors hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-200"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 transition-colors hover:text-primary-800 sm:text-[17px] dark:text-primary-400 dark:hover:text-primary-200"
                       >
-                        <Mail className="h-4.5 w-4.5" />
+                        <Mail className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
                         yomtov7.site@gmail.com
                       </a>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-5 px-7 py-5">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent-100 text-accent-600 dark:bg-accent-500/15 dark:text-accent-300">
-                    <Code2 className="h-6 w-6" />
+                <div className="flex items-center gap-3 px-4 py-4 sm:gap-5 sm:px-7 sm:py-5">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-100 text-accent-600 sm:h-12 sm:w-12 dark:bg-accent-500/15 dark:text-accent-300">
+                    <Code2 className="h-5 w-5 sm:h-6 sm:w-6" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="text-sm font-semibold text-text-subtle">פיתוח, עיצוב ובניית האתר</div>
-                    <div className="flex items-center justify-between gap-2">
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
                       <div className="text-lg font-bold text-text">סער כהן</div>
                       <a
                         href="mailto:saar_cohen@myelectroniclab.com"
                         dir="ltr"
-                        className="inline-flex items-center gap-1.5 text-[17px] font-semibold text-accent-600 transition-colors hover:text-accent-800 dark:text-accent-400 dark:hover:text-accent-200"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-600 transition-colors hover:text-accent-800 sm:text-[17px] dark:text-accent-400 dark:hover:text-accent-200"
                       >
-                        <Mail className="h-4.5 w-4.5" />
+                        <Mail className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
                         saar_cohen@myelectroniclab.com
                       </a>
                     </div>
