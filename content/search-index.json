@@ -840,5 +840,40 @@
     "title": "תרגילים עם נוסחאות יסוד ב-AC",
     "subject": "electricity",
     "url": "/electricity/formulas/ac-fundamentals-exercises"
+  },
+  {
+    "id": "analog/formulas/power-amplifiers-theory",
+    "type": "formula",
+    "title": "מגברי הספק — תאוריה",
+    "subject": "analog",
+    "url": "/analog/formulas/power-amplifiers-theory"
+  },
+  {
+    "id": "analog/formulas/opamp-applications",
+    "type": "formula",
+    "title": "מגברי שרת — יישומים",
+    "subject": "analog",
+    "url": "/analog/formulas/opamp-applications"
+  },
+  {
+    "id": "analog/formulas/formula-sheet-analog",
+    "type": "formula",
+    "title": "נוסחאון בתקבילית",
+    "subject": "analog",
+    "url": "/analog/formulas/formula-sheet-analog"
+  },
+  {
+    "id": "analog/formulas/bjt-connection-types",
+    "type": "formula",
+    "title": "צורות חיבור של BJT",
+    "subject": "analog",
+    "url": "/analog/formulas/bjt-connection-types"
+  },
+  {
+    "id": "analog/formulas/mirror-effect-exercise",
+    "type": "formula",
+    "title": "תרגיל באפקט משקפת",
+    "subject": "analog",
+    "url": "/analog/formulas/mirror-effect-exercise"
   }
 ]

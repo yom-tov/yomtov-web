@@ -68,5 +68,75 @@
         "id": "ac-fundamentals-exercises"
       }
     ]
+  },
+  {
+    "id": "analog/formulas/power-amplifiers-theory",
+    "slug": "power-amplifiers-theory",
+    "subject": "analog",
+    "title": "מגברי הספק — תאוריה",
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/formulas/analog/power-amplifiers-theory.pdf",
+        "sizeBytes": 5134623,
+        "id": "power-amplifiers-theory"
+      }
+    ]
+  },
+  {
+    "id": "analog/formulas/opamp-applications",
+    "slug": "opamp-applications",
+    "subject": "analog",
+    "title": "מגברי שרת — יישומים",
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/formulas/analog/opamp-applications.pdf",
+        "sizeBytes": 745882,
+        "id": "opamp-applications"
+      }
+    ]
+  },
+  {
+    "id": "analog/formulas/formula-sheet-analog",
+    "slug": "formula-sheet-analog",
+    "subject": "analog",
+    "title": "נוסחאון בתקבילית",
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/formulas/analog/formula-sheet-analog.pdf",
+        "sizeBytes": 15380614,
+        "id": "formula-sheet-analog"
+      }
+    ]
+  },
+  {
+    "id": "analog/formulas/bjt-connection-types",
+    "slug": "bjt-connection-types",
+    "subject": "analog",
+    "title": "צורות חיבור של BJT",
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/formulas/analog/bjt-connection-types.pdf",
+        "sizeBytes": 562296,
+        "id": "bjt-connection-types"
+      }
+    ]
+  },
+  {
+    "id": "analog/formulas/mirror-effect-exercise",
+    "slug": "mirror-effect-exercise",
+    "subject": "analog",
+    "title": "תרגיל באפקט משקפת",
+    "files": [
+      {
+        "url": "",
+        "path": "/pdfs/formulas/analog/mirror-effect-exercise.pdf",
+        "sizeBytes": 1784539,
+        "id": "mirror-effect-exercise"
+      }
+    ]
   }
 ]
