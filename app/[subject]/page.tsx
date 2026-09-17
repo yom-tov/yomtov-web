@@ -132,9 +132,9 @@ export default async function SubjectPage({ params }: { params: Params }) {
       href: `/${subject}/formulas`,
       count: fml.length,
       icon: <FileText className="h-5 w-5" />,
-      gradient: "from-amber-500 to-yellow-500",
-      iconBg: "bg-amber-50 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300",
-      linkColor: "text-amber-600 group-hover:text-amber-800 dark:text-amber-300 dark:group-hover:text-white",
+      gradient: "from-violet-500 to-purple-500",
+      iconBg: "bg-violet-50 text-violet-600 dark:bg-violet-500/15 dark:text-violet-300",
+      linkColor: "text-violet-600 group-hover:text-violet-800 dark:text-violet-300 dark:group-hover:text-white",
     });
   }
 
