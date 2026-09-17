@@ -55,6 +55,9 @@ export default async function SubjectPage({ params }: { params: Params }) {
     href: string;
     count: number;
     icon: React.ReactNode;
+    gradient: string;
+    iconBg: string;
+    linkColor: string;
   }[] = [];
   if (mahat.length > 0) {
     items.push({
@@ -64,6 +67,9 @@ export default async function SubjectPage({ params }: { params: Params }) {
       href: `/${subject}/mahat-exams`,
       count: mahat.length,
       icon: <GraduationCap className="h-5 w-5" />,
+      gradient: "from-indigo-500 to-blue-500",
+      iconBg: "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-300",
+      linkColor: "text-indigo-600 group-hover:text-indigo-800 dark:text-indigo-300 dark:group-hover:text-white",
     });
   }
   if (edu.length > 0) {
@@ -74,6 +80,9 @@ export default async function SubjectPage({ params }: { params: Params }) {
       href: `/${subject}/ministry-exams`,
       count: edu.length,
       icon: <ClipboardCheck className="h-5 w-5" />,
+      gradient: "from-cyan-500 to-teal-500",
+      iconBg: "bg-cyan-50 text-cyan-600 dark:bg-cyan-500/15 dark:text-cyan-300",
+      linkColor: "text-cyan-600 group-hover:text-cyan-800 dark:text-cyan-300 dark:group-hover:text-white",
     });
   }
   if (tech.length > 0) {
@@ -84,6 +93,9 @@ export default async function SubjectPage({ params }: { params: Params }) {
       href: `/${subject}/technician-exams`,
       count: tech.length,
       icon: <Wrench className="h-5 w-5" />,
+      gradient: "from-orange-500 to-amber-500",
+      iconBg: "bg-orange-50 text-orange-600 dark:bg-orange-500/15 dark:text-orange-300",
+      linkColor: "text-orange-600 group-hover:text-orange-800 dark:text-orange-300 dark:group-hover:text-white",
     });
   }
   if (elecSys.length > 0) {
@@ -94,6 +106,9 @@ export default async function SubjectPage({ params }: { params: Params }) {
       href: `/${subject}/electrical-systems-exams`,
       count: elecSys.length,
       icon: <Building2 className="h-5 w-5" />,
+      gradient: "from-rose-500 to-pink-500",
+      iconBg: "bg-rose-50 text-rose-600 dark:bg-rose-500/15 dark:text-rose-300",
+      linkColor: "text-rose-600 group-hover:text-rose-800 dark:text-rose-300 dark:group-hover:text-white",
     });
   }
   if (asg.length > 0) {
@@ -104,6 +119,9 @@ export default async function SubjectPage({ params }: { params: Params }) {
       href: `/${subject}/assignments`,
       count: asg.length,
       icon: <NotebookPen className="h-5 w-5" />,
+      gradient: "from-emerald-500 to-green-500",
+      iconBg: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/15 dark:text-emerald-300",
+      linkColor: "text-emerald-600 group-hover:text-emerald-800 dark:text-emerald-300 dark:group-hover:text-white",
     });
   }
   if (fml.length > 0) {
@@ -114,6 +132,9 @@ export default async function SubjectPage({ params }: { params: Params }) {
       href: `/${subject}/formulas`,
       count: fml.length,
       icon: <FileText className="h-5 w-5" />,
+      gradient: "from-amber-500 to-yellow-500",
+      iconBg: "bg-amber-50 text-amber-600 dark:bg-amber-500/15 dark:text-amber-300",
+      linkColor: "text-amber-600 group-hover:text-amber-800 dark:text-amber-300 dark:group-hover:text-white",
     });
   }
 
@@ -158,23 +179,31 @@ export default async function SubjectPage({ params }: { params: Params }) {
             <Link
               key={it.key}
               href={it.href}
-              className="group flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary-200 hover:shadow-md dark:hover:border-primary-400/40"
+              className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-surface p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:hover:border-white/10"
             >
-              <div className="flex items-start justify-between">
-                <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-300">
+              <div
+                aria-hidden
+                className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-l ${it.gradient}`}
+              />
+              <div
+                aria-hidden
+                className={`pointer-events-none absolute -top-14 -left-14 h-32 w-32 rounded-full bg-gradient-to-br ${it.gradient} opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-20`}
+              />
+              <div className="relative flex items-start justify-between">
+                <div className={`grid h-11 w-11 place-items-center rounded-xl ${it.iconBg}`}>
                   {it.icon}
                 </div>
                 <span className="text-xs font-semibold text-text-subtle num">
                   {it.count} פריטים
                 </span>
               </div>
-              <div className="mt-6">
+              <div className="relative mt-6">
                 <h3 className="text-lg font-bold text-text">{it.title}</h3>
                 <p className="mt-1 text-sm text-text-muted">{it.description}</p>
               </div>
-              <div className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary-700 group-hover:text-primary-900 dark:text-primary-300 dark:group-hover:text-white">
+              <div className={`relative mt-5 inline-flex items-center gap-1 text-sm font-semibold ${it.linkColor}`}>
                 עיון
-                <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+                <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
               </div>
             </Link>
           ))}
