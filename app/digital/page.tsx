@@ -78,7 +78,7 @@ export default function DigitalPage() {
           סימולטור מעגלים ספרתיים
         </h2>
         <p className="mt-1 text-sm text-text-muted">
-          מפענח BCD ל-7 מקטעים — לחצו על המתגים כדי לשנות את הספרה המוצגת
+          רמזור תנועה ספרתי — צפו בלוגיקה הסדרתית שמפעילה את הנורות
         </p>
         <div className="mt-4">
           <DigitalSimulator />

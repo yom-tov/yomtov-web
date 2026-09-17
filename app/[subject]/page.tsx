@@ -236,6 +236,54 @@ export default async function SubjectPage({ params }: { params: Params }) {
         </section>
       )}
 
+      {subject === "electricity" && (
+        <section className="mt-14">
+          <h2 className="text-xl font-extrabold text-text">
+            סימולטור מעגלים
+          </h2>
+          <p className="mt-1 text-sm text-text-muted">
+            קוביית נגדים — מעגל קלאסי לתרגול חישוב התנגדות שקולה
+          </p>
+          <div className="mt-4 mx-auto w-full max-w-2xl">
+            <div className="overflow-hidden rounded-2xl border border-border shadow-lg bg-neutral-900">
+              <div className="relative w-full" style={{ paddingBottom: "68.75%" }}>
+                <iframe
+                  src="https://www.falstad.com/circuit/circuitjs.html?startCircuit=cube.txt"
+                  title="סימולטור מעגלים — Resistor Cube"
+                  className="absolute inset-0 h-full w-full"
+                  allow="fullscreen"
+                  sandbox="allow-scripts allow-same-origin allow-popups"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {subject === "analog" && (
+        <section className="mt-14">
+          <h2 className="text-xl font-extrabold text-text">
+            סימולטור מעגלים
+          </h2>
+          <p className="mt-1 text-sm text-text-muted">
+            מגבר Common-Emitter — מעגל מגבר בסיסי עם טרנזיסטור BJT
+          </p>
+          <div className="mt-4 mx-auto w-full max-w-2xl">
+            <div className="overflow-hidden rounded-2xl border border-border shadow-lg bg-neutral-900">
+              <div className="relative w-full" style={{ paddingBottom: "68.75%" }}>
+                <iframe
+                  src="https://www.falstad.com/circuit/circuitjs.html?startCircuit=ceamp.txt"
+                  title="סימולטור מעגלים — Common-Emitter Amplifier"
+                  className="absolute inset-0 h-full w-full"
+                  allow="fullscreen"
+                  sandbox="allow-scripts allow-same-origin allow-popups"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
     </div>
   );
 }

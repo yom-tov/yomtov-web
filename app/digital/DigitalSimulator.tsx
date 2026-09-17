@@ -5,7 +5,7 @@ import { Maximize2, Minimize2, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 const SIMULATOR_URL =
-  "https://www.falstad.com/circuit/circuitjs.html?startCircuit=7segdecoder.txt";
+  "https://www.falstad.com/circuit/circuitjs.html?startCircuit=traffic.txt";
 
 export default function DigitalSimulator() {
   const [expanded, setExpanded] = useState(false);
@@ -18,7 +18,7 @@ export default function DigitalSimulator() {
           <div className="relative w-full" style={{ paddingBottom: "68.75%" }}>
             <iframe
               src={SIMULATOR_URL}
-              title="סימולטור מעגלים ספרתיים — 7-Segment Decoder"
+              title="סימולטור מעגלים ספרתיים — Traffic Light"
               className="absolute inset-0 h-full w-full"
               allow="fullscreen"
               sandbox="allow-scripts allow-same-origin allow-popups"
@@ -62,7 +62,7 @@ export default function DigitalSimulator() {
             </button>
             <iframe
               src={SIMULATOR_URL}
-              title="סימולטור מעגלים ספרתיים — 7-Segment Decoder (תצוגה מורחבת)"
+              title="סימולטור מעגלים ספרתיים — Traffic Light (תצוגה מורחבת)"
               className="h-full w-full"
               allow="fullscreen"
               sandbox="allow-scripts allow-same-origin allow-popups"
