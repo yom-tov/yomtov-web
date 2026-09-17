@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail } from "lucide-react";
+import { Mail, Globe, Code2 } from "lucide-react";
 
 const CONTACT_EMAIL = "yomtov7@gmail.com";
 
@@ -129,7 +129,30 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-10 border-t border-border pt-6 text-xs text-text-subtle">
-          © {new Date().getFullYear()} אבי יומטוביאן · כל הזכויות שמורות.
+          <div>© {new Date().getFullYear()} אבי יומטוביאן · כל הזכויות שמורות.</div>
+          <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1">
+            <span className="inline-flex items-center gap-1">
+              <Code2 className="h-3.5 w-3.5 text-text-subtle" />
+              האתר נבנה על ידי סער כהן -
+            </span>
+            <a
+              href="mailto:saar_cohen@myelectroniclab.com"
+              dir="ltr"
+              className="text-text-muted transition-colors hover:text-primary-600 dark:hover:text-primary-300"
+            >
+              saar_cohen@myelectroniclab.com
+            </a>
+            <span className="text-border">|</span>
+            <a
+              href="https://myelectroniclab.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/dev inline-flex items-center gap-1 rounded-full border border-primary-200 bg-primary-50/50 px-2.5 py-0.5 text-primary-600 transition-all hover:-translate-y-px hover:border-primary-300 hover:bg-primary-50 hover:text-primary-700 hover:shadow-sm dark:border-primary-500/20 dark:bg-primary-500/10 dark:text-primary-300 dark:hover:border-primary-500/40 dark:hover:bg-primary-500/15 dark:hover:text-primary-200"
+            >
+              <Globe className="h-3 w-3" />
+              MyElectronicLab.com
+            </a>
+          </div>
         </div>
       </div>
     </footer>
