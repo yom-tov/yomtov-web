@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
-import { Mail, ShieldCheck, Accessibility as AccessibilityIcon, Crown, Code2 } from "lucide-react";
+import { Mail, ShieldCheck, Accessibility as AccessibilityIcon, Crown, Code2, Globe } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "הצהרת נגישות",
@@ -84,28 +84,58 @@ export default function AccessibilityPage() {
           </section>
 
           <div className="overflow-hidden rounded-2xl border border-primary-200/60 bg-gradient-to-br from-primary-50/80 via-surface to-accent-50/50 shadow-lg shadow-primary-500/5 dark:border-primary-400/20 dark:from-primary-500/10 dark:via-surface dark:to-accent-500/5 dark:shadow-primary-500/10">
-            <div className="border-b border-primary-100/60 bg-primary-50/50 px-6 py-3 dark:border-primary-400/15 dark:bg-primary-500/5">
-              <h3 className="text-sm font-bold text-primary-800 dark:text-primary-200">
+            <div className="border-b border-primary-100/60 bg-primary-50/50 px-4 py-3 sm:px-7 sm:py-4 dark:border-primary-400/15 dark:bg-primary-500/5">
+              <h3 className="text-base font-bold text-primary-800 dark:text-primary-200">
                 צוות האתר
               </h3>
             </div>
-            <div className="divide-y divide-primary-100/40 dark:divide-primary-400/10">
-              <div className="flex items-center gap-4 px-6 py-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-600 dark:bg-primary-500/15 dark:text-primary-300">
-                  <Crown className="h-5 w-5" />
+            <div className="divide-y-2 divide-primary-200 dark:divide-primary-400/30">
+              <div className="flex items-center gap-3 px-4 py-4 sm:gap-5 sm:px-7 sm:py-5">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-600 sm:h-12 sm:w-12 dark:bg-primary-500/15 dark:text-primary-300">
+                  <Crown className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
-                <div>
-                  <div className="text-xs font-semibold text-text-subtle">בעלים ומנהל האתר</div>
-                  <div className="text-base font-bold text-text">אבי יומטוביאן</div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-semibold text-text-subtle">בעלים ומנהל האתר</div>
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
+                    <div className="text-lg font-bold text-text">אבי יומטוביאן</div>
+                    <a
+                      href="mailto:yomtov7.site@gmail.com"
+                      dir="ltr"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 transition-colors hover:text-primary-800 sm:text-[17px] dark:text-primary-400 dark:hover:text-primary-200"
+                    >
+                      <Mail className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
+                      yomtov7.site@gmail.com
+                    </a>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-center gap-4 px-6 py-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-100 text-accent-600 dark:bg-accent-500/15 dark:text-accent-300">
-                  <Code2 className="h-5 w-5" />
+              <div className="flex items-center gap-3 px-4 py-4 sm:gap-5 sm:px-7 sm:py-5">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-100 text-accent-600 sm:h-12 sm:w-12 dark:bg-accent-500/15 dark:text-accent-300">
+                  <Code2 className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
-                <div>
-                  <div className="text-xs font-semibold text-text-subtle">פיתוח, עיצוב ובניית האתר</div>
-                  <div className="text-base font-bold text-text">סער כהן</div>
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-semibold text-text-subtle">פיתוח, עיצוב ובניית האתר</div>
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
+                    <div className="text-lg font-bold text-text">סער כהן</div>
+                    <a
+                      href="mailto:saar_cohen@myelectroniclab.com"
+                      dir="ltr"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-600 transition-colors hover:text-accent-800 sm:text-[17px] dark:text-accent-400 dark:hover:text-accent-200"
+                    >
+                      <Mail className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
+                      saar_cohen@myelectroniclab.com
+                    </a>
+                  </div>
+                  <a
+                    href="https://myelectroniclab.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/btn relative mt-3 flex items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-l from-accent-600 to-accent-500 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-accent-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent-500/30 dark:from-accent-500 dark:to-accent-400 dark:shadow-accent-400/20"
+                  >
+                    <span className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover/btn:translate-x-full" />
+                    <Globe className="relative h-4.5 w-4.5" />
+                    <span className="relative">בקרו באתר MyElectronicLab.com</span>
+                  </a>
                 </div>
               </div>
             </div>

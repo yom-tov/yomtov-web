@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { SubjectCard } from "@/components/cards/SubjectCard";
 import { ExamCard } from "@/components/cards/ExamCard";
-import { subjects, counts, recentExams, examsFor } from "@/lib/content";
+import { subjects, counts, recentExams, examsFor, assignmentsFor, formulasFor } from "@/lib/content";
 
 // `absolute` bypasses the root layout's "%s | אבי יומטוביאן" title
 // template — the home page (and only the home page) shows just the brand
@@ -113,15 +113,21 @@ export default function Home() {
           {subjects.map((s) => {
             const nMahat = examsFor(s.id, "mahat").length;
             const nEdu = examsFor(s.id, "education").length;
+            const nAsg = assignmentsFor(s.id).length;
+            const nFml = formulasFor(s.id).length;
             const parts: string[] = [];
             if (nMahat) parts.push(`${nMahat} מבחני מה"ט`);
             if (nEdu) parts.push(`${nEdu} מבחני מ"החינוך`);
+            if (!nMahat && !nEdu) {
+              if (nAsg) parts.push(`${nAsg} תרגולים`);
+              if (nFml) parts.push(`${nFml} נוסחאונים`);
+            }
             return (
               <SubjectCard
                 key={s.id}
                 subject={s}
                 size="lg"
-                stats={parts.join(" · ") || "בקרוב"}
+                stats={parts.join(" · ") || "סרטוני הדרכה"}
               />
             );
           })}
