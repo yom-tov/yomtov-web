@@ -5,7 +5,7 @@ import { Maximize2, Minimize2, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 const SIMULATOR_URL =
-  "https://www.falstad.com/circuit/circuitjs.html?startCircuit=voltdivide.txt";
+  "https://www.falstad.com/circuit/circuitjs.html?startCircuit=currentsrcelm.txt";
 
 export default function CircuitSimulator() {
   const [expanded, setExpanded] = useState(false);
