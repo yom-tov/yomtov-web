@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, NotebookPen, Beaker, Palette, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, NotebookPen, Beaker, Package, Video, Users, Palette, Settings, LogOut } from "lucide-react";
 import { clsx } from "clsx";
 
 const ITEMS = [
@@ -11,6 +11,9 @@ const ITEMS = [
   { href: "/admin/exams", label: "מבחנים", icon: FileText },
   { href: "/admin/assignments", label: "מטלות", icon: NotebookPen },
   { href: "/admin/labs", label: "מעבדות", icon: Beaker },
+  { href: "/admin/packages", label: "חבילות תוכן", icon: Package },
+  { href: "/admin/videos", label: "סרטונים", icon: Video },
+  { href: "/admin/users", label: "משתמשים", icon: Users },
   { href: "/admin/subjects", label: "קטגוריות", icon: Palette },
   { href: "/admin/settings", label: "הגדרות", icon: Settings },
 ];

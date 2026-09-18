@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { Menu, Search, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { UserNav } from "@/components/user/UserNav";
 
 const NAV = [
   { href: "/electricity", label: "חשמל" },
@@ -15,6 +16,7 @@ const NAV = [
   { href: "/labs", label: "מעבדות" },
   { href: "/calculator", label: "מחשבון" },
   { href: "/exams", label: "מבחנים" },
+  { href: "/courses", label: "קורסים" },
 ];
 
 export function Header() {
@@ -68,6 +70,9 @@ export function Header() {
             <span>חיפוש במאגר…</span>
           </Link>
           <ThemeToggle />
+          <div className="hidden md:block">
+            <UserNav />
+          </div>
           <Link
             href="/search"
             className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-text-muted hover:bg-surface-2"
@@ -106,6 +111,9 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            <div className="border-t border-border pt-2 mt-2 px-3">
+              <UserNav />
+            </div>
           </nav>
         </div>
       )}

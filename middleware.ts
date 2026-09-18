@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import redirectsData from "./scripts/crawl-output/redirects.json" with { type: "json" };
 import { SESSION_COOKIE, verifySession } from "@/lib/auth";
+import { USER_SESSION_COOKIE, verifyUserSession } from "@/lib/user-auth";
 
 // ----------------------------------------------------------------------------
 // Legacy URL redirects (built at content-build time)
@@ -55,7 +56,20 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // 1) Admin auth gate — runs first, before any redirect table lookup.
+  // 1) User auth gate — protects /dashboard/* and /watch/*
+  if (path.startsWith("/dashboard") || path.startsWith("/watch/")) {
+    const token = req.cookies.get(USER_SESSION_COOKIE)?.value;
+    const session = await verifyUserSession(token);
+    if (!session) {
+      const url = req.nextUrl.clone();
+      url.pathname = "/login";
+      url.search = "";
+      url.searchParams.set("next", path);
+      return NextResponse.redirect(url);
+    }
+  }
+
+  // 2) Admin auth gate — runs before any redirect table lookup.
   if (isAdminPath(path) && !isAdminPublic(path)) {
     const token = req.cookies.get(SESSION_COOKIE)?.value;
     const session = await verifySession(token);
@@ -78,7 +92,7 @@ export async function middleware(req: NextRequest) {
     return res;
   }
 
-  // 2) Legacy Hebrew/URL redirect table for the public site.
+  // 3) Legacy Hebrew/URL redirect table for the public site.
   let decoded = path;
   try {
     decoded = decodeURIComponent(path);
