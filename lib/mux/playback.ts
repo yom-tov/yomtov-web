@@ -12,7 +12,11 @@ function getSigningKey() {
 async function getPrivateKey() {
   const { keySecret } = getSigningKey();
   const decoded = Buffer.from(keySecret, "base64").toString("utf-8");
-  return importPKCS8(decoded, "RS256");
+  if (decoded.includes("-----BEGIN")) {
+    return importPKCS8(decoded, "RS256");
+  }
+  const pem = `-----BEGIN PRIVATE KEY-----\n${keySecret}\n-----END PRIVATE KEY-----`;
+  return importPKCS8(pem, "RS256");
 }
 
 export async function signPlaybackToken(playbackId: string): Promise<string> {
