@@ -60,6 +60,7 @@ const SECTIONS = [
       { href: "/search", label: "חיפוש" },
       { href: "/about", label: "אודות" },
       { href: "/accessibility", label: "הצהרת נגישות" },
+      { href: "/terms", label: "תנאי שימוש ופרטיות" },
     ],
   },
 ];
