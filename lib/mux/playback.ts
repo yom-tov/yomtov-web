@@ -13,26 +13,24 @@ function getSigningKey() {
 async function getPrivateKey() {
   const { keySecret } = getSigningKey();
 
-  // Log format hints for debugging (no sensitive data)
-  console.log("MUX key debug:", {
-    len: keySecret.length,
-    startsWith: keySecret.substring(0, 10),
-    includesBegin: keySecret.includes("-----BEGIN"),
-    includesNewline: keySecret.includes("\n"),
-  });
-
-  // Case 1: env var is the PEM string directly (not base64 encoded)
+  // Direct PEM
   if (keySecret.includes("-----BEGIN")) {
-    return importPKCS8(keySecret, "RS256");
+    return createPrivateKey(keySecret);
   }
 
-  // Case 2: env var is base64 of PEM
+  // Single base64 decode
   const decoded = Buffer.from(keySecret, "base64").toString("utf-8");
   if (decoded.includes("-----BEGIN")) {
-    return importPKCS8(decoded, "RS256");
+    return createPrivateKey(decoded);
   }
 
-  // Case 3: env var is base64 of DER — try both PKCS#8 and PKCS#1
+  // Double base64 decode (Mux key was base64-encoded before storing in env)
+  const doubleDecoded = Buffer.from(decoded, "base64").toString("utf-8");
+  if (doubleDecoded.includes("-----BEGIN")) {
+    return createPrivateKey(doubleDecoded);
+  }
+
+  // Raw DER fallback
   const derBuf = Buffer.from(keySecret, "base64");
   try {
     return createPrivateKey({ key: derBuf, format: "der", type: "pkcs8" });
