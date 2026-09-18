@@ -7,6 +7,7 @@ import { Footer } from "@/components/layout/Footer";
 import { ThemeScript } from "@/components/layout/ThemeScript";
 import { AccessibilityScript } from "@/components/layout/AccessibilityScript";
 import { AccessibilityWidget } from "@/components/layout/AccessibilityWidget";
+import { CookieBanner } from "@/components/layout/CookieBanner";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -83,6 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <Footer />
         <AccessibilityWidget />
+        <CookieBanner />
         <Analytics />
       </body>
     </html>
