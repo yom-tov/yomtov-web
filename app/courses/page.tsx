@@ -48,7 +48,8 @@ export default async function CoursesPage() {
           ...pkg,
           muxThumbnailUrl: `https://image.mux.com/${pkg.firstPlaybackId}/thumbnail.png?token=${token}&width=640&height=360`,
         };
-      } catch {
+      } catch (e) {
+        console.error("signThumbnailToken failed:", e);
         return { ...pkg, muxThumbnailUrl: null };
       }
     }),

@@ -68,8 +68,8 @@ export default async function CourseDetailPage({
     try {
       const token = await signThumbnailToken(firstVideo.muxPlaybackId);
       thumbnailUrl = `https://image.mux.com/${firstVideo.muxPlaybackId}/thumbnail.png?token=${token}&width=960&height=540`;
-    } catch {
-      // Signing keys not available (e.g. local dev)
+    } catch (e) {
+      console.error("signThumbnailToken failed:", e);
     }
   }
 
