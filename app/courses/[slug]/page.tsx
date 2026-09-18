@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { db } from "@/lib/db";
 import { contentPackages, packageVideos, videos } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { Play, Lock, Clock, ArrowLeft, ShoppingBag } from "lucide-react";
+import { signThumbnailToken } from "@/lib/mux/playback";
 
 export const dynamic = "force-dynamic";
 
@@ -47,6 +49,7 @@ export default async function CourseDetailPage({
       videoTitle: videos.title,
       videoDescription: videos.description,
       durationSeconds: videos.durationSeconds,
+      muxPlaybackId: videos.muxPlaybackId,
     })
     .from(packageVideos)
     .innerJoin(videos, eq(packageVideos.videoId, videos.id))
@@ -58,6 +61,17 @@ export default async function CourseDetailPage({
     0,
   );
   const totalMinutes = Math.ceil(totalDuration / 60);
+
+  let thumbnailUrl: string | null = null;
+  const firstVideo = pkgVideos[0];
+  if (firstVideo?.muxPlaybackId) {
+    try {
+      const token = await signThumbnailToken(firstVideo.muxPlaybackId);
+      thumbnailUrl = `https://image.mux.com/${firstVideo.muxPlaybackId}/thumbnail.png?token=${token}&width=960&height=540`;
+    } catch {
+      // Signing keys not available (e.g. local dev)
+    }
+  }
 
   const formatDuration = (sec: number | null) => {
     if (!sec) return "";
@@ -79,10 +93,10 @@ export default async function CourseDetailPage({
       <div className="grid gap-8 lg:grid-cols-3">
         {/* Main content */}
         <div className="lg:col-span-2">
-          {pkg.thumbnailUrl ? (
+          {pkg.thumbnailUrl || thumbnailUrl ? (
             <div className="aspect-video overflow-hidden rounded-2xl bg-surface-2">
               <img
-                src={pkg.thumbnailUrl}
+                src={(pkg.thumbnailUrl || thumbnailUrl)!}
                 alt={pkg.title}
                 className="h-full w-full object-cover"
               />

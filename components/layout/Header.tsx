@@ -23,8 +23,8 @@ export function Header() {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-surface/85 backdrop-blur-md">
-      <div className="container-page flex h-16 items-center gap-4">
-        <Link href="/" className="group flex items-center gap-3" aria-label="דף הבית - אבי יומטוביאן">
+      <div className="flex h-16 items-center gap-4 px-4 md:px-6 lg:px-8">
+        <Link href="/" className="group flex shrink-0 items-center gap-3 whitespace-nowrap" aria-label="דף הבית - אבי יומטוביאן">
           <Image
             src="/images/mark.png"
             alt=""
@@ -64,7 +64,7 @@ export function Header() {
         <div className="mr-auto flex items-center gap-2">
           <Link
             href="/search"
-            className="hidden md:inline-flex items-center gap-2 rounded-lg border border-border-strong bg-white px-3 py-2 text-sm font-medium text-text-muted shadow-sm transition-colors hover:border-primary-400 hover:bg-primary-50/40 hover:text-text dark:bg-surface dark:hover:bg-surface-2"
+            className="hidden md:inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-lg border border-border-strong bg-white px-3 py-2 text-sm font-medium text-text-muted shadow-sm transition-colors hover:border-primary-400 hover:bg-primary-50/40 hover:text-text dark:bg-surface dark:hover:bg-surface-2"
           >
             <Search className="h-4 w-4 text-primary-500" />
             <span>חיפוש במאגר…</span>

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { db } from "@/lib/db";
-import { contentPackages, packageVideos } from "@/lib/db/schema";
+import { contentPackages, packageVideos, videos } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
 import { Play, ShoppingBag } from "lucide-react";
+import { signThumbnailToken } from "@/lib/mux/playback";
 
 export const metadata: Metadata = {
   title: "קורסים ותכנים בתשלום",
@@ -26,10 +27,32 @@ export default async function CoursesPage() {
         SELECT COUNT(*)::int FROM ${packageVideos}
         WHERE ${packageVideos.packageId} = ${contentPackages.id}
       )`,
+      firstPlaybackId: sql<string | null>`(
+        SELECT v.mux_playback_id FROM ${packageVideos} pv
+        INNER JOIN ${videos} v ON v.id = pv.video_id
+        WHERE pv.package_id = ${contentPackages.id}
+        ORDER BY pv.display_order LIMIT 1
+      )`,
     })
     .from(contentPackages)
     .where(eq(contentPackages.published, true))
     .orderBy(contentPackages.displayOrder);
+
+  const packagesWithThumbnails = await Promise.all(
+    packages.map(async (pkg) => {
+      if (pkg.thumbnailUrl) return { ...pkg, muxThumbnailUrl: null };
+      if (!pkg.firstPlaybackId) return { ...pkg, muxThumbnailUrl: null };
+      try {
+        const token = await signThumbnailToken(pkg.firstPlaybackId);
+        return {
+          ...pkg,
+          muxThumbnailUrl: `https://image.mux.com/${pkg.firstPlaybackId}/thumbnail.png?token=${token}&width=640&height=360`,
+        };
+      } catch {
+        return { ...pkg, muxThumbnailUrl: null };
+      }
+    }),
+  );
 
   return (
     <div className="container-page py-10">
@@ -43,18 +66,18 @@ export default async function CoursesPage() {
         </p>
       </div>
 
-      {packages.length > 0 ? (
+      {packagesWithThumbnails.length > 0 ? (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {packages.map((pkg) => (
+          {packagesWithThumbnails.map((pkg) => (
             <Link
               key={pkg.id}
               href={`/courses/${pkg.slug}`}
               className="group relative overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary-500/10"
             >
-              {pkg.thumbnailUrl ? (
+              {(pkg.thumbnailUrl || pkg.muxThumbnailUrl) ? (
                 <div className="aspect-video bg-surface-2 overflow-hidden">
                   <img
-                    src={pkg.thumbnailUrl}
+                    src={(pkg.thumbnailUrl || pkg.muxThumbnailUrl)!}
                     alt={pkg.title}
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />

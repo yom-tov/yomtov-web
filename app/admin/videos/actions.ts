@@ -86,6 +86,42 @@ export async function updateVideoAction(
   }
 }
 
+export async function syncVideoFromMuxAction(
+  id: string,
+): Promise<ActionResult> {
+  try {
+    await requireSession();
+  } catch {
+    return { ok: false, error: "לא מאומת" };
+  }
+  try {
+    const [video] = await db
+      .select({ muxAssetId: videos.muxAssetId })
+      .from(videos)
+      .where(eq(videos.id, id))
+      .limit(1);
+    if (!video) return { ok: false, error: "סרטון לא נמצא" };
+
+    const { getMuxClient } = await import("@/lib/mux/client");
+    const mux = getMuxClient();
+    const asset = await mux.video.assets.retrieve(video.muxAssetId);
+
+    await db
+      .update(videos)
+      .set({
+        durationSeconds: asset.duration ? Math.round(asset.duration) : null,
+      })
+      .where(eq(videos.id, id));
+
+    revalidatePath("/admin/videos");
+    revalidatePath(`/admin/videos/${id}/edit`);
+    revalidatePath("/courses");
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}
+
 export async function deleteVideoAction(id: string): Promise<ActionResult> {
   try {
     await requireSession();

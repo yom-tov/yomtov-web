@@ -4,9 +4,9 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Edit3, Trash2, Plus } from "lucide-react";
+import { Edit3, Trash2, Plus, RefreshCw } from "lucide-react";
 import { DangerConfirm } from "@/components/admin/DangerConfirm";
-import { deleteVideoAction } from "./actions";
+import { deleteVideoAction, syncVideoFromMuxAction } from "./actions";
 
 interface VideoRow {
   id: string;
@@ -24,6 +24,21 @@ export function VideosListClient({ items }: { items: VideoRow[] }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [toDelete, setToDelete] = useState<VideoRow | null>(null);
+  const [syncing, setSyncing] = useState<string | null>(null);
+
+  const doSync = (videoId: string) => {
+    setSyncing(videoId);
+    startTransition(async () => {
+      const res = await syncVideoFromMuxAction(videoId);
+      if (res.ok) {
+        toast.success("נתוני הסרטון עודכנו מ-Mux");
+        router.refresh();
+      } else {
+        toast.error(res.error ?? "סנכרון נכשל");
+      }
+      setSyncing(null);
+    });
+  };
 
   const doDelete = () => {
     if (!toDelete) return;
@@ -93,6 +108,15 @@ export function VideosListClient({ items }: { items: VideoRow[] }) {
                 <Td className="num">{v.displayOrder}</Td>
                 <Td>
                   <div className="flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() => doSync(v.id)}
+                      disabled={pending || syncing === v.id}
+                      title="סנכרון משך מ-Mux"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-accent-300 hover:text-accent-700 disabled:opacity-50"
+                    >
+                      <RefreshCw className={`h-3.5 w-3.5 ${syncing === v.id ? "animate-spin" : ""}`} /> סנכרון
+                    </button>
                     <Link
                       href={`/admin/videos/${v.id}/edit`}
                       className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
