@@ -28,19 +28,15 @@ export default async function CoursesPage() {
         WHERE ${packageVideos.packageId} = ${contentPackages.id}
       )`,
       firstPlaybackId: sql<string | null>`(
-        SELECT v.mux_playback_id FROM ${packageVideos} pv
-        INNER JOIN ${videos} v ON v.id = pv.video_id
-        WHERE pv.package_id = ${contentPackages.id}
-        ORDER BY pv.display_order LIMIT 1
+        SELECT ${videos.muxPlaybackId} FROM ${packageVideos}
+        INNER JOIN ${videos} ON ${videos.id} = ${packageVideos.videoId}
+        WHERE ${packageVideos.packageId} = ${contentPackages.id}
+        ORDER BY ${packageVideos.displayOrder} LIMIT 1
       )`,
     })
     .from(contentPackages)
     .where(eq(contentPackages.published, true))
     .orderBy(contentPackages.displayOrder);
-
-  console.log("courses listing packages:", packages.map(p => ({
-    slug: p.slug, thumbnailUrl: p.thumbnailUrl, firstPlaybackId: p.firstPlaybackId,
-  })));
 
   const packagesWithThumbnails = await Promise.all(
     packages.map(async (pkg) => {
