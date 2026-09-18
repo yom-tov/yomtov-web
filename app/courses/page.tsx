@@ -28,10 +28,10 @@ export default async function CoursesPage() {
         WHERE ${packageVideos.packageId} = ${contentPackages.id}
       )`,
       firstPlaybackId: sql<string | null>`(
-        SELECT ${videos.muxPlaybackId} FROM ${packageVideos}
-        INNER JOIN ${videos} ON ${videos.id} = ${packageVideos.videoId}
-        WHERE ${packageVideos.packageId} = ${contentPackages.id}
-        ORDER BY ${packageVideos.displayOrder} LIMIT 1
+        SELECT "videos"."mux_playback_id" FROM "package_videos"
+        INNER JOIN "videos" ON "videos"."id" = "package_videos"."video_id"
+        WHERE "package_videos"."package_id" = "content_packages"."id"
+        ORDER BY "package_videos"."display_order" LIMIT 1
       )`,
     })
     .from(contentPackages)
