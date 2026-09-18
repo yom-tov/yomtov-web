@@ -1,4 +1,5 @@
 import { SignJWT, importPKCS8 } from "jose";
+import { createPrivateKey } from "node:crypto";
 
 function getSigningKey() {
   const keyId = process.env.MUX_SIGNING_KEY_ID;
@@ -15,8 +16,12 @@ async function getPrivateKey() {
   if (decoded.includes("-----BEGIN")) {
     return importPKCS8(decoded, "RS256");
   }
-  const pem = `-----BEGIN PRIVATE KEY-----\n${keySecret}\n-----END PRIVATE KEY-----`;
-  return importPKCS8(pem, "RS256");
+  // Mux provides the key as base64-encoded DER in PKCS#1 format
+  return createPrivateKey({
+    key: Buffer.from(keySecret, "base64"),
+    format: "der",
+    type: "pkcs1",
+  });
 }
 
 export async function signPlaybackToken(playbackId: string): Promise<string> {
