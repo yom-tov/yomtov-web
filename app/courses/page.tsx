@@ -38,6 +38,10 @@ export default async function CoursesPage() {
     .where(eq(contentPackages.published, true))
     .orderBy(contentPackages.displayOrder);
 
+  console.log("courses listing packages:", packages.map(p => ({
+    slug: p.slug, thumbnailUrl: p.thumbnailUrl, firstPlaybackId: p.firstPlaybackId,
+  })));
+
   const packagesWithThumbnails = await Promise.all(
     packages.map(async (pkg) => {
       if (pkg.thumbnailUrl) return { ...pkg, muxThumbnailUrl: null };
