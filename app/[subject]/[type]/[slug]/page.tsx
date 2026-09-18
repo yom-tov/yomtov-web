@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Download, FileText, Sparkles, ExternalLink } from "lucide-react";
+import { Download, Sparkles } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
 import {
@@ -11,7 +11,6 @@ import {
   findAssignment,
   findExam,
   findFormula,
-  formatSize,
   getSubject,
   sourceFromSlug,
   SOURCE_TITLE_HE,
@@ -21,7 +20,7 @@ import type { SubjectId } from "@/types/content";
 import { ExamCard } from "@/components/cards/ExamCard";
 import { AssignmentCard } from "@/components/cards/AssignmentCard";
 import { FormulaCard } from "@/components/cards/FormulaCard";
-import { PdfPreview } from "@/components/pdf/PdfPreview";
+import { ItemPreview } from "@/components/pdf/ItemPreview";
 import { getAssetUrl } from "@/lib/pdf-url";
 
 const VALID_TYPES = ["mahat-exams", "ministry-exams", "technician-exams", "electrical-systems-exams", "assignments", "formulas"] as const;
@@ -130,15 +129,16 @@ export default async function ItemPage({
       });
     }
   } else if (assignment) {
-    assignment.files.forEach((f, idx) => {
+    const primary = assignment.files[0];
+    if (primary) {
       files.push({
-        label: idx === 0 ? assignment.title : `נספח ${idx + 1}`,
-        role: idx === 0 ? "primary" : "solution",
-        url: f.url,
-        path: getAssetUrl(f.path),
-        sizeBytes: f.sizeBytes,
+        label: assignment.title,
+        role: "primary",
+        url: primary.url,
+        path: getAssetUrl(primary.path),
+        sizeBytes: primary.sizeBytes,
       });
-    });
+    }
   } else if (formula) {
     formula.files.forEach((f, idx) => {
       files.push({
@@ -251,59 +251,12 @@ export default async function ItemPage({
         </div>
       </header>
 
-      <section className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
-        {/* Preview */}
-        <div>
-          <PdfPreview src={files[0].path} title={files[0].label} />
-        </div>
-        {/* Sidebar with files */}
-        <aside className="space-y-3">
-          {files.map((f) => (
-            <div
-              key={f.path}
-              className="rounded-2xl border border-border bg-surface p-4"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-500/15 dark:text-primary-300">
-                  <FileText className="h-4.5 w-4.5" />
-                </div>
-                {f.role === "solution" ? (
-                  <Badge tone="success">פתרון</Badge>
-                ) : f.role === "extra" ? (
-                  <Badge tone="neutral">נספח</Badge>
-                ) : (
-                  <Badge tone="primary">מבחן</Badge>
-                )}
-              </div>
-              <div className="mt-3 text-sm font-semibold text-text">
-                {f.label}
-              </div>
-              <div className="mt-1 text-xs text-text-subtle num">
-                PDF · {formatSize(f.sizeBytes)}
-              </div>
-              <div className="mt-4 flex gap-2">
-                <a
-                  href={f.path}
-                  download
-                  className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary-600 px-3 py-2 text-xs font-semibold text-white hover:bg-primary-700"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  הורדה
-                </a>
-                <a
-                  href={f.path}
-                  target="_blank"
-                  rel="noopener"
-                  className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-text hover:bg-surface-2"
-                >
-                  <ExternalLink className="h-3.5 w-3.5" />
-                  פתיחה
-                </a>
-              </div>
-            </div>
-          ))}
-        </aside>
-      </section>
+      <ItemPreview
+        files={files}
+        hasAssignmentSolutions={!!(assignment && assignment.files.length > 1)}
+        subject={subject}
+        slug={slug}
+      />
 
       {related.length > 0 && (
         <section className="mt-14">
