@@ -12,16 +12,33 @@ function getSigningKey() {
 
 async function getPrivateKey() {
   const { keySecret } = getSigningKey();
+
+  // Log format hints for debugging (no sensitive data)
+  console.log("MUX key debug:", {
+    len: keySecret.length,
+    startsWith: keySecret.substring(0, 10),
+    includesBegin: keySecret.includes("-----BEGIN"),
+    includesNewline: keySecret.includes("\n"),
+  });
+
+  // Case 1: env var is the PEM string directly (not base64 encoded)
+  if (keySecret.includes("-----BEGIN")) {
+    return importPKCS8(keySecret, "RS256");
+  }
+
+  // Case 2: env var is base64 of PEM
   const decoded = Buffer.from(keySecret, "base64").toString("utf-8");
   if (decoded.includes("-----BEGIN")) {
     return importPKCS8(decoded, "RS256");
   }
-  // Mux provides the key as base64-encoded DER in PKCS#1 format
-  return createPrivateKey({
-    key: Buffer.from(keySecret, "base64"),
-    format: "der",
-    type: "pkcs1",
-  });
+
+  // Case 3: env var is base64 of DER — try both PKCS#8 and PKCS#1
+  const derBuf = Buffer.from(keySecret, "base64");
+  try {
+    return createPrivateKey({ key: derBuf, format: "der", type: "pkcs8" });
+  } catch {
+    return createPrivateKey({ key: derBuf, format: "der", type: "pkcs1" });
+  }
 }
 
 export async function signPlaybackToken(playbackId: string): Promise<string> {
