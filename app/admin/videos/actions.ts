@@ -39,6 +39,7 @@ export async function createVideoAction(
       muxAssetId: parsed.data.muxAssetId,
       muxPlaybackId: parsed.data.muxPlaybackId,
       durationSeconds: parsed.data.durationSeconds ?? null,
+      thumbnailUrl: parsed.data.thumbnailUrl ?? null,
       thumbnailTime: parsed.data.thumbnailTime ?? 0,
       displayOrder: parsed.data.displayOrder,
     });
@@ -74,6 +75,7 @@ export async function updateVideoAction(
         muxAssetId: parsed.data.muxAssetId,
         muxPlaybackId: parsed.data.muxPlaybackId,
         durationSeconds: parsed.data.durationSeconds ?? null,
+        thumbnailUrl: parsed.data.thumbnailUrl ?? null,
         thumbnailTime: parsed.data.thumbnailTime ?? 0,
         displayOrder: parsed.data.displayOrder,
       })

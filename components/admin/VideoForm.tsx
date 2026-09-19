@@ -9,6 +9,7 @@ import {
   createVideoAction,
   updateVideoAction,
 } from "@/app/admin/videos/actions";
+import { FileUpload, type UploadedFile } from "@/components/admin/FileUpload";
 
 type Mode = "create" | "edit";
 
@@ -19,6 +20,7 @@ interface VideoData {
   muxAssetId: string;
   muxPlaybackId: string;
   durationSeconds: number | null;
+  thumbnailUrl: string | null;
   thumbnailTime: number | null;
   displayOrder: number;
 }
@@ -42,6 +44,16 @@ export function VideoForm({
   const [durationSeconds, setDurationSeconds] = useState<string>(
     initial?.durationSeconds != null ? String(initial.durationSeconds) : "",
   );
+  const [thumbnailFile, setThumbnailFile] = useState<UploadedFile | null>(
+    initial?.thumbnailUrl
+      ? {
+          url: initial.thumbnailUrl,
+          sizeBytes: 0,
+          pathname: initial.thumbnailUrl,
+          filename: "thumbnail",
+        }
+      : null,
+  );
   const [thumbnailTime, setThumbnailTime] = useState<string>(
     initial?.thumbnailTime != null ? String(initial.thumbnailTime) : "0",
   );
@@ -63,6 +75,7 @@ export function VideoForm({
         muxAssetId: muxAssetId.trim(),
         muxPlaybackId: muxPlaybackId.trim(),
         durationSeconds: durationSeconds ? Number(durationSeconds) : null,
+        thumbnailUrl: thumbnailFile?.url?.trim() || null,
         thumbnailTime: thumbnailTime ? Number(thumbnailTime) : 0,
         displayOrder,
       };
@@ -169,6 +182,17 @@ export function VideoForm({
           />
         </Field>
       </div>
+
+      <FileUpload
+        label="תמונה ממוזערת לסרטון (אופציונלי)"
+        value={thumbnailFile}
+        onChange={setThumbnailFile}
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        variant="image"
+      />
+      <p className="text-xs text-text-subtle -mt-4">
+        אם לא מועלית תמונה, תוצג תמונה אוטומטית מ-Mux.
+      </p>
 
       <div className="flex items-center justify-between border-t border-border pt-4">
         <div className="text-xs text-text-subtle">

@@ -33,6 +33,12 @@ export default async function CoursesPage() {
         WHERE "package_videos"."package_id" = "content_packages"."id"
         ORDER BY "package_videos"."display_order" LIMIT 1
       )`,
+      firstVideoThumbnail: sql<string | null>`(
+        SELECT "videos"."thumbnail_url" FROM "package_videos"
+        INNER JOIN "videos" ON "videos"."id" = "package_videos"."video_id"
+        WHERE "package_videos"."package_id" = "content_packages"."id"
+        ORDER BY "package_videos"."display_order" LIMIT 1
+      )`,
     })
     .from(contentPackages)
     .where(eq(contentPackages.published, true))
@@ -41,6 +47,7 @@ export default async function CoursesPage() {
   const packagesWithThumbnails = await Promise.all(
     packages.map(async (pkg) => {
       if (pkg.thumbnailUrl) return { ...pkg, muxThumbnailUrl: null };
+      if (pkg.firstVideoThumbnail) return { ...pkg, muxThumbnailUrl: pkg.firstVideoThumbnail };
       if (!pkg.firstPlaybackId) return { ...pkg, muxThumbnailUrl: null };
       try {
         const token = await signThumbnailToken(pkg.firstPlaybackId);

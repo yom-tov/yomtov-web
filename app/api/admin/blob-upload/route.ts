@@ -5,17 +5,28 @@ import { requireSession } from "@/lib/auth";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const MAX_BYTES = 30 * 1024 * 1024; // 30 MB
+const MAX_PDF_BYTES = 30 * 1024 * 1024; // 30 MB
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024; // 10 MB
 
-// Vercel Blob "client upload" flow. The browser sends a small JSON handshake
-// here; we verify the session, restrict to PDFs under 30 MB, and hand back
-// a signed URL the browser uses to PUT the file directly to Blob.
+const IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+];
+
+const PDF_TYPES = ["application/pdf"];
+
 export async function POST(req: Request): Promise<NextResponse> {
   try {
     await requireSession();
   } catch {
     return NextResponse.json({ error: "UNAUTHENTICATED" }, { status: 401 });
   }
+
+  const url = new URL(req.url);
+  const type = url.searchParams.get("type");
+  const isImage = type === "image";
 
   const body = (await req.json()) as HandleUploadBody;
 
@@ -24,15 +35,12 @@ export async function POST(req: Request): Promise<NextResponse> {
       body,
       request: req,
       onBeforeGenerateToken: async () => ({
-        allowedContentTypes: ["application/pdf"],
-        maximumSizeInBytes: MAX_BYTES,
+        allowedContentTypes: isImage ? IMAGE_TYPES : PDF_TYPES,
+        maximumSizeInBytes: isImage ? MAX_IMAGE_BYTES : MAX_PDF_BYTES,
         addRandomSuffix: true,
-        cacheControlMaxAge: 60, // ephemeral — we delete after committing to git
+        cacheControlMaxAge: isImage ? 31536000 : 60,
       }),
-      onUploadCompleted: async () => {
-        // No-op: the server action that submits the form is the one that
-        // reads the blob and cleans it up.
-      },
+      onUploadCompleted: async () => {},
     });
     return NextResponse.json(jsonResponse);
   } catch (err) {

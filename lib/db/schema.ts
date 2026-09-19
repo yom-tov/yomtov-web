@@ -54,6 +54,7 @@ export const videos = pgTable("videos", {
   muxAssetId: varchar("mux_asset_id", { length: 255 }).notNull(),
   muxPlaybackId: varchar("mux_playback_id", { length: 255 }).notNull(),
   durationSeconds: integer("duration_seconds"),
+  thumbnailUrl: varchar("thumbnail_url", { length: 500 }),
   thumbnailTime: real("thumbnail_time").default(0),
   displayOrder: integer("display_order").default(0).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

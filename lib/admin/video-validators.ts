@@ -31,6 +31,7 @@ export const VideoCreateSchema = z.object({
   muxAssetId: z.string().min(1).max(255),
   muxPlaybackId: z.string().min(1).max(255),
   durationSeconds: z.number().int().min(0).nullable().optional(),
+  thumbnailUrl: z.string().url().max(500).nullable().optional(),
   thumbnailTime: z.number().min(0).nullable().optional(),
   displayOrder: z.number().int().min(0).max(999).default(0),
 });
@@ -42,6 +43,7 @@ export const VideoUpdateSchema = z.object({
   muxAssetId: z.string().min(1).max(255),
   muxPlaybackId: z.string().min(1).max(255),
   durationSeconds: z.number().int().min(0).nullable().optional(),
+  thumbnailUrl: z.string().url().max(500).nullable().optional(),
   thumbnailTime: z.number().min(0).nullable().optional(),
   displayOrder: z.number().int().min(0).max(999).default(0),
 });

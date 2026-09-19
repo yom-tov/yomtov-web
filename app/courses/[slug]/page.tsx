@@ -50,6 +50,7 @@ export default async function CourseDetailPage({
       videoDescription: videos.description,
       durationSeconds: videos.durationSeconds,
       muxPlaybackId: videos.muxPlaybackId,
+      thumbnailUrl: videos.thumbnailUrl,
     })
     .from(packageVideos)
     .innerJoin(videos, eq(packageVideos.videoId, videos.id))
@@ -64,7 +65,9 @@ export default async function CourseDetailPage({
 
   let thumbnailUrl: string | null = null;
   const firstVideo = pkgVideos[0];
-  if (firstVideo?.muxPlaybackId) {
+  if (firstVideo?.thumbnailUrl) {
+    thumbnailUrl = firstVideo.thumbnailUrl;
+  } else if (firstVideo?.muxPlaybackId) {
     try {
       const token = await signThumbnailToken(firstVideo.muxPlaybackId);
       thumbnailUrl = `https://image.mux.com/${firstVideo.muxPlaybackId}/thumbnail.png?token=${token}&width=960&height=540`;

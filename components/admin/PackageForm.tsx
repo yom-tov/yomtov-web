@@ -9,6 +9,7 @@ import {
   createPackageAction,
   updatePackageAction,
 } from "@/app/admin/packages/actions";
+import { FileUpload, type UploadedFile } from "@/components/admin/FileUpload";
 
 type Mode = "create" | "edit";
 
@@ -36,8 +37,15 @@ export function PackageForm({
   const [slug, setSlug] = useState(initial?.slug ?? "");
   const [title, setTitle] = useState(initial?.title ?? "");
   const [description, setDescription] = useState(initial?.description ?? "");
-  const [thumbnailUrl, setThumbnailUrl] = useState(
-    initial?.thumbnailUrl ?? "",
+  const [thumbnailFile, setThumbnailFile] = useState<UploadedFile | null>(
+    initial?.thumbnailUrl
+      ? {
+          url: initial.thumbnailUrl,
+          sizeBytes: 0,
+          pathname: initial.thumbnailUrl,
+          filename: "thumbnail",
+        }
+      : null,
   );
   const [priceDisplay, setPriceDisplay] = useState(
     initial?.priceDisplay ?? "",
@@ -52,13 +60,14 @@ export function PackageForm({
 
   const submit = () => {
     startTransition(async () => {
+      const thumbnailUrl = thumbnailFile?.url?.trim() || null;
       const res =
         mode === "create"
           ? await createPackageAction({
               slug: slug.trim(),
               title: title.trim(),
               description: description.trim() || null,
-              thumbnailUrl: thumbnailUrl.trim() || null,
+              thumbnailUrl,
               priceDisplay: priceDisplay.trim(),
               displayOrder,
               published,
@@ -66,7 +75,7 @@ export function PackageForm({
           : await updatePackageAction(initial!.id, {
               title: title.trim(),
               description: description.trim() || null,
-              thumbnailUrl: thumbnailUrl.trim() || null,
+              thumbnailUrl,
               priceDisplay: priceDisplay.trim(),
               displayOrder,
               published,
@@ -149,14 +158,13 @@ export function PackageForm({
         />
       </Field>
 
-      <Field label="URL תמונה ממוזערת (אופציונלי)">
-        <input
-          value={thumbnailUrl}
-          onChange={(e) => setThumbnailUrl(e.target.value)}
-          className="input"
-          placeholder="https://..."
-        />
-      </Field>
+      <FileUpload
+        label="תמונה ממוזערת לחבילה (אופציונלי)"
+        value={thumbnailFile}
+        onChange={setThumbnailFile}
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        variant="image"
+      />
 
       <label className="inline-flex items-center gap-2 text-sm">
         <input
