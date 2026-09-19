@@ -5,6 +5,7 @@ import { CheckCircle, XCircle } from "lucide-react";
 import { db } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
+import { getEmailProvider } from "@/lib/email";
 
 export const metadata: Metadata = {
   title: "אימות דואר אלקטרוני",
@@ -47,6 +48,11 @@ export default async function VerifyEmailPage({
           emailVerificationExpires: null,
         })
         .where(eq(users.id, user.id));
+      try {
+        await getEmailProvider().sendWelcomeEmail(user.email, user.firstName);
+      } catch (e) {
+        console.error("Failed to send welcome email:", e);
+      }
       success = true;
       message = "החשבון אומת בהצלחה! אפשר להתחבר.";
     }
