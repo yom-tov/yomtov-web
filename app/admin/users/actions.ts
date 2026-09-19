@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { nanoid } from "nanoid";
 import { requireSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { users, userPurchases } from "@/lib/db/schema";
@@ -9,6 +10,7 @@ import {
   PurchaseGrantSchema,
   UserUpdateSchema,
 } from "@/lib/admin/user-validators";
+import { getEmailProvider } from "@/lib/email";
 
 export interface ActionResult {
   ok: boolean;
@@ -143,6 +145,46 @@ export async function updateUserAction(
       .where(eq(users.id, userId));
     revalidatePath(`/admin/users/${userId}`);
     revalidatePath("/admin/users");
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}
+
+export async function resendVerificationAction(
+  userId: string,
+): Promise<ActionResult> {
+  try {
+    await requireSession();
+  } catch {
+    return { ok: false, error: "לא מאומת" };
+  }
+  try {
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, userId))
+      .limit(1);
+    if (!user) return { ok: false, error: "משתמש לא נמצא" };
+    if (user.emailVerified) return { ok: false, error: "המייל כבר אומת" };
+
+    const token = nanoid(32);
+    const expires = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await db
+      .update(users)
+      .set({
+        emailVerificationToken: token,
+        emailVerificationExpires: expires,
+      })
+      .where(eq(users.id, userId));
+
+    await getEmailProvider().sendVerificationEmail(
+      user.email,
+      token,
+      user.firstName,
+    );
+
+    revalidatePath(`/admin/users/${userId}`);
     return { ok: true };
   } catch (e) {
     return { ok: false, error: (e as Error).message };

@@ -13,11 +13,13 @@ import {
   Plus,
   Ban,
   Loader2,
+  Mail,
 } from "lucide-react";
 import {
   grantAccessAction,
   revokeAccessAction,
   toggleUserActiveAction,
+  resendVerificationAction,
 } from "../actions";
 
 interface User {
@@ -106,6 +108,17 @@ export function UserDetailClient({
     });
   };
 
+  const handleResendVerification = () => {
+    startTransition(async () => {
+      const res = await resendVerificationAction(user.id);
+      if (res.ok) {
+        toast.success("מייל אימות נשלח בהצלחה");
+      } else {
+        toast.error(res.error ?? "שגיאה");
+      }
+    });
+  };
+
   const handleToggleActive = () => {
     startTransition(async () => {
       const res = await toggleUserActiveAction(user.id, !user.active);
@@ -176,6 +189,19 @@ export function UserDetailClient({
                   <>
                     <XCircle className="h-3.5 w-3.5 text-amber-500" /> לא
                     מאומת
+                    <button
+                      type="button"
+                      onClick={handleResendVerification}
+                      disabled={pending}
+                      className="mr-1 inline-flex items-center gap-1 rounded-md border border-primary-200 bg-primary-50 px-2 py-0.5 text-[10px] font-semibold text-primary-700 hover:bg-primary-100"
+                    >
+                      {pending ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : (
+                        <Mail className="h-3 w-3" />
+                      )}
+                      שלח שוב
+                    </button>
                   </>
                 )}
               </span>
