@@ -1,5 +1,12 @@
 import { z } from "zod";
 
+const thumbnailUrlSchema = z
+  .string()
+  .max(1000)
+  .refine((v) => v.startsWith("/") || v.startsWith("http"), "URL לא תקין")
+  .nullable()
+  .optional();
+
 export const ContentPackageCreateSchema = z.object({
   slug: z
     .string()
@@ -8,7 +15,7 @@ export const ContentPackageCreateSchema = z.object({
     .regex(/^[a-z0-9\-]+$/, "Slug: a-z 0-9 - בלבד"),
   title: z.string().min(1).max(200),
   description: z.string().max(2000).nullable().optional(),
-  thumbnailUrl: z.string().url().max(500).nullable().optional(),
+  thumbnailUrl: thumbnailUrlSchema,
   priceDisplay: z.string().min(1).max(50),
   displayOrder: z.number().int().min(0).max(999).default(0),
   published: z.boolean().default(false),
@@ -18,7 +25,7 @@ export type ContentPackageCreateInput = z.infer<typeof ContentPackageCreateSchem
 export const ContentPackageUpdateSchema = z.object({
   title: z.string().min(1).max(200),
   description: z.string().max(2000).nullable().optional(),
-  thumbnailUrl: z.string().url().max(500).nullable().optional(),
+  thumbnailUrl: thumbnailUrlSchema,
   priceDisplay: z.string().min(1).max(50),
   displayOrder: z.number().int().min(0).max(999).default(0),
   published: z.boolean().default(false),
@@ -31,7 +38,7 @@ export const VideoCreateSchema = z.object({
   muxAssetId: z.string().min(1).max(255),
   muxPlaybackId: z.string().min(1).max(255),
   durationSeconds: z.number().int().min(0).nullable().optional(),
-  thumbnailUrl: z.string().url().max(500).nullable().optional(),
+  thumbnailUrl: thumbnailUrlSchema,
   thumbnailTime: z.number().min(0).nullable().optional(),
   displayOrder: z.number().int().min(0).max(999).default(0),
 });
@@ -43,7 +50,7 @@ export const VideoUpdateSchema = z.object({
   muxAssetId: z.string().min(1).max(255),
   muxPlaybackId: z.string().min(1).max(255),
   durationSeconds: z.number().int().min(0).nullable().optional(),
-  thumbnailUrl: z.string().url().max(500).nullable().optional(),
+  thumbnailUrl: thumbnailUrlSchema,
   thumbnailTime: z.number().min(0).nullable().optional(),
   displayOrder: z.number().int().min(0).max(999).default(0),
 });
