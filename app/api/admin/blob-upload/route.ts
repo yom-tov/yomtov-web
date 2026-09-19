@@ -24,22 +24,23 @@ export async function POST(req: Request): Promise<NextResponse> {
     return NextResponse.json({ error: "UNAUTHENTICATED" }, { status: 401 });
   }
 
-  const url = new URL(req.url);
-  const type = url.searchParams.get("type");
-  const isImage = type === "image";
-
   const body = (await req.json()) as HandleUploadBody;
 
   try {
     const jsonResponse = await handleUpload({
       body,
       request: req,
-      onBeforeGenerateToken: async () => ({
-        allowedContentTypes: isImage ? IMAGE_TYPES : PDF_TYPES,
-        maximumSizeInBytes: isImage ? MAX_IMAGE_BYTES : MAX_PDF_BYTES,
-        addRandomSuffix: true,
-        cacheControlMaxAge: isImage ? 31536000 : 60,
-      }),
+      onBeforeGenerateToken: async (pathname) => {
+        const isImage = /\.(jpe?g|png|webp|gif)$/i.test(pathname);
+        return {
+          allowedContentTypes: isImage
+            ? [...IMAGE_TYPES, ...PDF_TYPES]
+            : [...PDF_TYPES, ...IMAGE_TYPES],
+          maximumSizeInBytes: isImage ? MAX_IMAGE_BYTES : MAX_PDF_BYTES,
+          addRandomSuffix: true,
+          cacheControlMaxAge: isImage ? 31536000 : 60,
+        };
+      },
       onUploadCompleted: async () => {},
     });
     return NextResponse.json(jsonResponse);

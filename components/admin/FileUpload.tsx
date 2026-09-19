@@ -43,9 +43,6 @@ export function FileUpload({
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const isImage = variant === "image";
-  const uploadUrl = isImage
-    ? "/api/admin/blob-upload?type=image"
-    : "/api/admin/blob-upload";
 
   const doUpload = async (file: File) => {
     setBusy(true);
@@ -54,7 +51,7 @@ export function FileUpload({
     try {
       const blob = await upload(file.name, file, {
         access: "public",
-        handleUploadUrl: uploadUrl,
+        handleUploadUrl: "/api/admin/blob-upload",
         contentType: file.type || (isImage ? "image/jpeg" : "application/pdf"),
         onUploadProgress: ({ percentage }) => setProgress(percentage),
       });
