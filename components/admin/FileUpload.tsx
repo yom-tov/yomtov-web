@@ -49,18 +49,40 @@ export function FileUpload({
     setProgress(0);
     setErr(null);
     try {
-      const blob = await upload(file.name, file, {
-        access: "public",
-        handleUploadUrl: "/api/admin/blob-upload",
-        contentType: file.type || (isImage ? "image/jpeg" : "application/pdf"),
-        onUploadProgress: ({ percentage }) => setProgress(percentage),
-      });
-      onChange({
-        url: blob.url,
-        sizeBytes: file.size,
-        pathname: blob.pathname,
-        filename: file.name,
-      });
+      if (isImage) {
+        const formData = new FormData();
+        formData.append("file", file);
+        setProgress(50);
+        const res = await fetch("/api/admin/upload-image", {
+          method: "POST",
+          body: formData,
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({ error: "העלאה נכשלה" }));
+          throw new Error(data.error || `Upload failed (${res.status})`);
+        }
+        const data = await res.json();
+        setProgress(100);
+        onChange({
+          url: data.url,
+          sizeBytes: file.size,
+          pathname: data.pathname,
+          filename: file.name,
+        });
+      } else {
+        const blob = await upload(file.name, file, {
+          access: "public",
+          handleUploadUrl: "/api/admin/blob-upload",
+          contentType: file.type || "application/pdf",
+          onUploadProgress: ({ percentage }) => setProgress(percentage),
+        });
+        onChange({
+          url: blob.url,
+          sizeBytes: file.size,
+          pathname: blob.pathname,
+          filename: file.name,
+        });
+      }
     } catch (e) {
       const msg = (e as Error).message || "העלאה נכשלה";
       setErr(msg);
