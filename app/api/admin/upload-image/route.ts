@@ -38,7 +38,7 @@ export async function POST(req: Request): Promise<NextResponse> {
 
   try {
     const blob = await put(file.name, file, {
-      access: "public",
+      access: "private",
       addRandomSuffix: true,
       cacheControlMaxAge: 31536000,
       contentType: file.type,
