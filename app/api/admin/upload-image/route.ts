@@ -44,8 +44,9 @@ export async function POST(req: Request): Promise<NextResponse> {
       contentType: file.type,
     });
 
+    const proxyUrl = `/api/blob-image?url=${encodeURIComponent(blob.url)}`;
     return NextResponse.json({
-      url: blob.url,
+      url: proxyUrl,
       pathname: blob.pathname,
       size: file.size,
     });
