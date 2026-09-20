@@ -240,11 +240,11 @@ export default function TermsPage() {
           <p className="mt-2">
             <strong>דוא&quot;ל:</strong>{" "}
             <a
-              href="mailto:contact@yomtovian.com"
+              href="mailto:support@yomtovian.com"
               dir="ltr"
               className="font-medium text-primary-600 underline underline-offset-2 hover:text-primary-700 dark:text-primary-400"
             >
-              contact@yomtovian.com
+              support@yomtovian.com
             </a>
           </p>
         </Section>
