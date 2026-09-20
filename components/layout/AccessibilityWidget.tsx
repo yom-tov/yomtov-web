@@ -17,7 +17,7 @@ import {
 import { clsx } from "clsx";
 
 const STORAGE_KEY = "yomtov-a11y";
-const CONTACT_EMAIL = "yomtov7.site@gmail.com";
+const CONTACT_EMAIL = "contact@yomtovian.com";
 
 interface A11ySettings {
   fontSize: number; // 100 | 110 | 120 | 130 | 140

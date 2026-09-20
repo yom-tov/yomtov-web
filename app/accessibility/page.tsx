@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "הצהרת נגישות לאתר אבי יומטוביאן, כולל פרטי יצירת קשר לדיווח על בעיות נגישות.",
 };
 
-const CONTACT_EMAIL = "yomtov7.site@gmail.com";
+const CONTACT_EMAIL = "contact@yomtovian.com";
 const LAST_UPDATED = "ספטמבר 2026";
 
 export default function AccessibilityPage() {
@@ -99,12 +99,12 @@ export default function AccessibilityPage() {
                   <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
                     <div className="text-lg font-bold text-text">אבי יומטוביאן</div>
                     <a
-                      href="mailto:yomtov7.site@gmail.com"
+                      href="mailto:contact@yomtovian.com"
                       dir="ltr"
                       className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 transition-colors hover:text-primary-800 sm:text-[17px] dark:text-primary-400 dark:hover:text-primary-200"
                     >
                       <Mail className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
-                      yomtov7.site@gmail.com
+                      contact@yomtovian.com
                     </a>
                   </div>
                 </div>
