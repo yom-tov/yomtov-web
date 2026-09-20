@@ -4,8 +4,9 @@ import {
   contentPackages,
   packageVideos,
   videos,
+  videoProgress,
 } from "@/lib/db/schema";
-import { eq, and, or, isNull, gt } from "drizzle-orm";
+import { eq, and, or, isNull, gt, inArray } from "drizzle-orm";
 
 export async function hasActiveAccess(
   userId: string,
@@ -94,4 +95,32 @@ export async function getPackageVideos(packageId: string) {
     .innerJoin(videos, eq(packageVideos.videoId, videos.id))
     .where(eq(packageVideos.packageId, packageId))
     .orderBy(packageVideos.displayOrder);
+}
+
+export async function getUserVideoProgress(
+  userId: string,
+  videoIds: string[],
+) {
+  if (videoIds.length === 0) return new Map<string, { position: number; duration: number | null }>();
+  const rows = await db
+    .select({
+      videoId: videoProgress.videoId,
+      positionSeconds: videoProgress.positionSeconds,
+      durationSeconds: videoProgress.durationSeconds,
+    })
+    .from(videoProgress)
+    .where(
+      and(
+        eq(videoProgress.userId, userId),
+        inArray(videoProgress.videoId, videoIds),
+      ),
+    );
+  const map = new Map<string, { position: number; duration: number | null }>();
+  for (const r of rows) {
+    map.set(r.videoId, {
+      position: r.positionSeconds,
+      duration: r.durationSeconds,
+    });
+  }
+  return map;
 }

@@ -19,22 +19,36 @@ export function WatchClient({
   title: string;
 }) {
   const [tokens, setTokens] = useState<TokenData | null>(null);
+  const [startTime, setStartTime] = useState<number | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/video/playback-token", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ videoId }),
-    })
-      .then(async (r) => {
+    Promise.all([
+      fetch("/api/video/playback-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ videoId }),
+      }).then(async (r) => {
         if (!r.ok) {
           const data = await r.json().catch(() => ({}));
           throw new Error(data.error ?? "Failed to load video");
         }
-        return r.json();
+        return r.json() as Promise<TokenData>;
+      }),
+      fetch(`/api/video/progress?videoId=${videoId}`)
+        .then((r) => r.json())
+        .catch(() => ({ progress: null })),
+    ])
+      .then(([tokenData, progressData]) => {
+        setTokens(tokenData);
+        if (progressData.progress?.positionSeconds) {
+          const pos = progressData.progress.positionSeconds;
+          const dur = progressData.progress.durationSeconds;
+          if (!dur || pos < dur - 5) {
+            setStartTime(pos);
+          }
+        }
       })
-      .then((data: TokenData) => setTokens(data))
       .catch((e) => setError(e.message));
   }, [videoId]);
 
@@ -63,6 +77,8 @@ export function WatchClient({
       thumbnailToken={tokens.thumbnailToken}
       storyboardToken={tokens.storyboardToken}
       title={title}
+      videoId={videoId}
+      startTime={startTime}
     />
   );
 }
