@@ -3,9 +3,11 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { contentPackages, packageVideos, videos } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
-import { Play, ShoppingBag } from "lucide-react";
+import { Play, ShoppingBag, CheckCircle, Clock } from "lucide-react";
 import { LessonsCta } from "./LessonsCta";
 import { signThumbnailToken } from "@/lib/mux/playback";
+import { getOptionalUserSession } from "@/lib/user-auth";
+import { getUserPackages } from "@/lib/admin/purchase-helpers";
 
 export const metadata: Metadata = {
   title: "קורסים ותכנים בתשלום",
@@ -16,6 +18,13 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function CoursesPage() {
+  const session = await getOptionalUserSession();
+  const ownedPackages = new Map<string, Date | null>();
+  if (session) {
+    const userPkgs = await getUserPackages(session.sub);
+    for (const p of userPkgs) ownedPackages.set(p.packageId, p.expiresAt);
+  }
+
   const packages = await db
     .select({
       id: contentPackages.id,
@@ -79,47 +88,67 @@ export default async function CoursesPage() {
 
       {packagesWithThumbnails.length > 0 ? (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {packagesWithThumbnails.map((pkg) => (
-            <Link
-              key={pkg.id}
-              href={`/courses/${pkg.slug}`}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary-500/10"
-            >
-              {(pkg.thumbnailUrl || pkg.muxThumbnailUrl) ? (
-                <div className="aspect-video bg-surface-2 overflow-hidden">
-                  <img
-                    src={(pkg.thumbnailUrl || pkg.muxThumbnailUrl)!}
-                    alt={pkg.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-              ) : (
-                <div className="aspect-video bg-gradient-to-br from-primary-100 to-accent-100 flex items-center justify-center">
-                  <Play className="h-12 w-12 text-primary-400" />
-                </div>
-              )}
-              <div className="p-5">
-                <h2 className="text-lg font-bold text-text group-hover:text-primary-700 transition-colors">
-                  {pkg.title}
-                </h2>
-                {pkg.description && (
-                  <p className="mt-2 text-sm text-text-muted line-clamp-2">
-                    {pkg.description}
-                  </p>
+          {packagesWithThumbnails.map((pkg) => {
+            const isOwned = ownedPackages.has(pkg.id);
+            const expiresAt = ownedPackages.get(pkg.id);
+            const expiryLabel = expiresAt
+              ? `עד ${expiresAt.toLocaleDateString("he-IL", { day: "numeric", month: "numeric", year: "numeric" })}`
+              : "ללא הגבלת זמן";
+            return (
+              <Link
+                key={pkg.id}
+                href={`/courses/${pkg.slug}`}
+                className={`group relative overflow-hidden rounded-2xl border bg-surface shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary-500/10 ${isOwned ? "border-emerald-300 ring-1 ring-emerald-200" : "border-border"}`}
+              >
+                {isOwned && (
+                  <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 rounded-lg bg-emerald-500/90 backdrop-blur-sm px-2.5 py-1 text-xs font-bold text-white shadow-md num">
+                    <Clock className="h-3.5 w-3.5" />
+                    {expiryLabel}
+                  </div>
                 )}
-                <div className="mt-4 flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1 text-sm text-text-subtle">
-                    <Play className="h-4 w-4" />
-                    {pkg.videoCount} סרטונים
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-lg bg-primary-50 px-3 py-1.5 text-sm font-bold text-primary-700">
-                    <ShoppingBag className="h-4 w-4" />
-                    {pkg.priceDisplay}
-                  </span>
+                {(pkg.thumbnailUrl || pkg.muxThumbnailUrl) ? (
+                  <div className="aspect-video bg-surface-2 overflow-hidden">
+                    <img
+                      src={(pkg.thumbnailUrl || pkg.muxThumbnailUrl)!}
+                      alt={pkg.title}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                ) : (
+                  <div className="aspect-video bg-gradient-to-br from-primary-100 to-accent-100 flex items-center justify-center">
+                    <Play className="h-12 w-12 text-primary-400" />
+                  </div>
+                )}
+                <div className="p-5">
+                  <h2 className="text-lg font-bold text-text group-hover:text-primary-700 transition-colors">
+                    {pkg.title}
+                  </h2>
+                  {pkg.description && (
+                    <p className="mt-2 text-sm text-text-muted line-clamp-2">
+                      {pkg.description}
+                    </p>
+                  )}
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1 text-sm text-text-subtle">
+                      <Play className="h-4 w-4" />
+                      {pkg.videoCount} סרטונים
+                    </span>
+                    {isOwned ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-1.5 text-sm font-bold text-emerald-700">
+                        <CheckCircle className="h-4 w-4" />
+                        נרכש
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 rounded-lg bg-primary-50 px-3 py-1.5 text-sm font-bold text-primary-700">
+                        <ShoppingBag className="h-4 w-4" />
+                        {pkg.priceDisplay}
+                      </span>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </div>
       ) : (
         <div className="rounded-2xl border border-dashed border-border bg-surface-2/30 py-16 text-center">

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { db } from "@/lib/db";
 import { contentPackages, packageVideos, videos } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { Play, Lock, Clock, ArrowLeft, ShoppingBag } from "lucide-react";
+import { Play, Lock, Clock, ArrowLeft, ShoppingBag, CheckCircle, ExternalLink } from "lucide-react";
 import { signThumbnailToken } from "@/lib/mux/playback";
+import { getOptionalUserSession } from "@/lib/user-auth";
+import { hasActiveAccess } from "@/lib/admin/purchase-helpers";
 
 export const dynamic = "force-dynamic";
 
@@ -42,6 +43,10 @@ export default async function CourseDetailPage({
     .limit(1);
 
   if (!pkg || !pkg.published) notFound();
+
+  const session = await getOptionalUserSession();
+  const isLoggedIn = !!session;
+  const isOwned = session ? await hasActiveAccess(session.sub, pkg.id) : false;
 
   const pkgVideos = await db
     .select({
@@ -155,38 +160,86 @@ export default async function CourseDetailPage({
           </div>
         </div>
 
-        {/* Sidebar - purchase card */}
+        {/* Sidebar */}
         <div className="lg:col-span-1">
-          <div className="sticky top-24 rounded-2xl border border-primary-200 bg-gradient-to-b from-primary-50/60 to-surface p-6">
-            <div className="text-center">
-              <div className="text-3xl font-extrabold text-primary-700 num">
-                {pkg.priceDisplay}
+          {isOwned ? (
+            <div className="sticky top-24 rounded-2xl border border-emerald-300 bg-gradient-to-b from-emerald-50/60 to-surface p-6">
+              <div className="text-center">
+                <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100">
+                  <CheckCircle className="h-7 w-7 text-emerald-600" />
+                </div>
+                <h3 className="mt-3 text-lg font-bold text-emerald-800">
+                  הקורס בבעלותך
+                </h3>
+                <p className="mt-2 text-sm text-text-muted">
+                  {pkgVideos.length} סרטונים · {totalMinutes} דקות תוכן
+                </p>
               </div>
-              <p className="mt-2 text-sm text-text-muted">
-                {pkgVideos.length} סרטונים · {totalMinutes} דקות תוכן
-              </p>
+              <div className="mt-6 space-y-3">
+                <Link
+                  href="/dashboard"
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-emerald-600 to-emerald-500 px-4 py-3 text-sm font-semibold text-white shadow-md hover:brightness-105 transition"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  עבור לצפייה בסרטונים
+                </Link>
+              </div>
+              <div className="mt-4 text-xs text-text-subtle text-center">
+                הקורס זמין באזור האישי שלך.
+                <br />
+                לחץ למעלה כדי לצפות בסרטונים.
+              </div>
             </div>
-            <div className="mt-6 space-y-3">
-              <Link
-                href="/register"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-primary-700 to-primary-500 px-4 py-3 text-sm font-semibold text-white shadow-md hover:brightness-105 transition"
-              >
-                <ShoppingBag className="h-4 w-4" />
-                הרשמה לרכישה
-              </Link>
-              <Link
-                href="/login"
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-sm font-semibold text-text hover:bg-surface-2 transition"
-              >
-                כבר רשום? התחבר
-              </Link>
+          ) : (
+            <div className="sticky top-24 rounded-2xl border border-primary-200 bg-gradient-to-b from-primary-50/60 to-surface p-6">
+              <div className="text-center">
+                <div className="text-3xl font-extrabold text-primary-700 num">
+                  {pkg.priceDisplay}
+                </div>
+                <p className="mt-2 text-sm text-text-muted">
+                  {pkgVideos.length} סרטונים · {totalMinutes} דקות תוכן
+                </p>
+              </div>
+              <div className="mt-6 space-y-3">
+                {isLoggedIn ? (
+                  <>
+                    <div className="rounded-xl border border-primary-100 bg-primary-50/50 px-4 py-3 text-center text-sm text-primary-800">
+                      לרכישת הקורס, פנה אלינו בהודעת Bit או במייל
+                    </div>
+                    <Link
+                      href="/dashboard"
+                      className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-sm font-semibold text-text hover:bg-surface-2 transition"
+                    >
+                      לאזור האישי
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/register"
+                      className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-primary-700 to-primary-500 px-4 py-3 text-sm font-semibold text-white shadow-md hover:brightness-105 transition"
+                    >
+                      <ShoppingBag className="h-4 w-4" />
+                      הרשמה לרכישה
+                    </Link>
+                    <Link
+                      href="/login"
+                      className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-sm font-semibold text-text hover:bg-surface-2 transition"
+                    >
+                      כבר רשום? התחבר
+                    </Link>
+                  </>
+                )}
+              </div>
+              {!isLoggedIn && (
+                <div className="mt-5 text-xs text-text-subtle text-center">
+                  לאחר ההרשמה, ניתן לרכוש גישה דרך Bit.
+                  <br />
+                  הגישה תופעל באופן ידני תוך שעות ספורות.
+                </div>
+              )}
             </div>
-            <div className="mt-5 text-xs text-text-subtle text-center">
-              לאחר ההרשמה, ניתן לרכוש גישה דרך Bit.
-              <br />
-              הגישה תופעל באופן ידני תוך שעות ספורות.
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

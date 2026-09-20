@@ -49,6 +49,16 @@ export async function requireUserSession(): Promise<UserSession> {
   return session;
 }
 
+export async function getOptionalUserSession(): Promise<UserSession | null> {
+  try {
+    const jar = await cookies();
+    const token = jar.get(USER_SESSION_COOKIE)?.value;
+    return verifyUserSession(token);
+  } catch {
+    return null;
+  }
+}
+
 export async function hashPassword(plain: string): Promise<string> {
   const bcrypt = (await import("bcryptjs")).default;
   return bcrypt.hash(plain, 12);
