@@ -66,7 +66,14 @@ export default async function CourseDetailPage({
     (sum, v) => sum + (v.durationSeconds ?? 0),
     0,
   );
-  const totalMinutes = Math.ceil(totalDuration / 60);
+  const totalHours = Math.floor(totalDuration / 3600);
+  const totalMins = Math.ceil((totalDuration % 3600) / 60);
+  const totalDurationLabel =
+    totalHours > 0
+      ? totalMins > 0
+        ? `${totalHours} שעות ו-${totalMins} דקות תוכן`
+        : `${totalHours} שעות תוכן`
+      : `${totalMins} דקות תוכן`;
 
   let thumbnailUrl: string | null = null;
   const firstVideo = pkgVideos[0];
@@ -174,7 +181,7 @@ export default async function CourseDetailPage({
                   הקורס בבעלותך
                 </h3>
                 <p className="mt-2 text-sm text-text-muted">
-                  {pkgVideos.length} סרטונים · {totalMinutes} דקות תוכן
+                  {pkgVideos.length} סרטונים · {totalDurationLabel}
                 </p>
               </div>
               <div className="mt-6 space-y-3">
@@ -199,7 +206,7 @@ export default async function CourseDetailPage({
                   T.B.D
                 </div>
                 <p className="mt-2 text-sm text-text-muted">
-                  {pkgVideos.length} סרטונים · {totalMinutes} דקות תוכן
+                  {pkgVideos.length} סרטונים · {totalDurationLabel}
                 </p>
               </div>
               <div className="mt-6 space-y-3">
