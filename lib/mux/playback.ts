@@ -1,5 +1,7 @@
 import { SignJWT, importPKCS8 } from "jose";
 
+const MUX_PLAYBACK_RESTRICTION_ID = "jzFra8s4AW7ut00fHvK2DZHTdg1DyyAI68WR3fnKqVLo";
+
 function getSigningKey() {
   const keyId = process.env.MUX_SIGNING_KEY_ID;
   const keySecret = process.env.MUX_SIGNING_KEY_PRIVATE;
@@ -89,6 +91,7 @@ export async function signPlaybackToken(
     sub: playbackId,
     aud: "v",
     kid: keyId,
+    playback_restriction_id: MUX_PLAYBACK_RESTRICTION_ID,
   };
   if (options?.assetEndTime !== undefined) {
     claims.asset_end_time = options.assetEndTime;
@@ -97,7 +100,7 @@ export async function signPlaybackToken(
   return new SignJWT(claims)
     .setProtectedHeader({ alg: "RS256", typ: "JWT", kid: keyId })
     .setIssuedAt(now)
-    .setExpirationTime(now + 7200)
+    .setExpirationTime(now + 1800)
     .sign(privateKey);
 }
 
@@ -112,6 +115,7 @@ export async function signThumbnailToken(
     sub: playbackId,
     aud: "t",
     kid: keyId,
+    playback_restriction_id: MUX_PLAYBACK_RESTRICTION_ID,
   })
     .setProtectedHeader({ alg: "RS256", typ: "JWT", kid: keyId })
     .setIssuedAt(now)
@@ -130,6 +134,7 @@ export async function signStoryboardToken(
     sub: playbackId,
     aud: "s",
     kid: keyId,
+    playback_restriction_id: MUX_PLAYBACK_RESTRICTION_ID,
   })
     .setProtectedHeader({ alg: "RS256", typ: "JWT", kid: keyId })
     .setIssuedAt(now)
