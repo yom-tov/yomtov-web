@@ -141,7 +141,7 @@ export default async function CoursesPage() {
                     ) : (
                       <span className="inline-flex items-center gap-1.5 rounded-lg bg-primary-50 px-3 py-1.5 text-sm font-bold text-primary-700">
                         <ShoppingBag className="h-4 w-4" />
-                        T.B.D
+                        {pkg.priceDisplay}
                       </span>
                     )}
                   </div>
