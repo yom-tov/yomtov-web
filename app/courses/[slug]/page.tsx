@@ -228,7 +228,7 @@ export default async function CourseDetailPage({
               <div className="rounded-2xl border border-primary-200 bg-gradient-to-b from-primary-50/60 to-surface p-6">
                 <div className="text-center">
                   <div className="text-3xl font-extrabold text-primary-700 num">
-                    {pkg.priceDisplay}
+                    {pkg.priceDisplay} ש&quot;ח
                   </div>
                   <p className="mt-2 text-sm text-text-muted">
                     {pkgVideos.length} סרטונים · {totalDurationLabel}
