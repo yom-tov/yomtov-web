@@ -43,6 +43,11 @@ export default async function CoursesPage() {
         WHERE "package_videos"."package_id" = "content_packages"."id"
         ORDER BY "package_videos"."display_order" LIMIT 1
       )`,
+      totalDurationSeconds: sql<number>`(
+        SELECT COALESCE(SUM("videos"."duration_seconds"), 0)::int FROM "package_videos"
+        INNER JOIN "videos" ON "videos"."id" = "package_videos"."video_id"
+        WHERE "package_videos"."package_id" = "content_packages"."id"
+      )`,
       firstVideoThumbnail: sql<string | null>`(
         SELECT "videos"."thumbnail_url" FROM "package_videos"
         INNER JOIN "videos" ON "videos"."id" = "package_videos"."video_id"
@@ -129,10 +134,23 @@ export default async function CoursesPage() {
                     </p>
                   )}
                   <div className="mt-4 flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1 text-sm text-text-subtle">
-                      <Play className="h-4 w-4" />
-                      {pkg.videoCount} סרטונים
-                    </span>
+                    <div className="flex items-center gap-3 text-sm text-text-subtle">
+                      <span className="inline-flex items-center gap-1">
+                        <Play className="h-4 w-4" />
+                        {pkg.videoCount} סרטונים
+                      </span>
+                      {pkg.totalDurationSeconds > 0 && (
+                        <>
+                          <span className="text-border">|</span>
+                          <span className="inline-flex items-center gap-1">
+                            <Clock className="h-3.5 w-3.5" />
+                            {Math.floor(pkg.totalDurationSeconds / 3600) > 0
+                              ? `${Math.floor(pkg.totalDurationSeconds / 3600)} שע׳ ${Math.ceil((pkg.totalDurationSeconds % 3600) / 60)} דק׳`
+                              : `${Math.ceil(pkg.totalDurationSeconds / 60)} דק׳`}
+                          </span>
+                        </>
+                      )}
+                    </div>
                     {isOwned ? (
                       <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-3 py-1.5 text-sm font-bold text-emerald-700">
                         <CheckCircle className="h-4 w-4" />
