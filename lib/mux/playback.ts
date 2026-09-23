@@ -77,16 +77,24 @@ async function getPrivateKey() {
   return importPKCS8(pkcs8Pem, "RS256");
 }
 
-export async function signPlaybackToken(playbackId: string): Promise<string> {
+export async function signPlaybackToken(
+  playbackId: string,
+  options?: { assetEndTime?: number },
+): Promise<string> {
   const { keyId } = getSigningKey();
   const privateKey = await getPrivateKey();
   const now = Math.floor(Date.now() / 1000);
 
-  return new SignJWT({
+  const claims: Record<string, unknown> = {
     sub: playbackId,
     aud: "v",
     kid: keyId,
-  })
+  };
+  if (options?.assetEndTime !== undefined) {
+    claims.asset_end_time = options.assetEndTime;
+  }
+
+  return new SignJWT(claims)
     .setProtectedHeader({ alg: "RS256", typ: "JWT", kid: keyId })
     .setIssuedAt(now)
     .setExpirationTime(now + 7200)
