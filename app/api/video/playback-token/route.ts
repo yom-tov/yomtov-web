@@ -3,7 +3,7 @@ import { requireUserSession } from "@/lib/user-auth";
 import { canWatchVideo } from "@/lib/admin/purchase-helpers";
 import { signPlaybackToken, signThumbnailToken, signStoryboardToken } from "@/lib/mux/playback";
 import { db } from "@/lib/db";
-import { videos, users } from "@/lib/db/schema";
+import { videos, users, userActivity } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export const runtime = "nodejs";
@@ -50,6 +50,10 @@ export async function POST(req: Request) {
     .limit(1);
 
   const viewerId = session.sub.slice(0, 8);
+
+  db.insert(userActivity)
+    .values({ userId: session.sub, eventType: "video_start", videoId })
+    .catch(() => {});
 
   const [playbackToken, thumbnailToken, storyboardToken] = await Promise.all([
     signPlaybackToken(video.muxPlaybackId, { viewerId }),

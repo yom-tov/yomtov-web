@@ -3,7 +3,7 @@
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
-import { users } from "@/lib/db/schema";
+import { users, userActivity } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import {
   USER_SESSION_COOKIE,
@@ -72,6 +72,10 @@ export async function userLoginAction(
   }
 
   userRateReset(ip);
+
+  db.insert(userActivity)
+    .values({ userId: user.id, eventType: "login" })
+    .catch(() => {});
 
   const jar = await cookies();
   const jwt = await signUserSession(user.id);
