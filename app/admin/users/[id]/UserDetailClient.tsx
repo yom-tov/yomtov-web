@@ -779,7 +779,7 @@ function ActivityTab({
                 <ActivityIcon eventType={act.eventType} />
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-medium text-text">
-                    <ActivityLabel eventType={act.eventType} />
+                    <ActivityLabel eventType={act.eventType} metadata={act.metadata} />
                     {act.videoId && (
                       <span className="text-text-muted">
                         {" — "}
@@ -833,6 +833,8 @@ function ActivityIcon({ eventType }: { eventType: string }) {
   switch (eventType) {
     case "promo_view":
       return <Eye className="h-3.5 w-3.5 text-fuchsia-500" />;
+    case "promo_watch_duration":
+      return <Clock className="h-3.5 w-3.5 text-fuchsia-400" />;
     case "video_start":
       return <Play className="h-3.5 w-3.5 text-primary-500" />;
     case "login":
@@ -842,10 +844,19 @@ function ActivityIcon({ eventType }: { eventType: string }) {
   }
 }
 
-function ActivityLabel({ eventType }: { eventType: string }) {
+function ActivityLabel({ eventType, metadata }: { eventType: string; metadata?: string | null }) {
   switch (eventType) {
     case "promo_view":
       return "צפייה בפרומו";
+    case "promo_watch_duration": {
+      const secs = metadata ? JSON.parse(metadata)?.durationSeconds : null;
+      if (secs) {
+        const m = Math.floor(secs / 60);
+        const s = secs % 60;
+        return `צפייה בפרומו — ${m > 0 ? `${m} דק' ` : ""}${s} שנ'`;
+      }
+      return "משך צפייה בפרומו";
+    }
     case "video_start":
       return "צפייה בסרטון";
     case "login":

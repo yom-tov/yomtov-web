@@ -23,14 +23,28 @@ export function UsersListClient({ items }: { items: UserRow[] }) {
   const [q, setQ] = useState("");
   const [verifiedFilter, setVerifiedFilter] = useState<"" | "yes" | "no">("");
   const [activeFilter, setActiveFilter] = useState<"" | "yes" | "no">("");
+  const [activityFilter, setActivityFilter] = useState<"" | "inactive-7" | "inactive-30" | "purchased-no-watch" | "never-logged">("");
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
+    const now = Date.now();
     return items.filter((u) => {
       if (verifiedFilter === "yes" && !u.emailVerified) return false;
       if (verifiedFilter === "no" && u.emailVerified) return false;
       if (activeFilter === "yes" && !u.active) return false;
       if (activeFilter === "no" && u.active) return false;
+      if (activityFilter === "inactive-7") {
+        if (u.lastSeen && now - new Date(u.lastSeen).getTime() < 7 * 86400000) return false;
+      }
+      if (activityFilter === "inactive-30") {
+        if (u.lastSeen && now - new Date(u.lastSeen).getTime() < 30 * 86400000) return false;
+      }
+      if (activityFilter === "purchased-no-watch") {
+        if (u.purchaseCount === 0 || u.videosWatched > 0) return false;
+      }
+      if (activityFilter === "never-logged") {
+        if (u.lastSeen) return false;
+      }
       if (needle) {
         const hay =
           `${u.firstName} ${u.lastName} ${u.email} ${u.phone ?? ""} ${u.institution ?? ""}`.toLowerCase();
@@ -38,15 +52,16 @@ export function UsersListClient({ items }: { items: UserRow[] }) {
       }
       return true;
     });
-  }, [items, q, verifiedFilter, activeFilter]);
+  }, [items, q, verifiedFilter, activeFilter, activityFilter]);
 
   const clearFilters = () => {
     setQ("");
     setVerifiedFilter("");
     setActiveFilter("");
+    setActivityFilter("");
   };
   const activeFilters =
-    Number(!!q) + Number(!!verifiedFilter) + Number(!!activeFilter);
+    Number(!!q) + Number(!!verifiedFilter) + Number(!!activeFilter) + Number(!!activityFilter);
 
   return (
     <div>
@@ -103,6 +118,21 @@ export function UsersListClient({ items }: { items: UserRow[] }) {
               <option value="">הכל</option>
               <option value="yes">פעיל</option>
               <option value="no">חסום</option>
+            </select>
+          </F>
+          <F label="פעילות">
+            <select
+              value={activityFilter}
+              onChange={(e) =>
+                setActivityFilter(e.target.value as typeof activityFilter)
+              }
+              className="select"
+            >
+              <option value="">הכל</option>
+              <option value="inactive-7">לא פעיל 7+ ימים</option>
+              <option value="inactive-30">לא פעיל 30+ ימים</option>
+              <option value="purchased-no-watch">רכש ולא צפה</option>
+              <option value="never-logged">מעולם לא התחבר</option>
             </select>
           </F>
           {activeFilters > 0 && (

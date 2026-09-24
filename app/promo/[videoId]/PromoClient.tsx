@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Loader2 } from "lucide-react";
-import { MuxVideoPlayer } from "@/components/video/MuxVideoPlayer";
+import MuxPlayer from "@mux/mux-player-react";
 
 interface PromoTokenData {
   playbackId: string;
@@ -19,6 +19,72 @@ export function PromoClient({
 }) {
   const [tokens, setTokens] = useState<PromoTokenData | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const playerRef = useRef<HTMLElement | null>(null);
+  const lastReported = useRef(0);
+
+  const reportDuration = useCallback(
+    (seconds: number) => {
+      if (seconds <= 0 || seconds <= lastReported.current) return;
+      lastReported.current = seconds;
+      const data = JSON.stringify({
+        videoId,
+        durationSeconds: Math.floor(seconds),
+      });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(
+          "/api/video/promo-duration",
+          new Blob([data], { type: "application/json" }),
+        );
+      } else {
+        fetch("/api/video/promo-duration", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: data,
+          keepalive: true,
+        }).catch(() => {});
+      }
+    },
+    [videoId],
+  );
+
+  useEffect(() => {
+    const el = playerRef.current as unknown as HTMLMediaElement | null;
+    if (!el) return;
+    let interval: ReturnType<typeof setInterval> | null = null;
+
+    const onPlay = () => {
+      interval = setInterval(() => {
+        if (el.currentTime && isFinite(el.currentTime)) {
+          reportDuration(el.currentTime);
+        }
+      }, 15000);
+    };
+    const onPause = () => {
+      if (interval) clearInterval(interval);
+      if (el.currentTime && isFinite(el.currentTime)) {
+        reportDuration(el.currentTime);
+      }
+    };
+    const onEnded = () => {
+      if (interval) clearInterval(interval);
+      if (el.duration && isFinite(el.duration)) {
+        reportDuration(el.duration);
+      }
+    };
+
+    el.addEventListener("play", onPlay);
+    el.addEventListener("pause", onPause);
+    el.addEventListener("ended", onEnded);
+    return () => {
+      if (interval) clearInterval(interval);
+      el.removeEventListener("play", onPlay);
+      el.removeEventListener("pause", onPause);
+      el.removeEventListener("ended", onEnded);
+      if (el.currentTime && isFinite(el.currentTime)) {
+        reportDuration(el.currentTime);
+      }
+    };
+  }, [reportDuration, tokens]);
 
   useEffect(() => {
     fetch("/api/video/promo-token", {
@@ -63,11 +129,22 @@ export function PromoClient({
   }
 
   return (
-    <MuxVideoPlayer
+    <MuxPlayer
+      ref={playerRef as React.RefObject<any>}
       playbackId={tokens.playbackId}
-      playbackToken={tokens.playbackToken}
-      thumbnailToken={tokens.thumbnailToken}
-      title={title}
+      tokens={{
+        playback: tokens.playbackToken,
+        thumbnail: tokens.thumbnailToken,
+      }}
+      metadata={{ video_title: title }}
+      accentColor="#1E40AF"
+      style={{
+        aspectRatio: "16/9",
+        width: "100%",
+        borderRadius: "var(--radius-lg)",
+        overflow: "hidden",
+      }}
+      streamType="on-demand"
     />
   );
 }
