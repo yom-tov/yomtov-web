@@ -51,7 +51,8 @@ export async function POST(req: Request) {
 
   const viewerId = session.sub.slice(0, 8);
 
-  db.insert(userActivity)
+  await db
+    .insert(userActivity)
     .values({ userId: session.sub, eventType: "video_start", videoId })
     .catch(() => {});
 

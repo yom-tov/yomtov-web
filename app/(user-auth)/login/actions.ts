@@ -73,7 +73,8 @@ export async function userLoginAction(
 
   userRateReset(ip);
 
-  db.insert(userActivity)
+  await db
+    .insert(userActivity)
     .values({ userId: user.id, eventType: "login" })
     .catch(() => {});
 
