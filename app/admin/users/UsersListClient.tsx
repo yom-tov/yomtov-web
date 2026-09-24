@@ -17,6 +17,7 @@ interface UserRow {
   purchaseCount: number;
   lastSeen: Date | null;
   videosWatched: number;
+  loginCount: number;
 }
 
 export function UsersListClient({ items }: { items: UserRow[] }) {
@@ -209,14 +210,17 @@ export function UsersListClient({ items }: { items: UserRow[] }) {
                     <span className="text-text-subtle">-</span>
                   )}
                 </Td>
-                <Td className="num text-text-subtle text-[11px]">
-                  {u.lastSeen ? (
-                    <span className="inline-flex items-center gap-1">
+                <Td className="num text-[11px]">
+                  {u.loginCount > 0 || u.videosWatched > 0 ? (
+                    <span
+                      className="inline-flex items-center gap-1 text-text-muted"
+                      title={new Date(u.lastSeen ?? u.createdAt).toLocaleString("he-IL")}
+                    >
                       <Clock className="h-3 w-3" />
-                      {formatLastSeen(new Date(u.lastSeen))}
+                      {formatLastSeen(new Date(u.lastSeen ?? u.createdAt))}
                     </span>
                   ) : (
-                    "-"
+                    <span className="text-text-subtle" title="המשתמש מעולם לא התחבר למערכת">לא התחבר</span>
                   )}
                 </Td>
                 <Td className="num text-text-subtle">
@@ -268,14 +272,19 @@ export function UsersListClient({ items }: { items: UserRow[] }) {
 function formatLastSeen(date: Date): string {
   const now = Date.now();
   const diff = now - date.getTime();
+  if (diff < 0) return "עכשיו";
   const mins = Math.floor(diff / 60000);
   if (mins < 1) return "עכשיו";
   if (mins < 60) return `לפני ${mins} דק'`;
   const hours = Math.floor(mins / 60);
   if (hours < 24) return `לפני ${hours} שע'`;
   const days = Math.floor(hours / 24);
+  if (days === 1) return "לפני יום";
   if (days < 7) return `לפני ${days} ימים`;
-  if (days < 30) return `לפני ${Math.floor(days / 7)} שבועות`;
+  const weeks = Math.floor(days / 7);
+  if (days < 30) return `לפני ${weeks === 1 ? "שבוע" : `${weeks} שבועות`}`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return `לפני ${months === 1 ? "חודש" : `${months} חודשים`}`;
   return date.toLocaleDateString("he-IL");
 }
 

@@ -50,8 +50,9 @@ export async function GET() {
       )`,
       lastSeen: sql<string | null>`(
         SELECT GREATEST(
-          (SELECT MAX(${userActivity.createdAt}) FROM ${userActivity} WHERE ${userActivity.userId} = ${users.id}),
-          (SELECT MAX(${videoProgress.updatedAt}) FROM ${videoProgress} WHERE ${videoProgress.userId} = ${users.id})
+          ${users.createdAt},
+          COALESCE((SELECT MAX(ua."created_at") FROM "user_activity" ua WHERE ua."user_id" = ${users.id}), ${users.createdAt}),
+          COALESCE((SELECT MAX(vp."updated_at") FROM "video_progress" vp WHERE vp."user_id" = ${users.id}), ${users.createdAt})
         )::text
       )`,
       packages: sql<string>`(

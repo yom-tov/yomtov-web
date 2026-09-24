@@ -24,13 +24,19 @@ export default async function AdminUsersPage() {
       )`,
       lastSeen: sql<Date | null>`(
         SELECT GREATEST(
-          (SELECT MAX(${userActivity.createdAt}) FROM ${userActivity} WHERE ${userActivity.userId} = ${users.id}),
-          (SELECT MAX(${videoProgress.updatedAt}) FROM ${videoProgress} WHERE ${videoProgress.userId} = ${users.id})
+          ${users.createdAt},
+          COALESCE((SELECT MAX(ua."created_at") FROM "user_activity" ua WHERE ua."user_id" = ${users.id}), ${users.createdAt}),
+          COALESCE((SELECT MAX(vp."updated_at") FROM "video_progress" vp WHERE vp."user_id" = ${users.id}), ${users.createdAt})
         )
       )`,
       videosWatched: sql<number>`(
         SELECT COUNT(*)::int FROM ${videoProgress}
         WHERE ${videoProgress.userId} = ${users.id}
+      )`,
+      loginCount: sql<number>`(
+        SELECT COUNT(*)::int FROM "user_activity" ua
+        WHERE ua."user_id" = ${users.id}
+        AND ua."event_type" = 'login'
       )`,
     })
     .from(users)
