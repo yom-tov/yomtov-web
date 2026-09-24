@@ -32,6 +32,7 @@ export function WatchClient({
   const [tokens, setTokens] = useState<TokenData | null>(null);
   const [startTime, setStartTime] = useState<number | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
+  const [extensionDetected, setExtensionDetected] = useState(false);
   const refreshTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const fetchTokens = useCallback(async () => {
@@ -108,6 +109,70 @@ export function WatchClient({
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    const flag = () => {
+      if (!cancelled) setExtensionDetected(true);
+    };
+
+    const EXT_IDS = [
+      "lmjnegcaeklhafolokijcfjliaokphfk",
+    ];
+    for (const eid of EXT_IDS) {
+      try {
+        const img = new Image();
+        img.onload = flag;
+        img.src = `chrome-extension://${eid}/icon.png`;
+      } catch {}
+      try {
+        const img2 = new Image();
+        img2.onload = flag;
+        img2.src = `chrome-extension://${eid}/icon-big.png`;
+      } catch {}
+    }
+
+    const SUSPECT = /vdh|downloadhelper|video.?download|savefrom|fvd.?down/i;
+    const observer = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        for (const node of Array.from(m.addedNodes)) {
+          if (node instanceof HTMLElement) {
+            const sig = `${node.id} ${node.className}`;
+            if (SUSPECT.test(sig)) flag();
+          }
+        }
+      }
+    });
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+    });
+
+    const scan = () => {
+      const sels = [
+        '[id*="vdh" i]', '[class*="vdh" i]',
+        '[id*="downloadhelper" i]', '[class*="downloadhelper" i]',
+        '[id*="video-download" i]', '[class*="video-download" i]',
+        '[data-vdh]', '[data-downloadhelper]',
+      ];
+      for (const s of sels) {
+        try {
+          if (document.querySelector(s)) {
+            flag();
+            return;
+          }
+        } catch {}
+      }
+    };
+    scan();
+    const scanId = setInterval(scan, 3000);
+
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+      clearInterval(scanId);
+    };
+  }, []);
+
   if (error) {
     return (
       <div className="aspect-video rounded-2xl bg-surface-2 flex items-center justify-center">
@@ -138,6 +203,39 @@ export function WatchClient({
         startTime={startTime}
       />
       {tokens.watermark && <VideoWatermark data={tokens.watermark} />}
+      {extensionDetected && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            zIndex: 35,
+            background: "rgba(0,0,0,0.96)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "var(--radius-lg)",
+            flexDirection: "column",
+            gap: "12px",
+            padding: "24px",
+            textAlign: "center",
+          }}
+        >
+          <p style={{ color: "#f87171", fontWeight: 700, fontSize: "18px" }}>
+            זוהה תוסף הורדת סרטונים
+          </p>
+          <p
+            style={{
+              color: "#fbbf24",
+              fontSize: "14px",
+              maxWidth: "360px",
+              lineHeight: "1.6",
+            }}
+          >
+            כדי להמשיך לצפות, יש להסיר או להשבית את תוסף הורדת הסרטונים
+            ולרענן את הדף
+          </p>
+        </div>
+      )}
       <div
         id="devtools-warning"
         style={{
