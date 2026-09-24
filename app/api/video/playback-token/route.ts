@@ -3,7 +3,7 @@ import { requireUserSession } from "@/lib/user-auth";
 import { canWatchVideo } from "@/lib/admin/purchase-helpers";
 import { signPlaybackToken, signThumbnailToken, signStoryboardToken } from "@/lib/mux/playback";
 import { db } from "@/lib/db";
-import { videos } from "@/lib/db/schema";
+import { videos, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export const runtime = "nodejs";
@@ -38,8 +38,21 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "ACCESS_DENIED" }, { status: 403 });
   }
 
+  const [user] = await db
+    .select({
+      firstName: users.firstName,
+      lastName: users.lastName,
+      email: users.email,
+      phone: users.phone,
+    })
+    .from(users)
+    .where(eq(users.id, session.sub))
+    .limit(1);
+
+  const viewerId = session.sub.slice(0, 8);
+
   const [playbackToken, thumbnailToken, storyboardToken] = await Promise.all([
-    signPlaybackToken(video.muxPlaybackId),
+    signPlaybackToken(video.muxPlaybackId, { viewerId }),
     signThumbnailToken(video.muxPlaybackId),
     signStoryboardToken(video.muxPlaybackId),
   ]);
@@ -49,5 +62,13 @@ export async function POST(req: Request) {
     playbackToken,
     thumbnailToken,
     storyboardToken,
+    watermark: user
+      ? {
+          name: `${user.firstName} ${user.lastName}`,
+          email: user.email,
+          phone: user.phone ?? "",
+          uid: viewerId,
+        }
+      : null,
   });
 }

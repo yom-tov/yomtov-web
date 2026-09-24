@@ -81,7 +81,7 @@ async function getPrivateKey() {
 
 export async function signPlaybackToken(
   playbackId: string,
-  options?: { assetEndTime?: number },
+  options?: { assetEndTime?: number; viewerId?: string },
 ): Promise<string> {
   const { keyId } = getSigningKey();
   const privateKey = await getPrivateKey();
@@ -96,11 +96,14 @@ export async function signPlaybackToken(
   if (options?.assetEndTime !== undefined) {
     claims.asset_end_time = options.assetEndTime;
   }
+  if (options?.viewerId) {
+    claims.viewer_id = options.viewerId;
+  }
 
   return new SignJWT(claims)
     .setProtectedHeader({ alg: "RS256", typ: "JWT", kid: keyId })
     .setIssuedAt(now)
-    .setExpirationTime(now + 1800)
+    .setExpirationTime(now + 600)
     .sign(privateKey);
 }
 
