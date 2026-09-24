@@ -89,6 +89,7 @@ export async function middleware(req: NextRequest) {
     // Authed — let the request through, no legacy redirect processing.
     const res = NextResponse.next();
     res.headers.set("x-robots-tag", "noindex, nofollow");
+    res.headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
     return res;
   }
 

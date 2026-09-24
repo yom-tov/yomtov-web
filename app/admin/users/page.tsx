@@ -1,3 +1,4 @@
+import { connection } from "next/server";
 import { db } from "@/lib/db";
 import { users, userPurchases, userActivity, videoProgress } from "@/lib/db/schema";
 import { sql } from "drizzle-orm";
@@ -6,6 +7,7 @@ import { UsersListClient } from "./UsersListClient";
 export const dynamic = "force-dynamic";
 
 export default async function AdminUsersPage() {
+  await connection();
   const allUsers = await db
     .select({
       id: users.id,

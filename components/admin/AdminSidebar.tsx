@@ -36,6 +36,7 @@ export function AdminSidebar() {
             <Link
               key={href}
               href={href}
+              prefetch={false}
               className={clsx(
                 "flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors",
                 active
@@ -72,6 +73,7 @@ export function AdminMobileNav() {
           <Link
             key={href}
             href={href}
+            prefetch={false}
             className={clsx(
               "flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-semibold",
               active ? "text-primary-700" : "text-text-subtle"

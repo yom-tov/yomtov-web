@@ -1,3 +1,4 @@
+import { connection } from "next/server";
 import Link from "next/link";
 import {
   FileText, NotebookPen, Beaker, Palette, ExternalLink, GitCommit,
@@ -15,6 +16,7 @@ import { sql, eq, and, gte, or, isNull, gt, desc } from "drizzle-orm";
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
+  await connection();
   const [{ data: exams }, { data: assignments }, { data: labs }, { data: subjects }] =
     await Promise.all([readExams(), readAssignments(), readLabs(), readSubjects()]);
 
