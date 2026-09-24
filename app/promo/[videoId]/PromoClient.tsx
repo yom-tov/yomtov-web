@@ -33,7 +33,14 @@ export function PromoClient({
         }
         return r.json() as Promise<PromoTokenData>;
       })
-      .then(setTokens)
+      .then((data) => {
+        setTokens(data);
+        fetch("/api/video/promo-view", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ videoId }),
+        }).catch(() => {});
+      })
       .catch((e) => setError(e.message));
   }, [videoId]);
 

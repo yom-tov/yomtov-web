@@ -114,6 +114,17 @@ export const videoProgress = pgTable(
   (t) => [primaryKey({ columns: [t.userId, t.videoId] })],
 );
 
+export const userActivity = pgTable("user_activity", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  eventType: varchar("event_type", { length: 50 }).notNull(),
+  videoId: uuid("video_id").references(() => videos.id, { onDelete: "set null" }),
+  metadata: text("metadata"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const passwordResetTokens = pgTable("password_reset_tokens", {
   id: uuid("id").defaultRandom().primaryKey(),
   userId: uuid("user_id")
