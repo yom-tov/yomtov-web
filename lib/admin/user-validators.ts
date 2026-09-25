@@ -25,9 +25,7 @@ export const UserRegistrationSchema = z
       .optional()
       .or(z.literal("")),
     institution: z.string().max(200).optional().or(z.literal("")),
-    agreedToTerms: z.literal("on", {
-      errorMap: () => ({ message: "יש לאשר את תנאי השימוש" }),
-    }),
+    agreedToTerms: z.literal("on", { message: "יש לאשר את תנאי השימוש" }),
   })
   .refine((d) => d.password === d.confirmPassword, {
     message: "הסיסמאות אינן תואמות",
