@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { contentPackages, packageVideos, videos } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { Play, Lock, Clock, ArrowLeft, ShoppingBag, CheckCircle, ExternalLink, Sparkles } from "lucide-react";
+import { PurchaseButton } from "./PurchaseButton";
 import { signThumbnailToken } from "@/lib/mux/playback";
 import { getOptionalUserSession } from "@/lib/user-auth";
 import { hasActiveAccess } from "@/lib/admin/purchase-helpers";
@@ -236,17 +237,7 @@ export default async function CourseDetailPage({
                 </div>
                 <div className="mt-6 space-y-3">
                   {isLoggedIn ? (
-                    <>
-                      <div className="rounded-xl border border-primary-100 bg-primary-50/50 px-4 py-3 text-center text-sm text-primary-800">
-                        לרכישת הקורס, פנה אלינו בהודעת Bit או במייל
-                      </div>
-                      <Link
-                        href="/dashboard"
-                        className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 text-sm font-semibold text-text hover:bg-surface-2 transition"
-                      >
-                        לאזור האישי
-                      </Link>
-                    </>
+                    <PurchaseButton />
                   ) : (
                     <>
                       <Link
