@@ -256,13 +256,6 @@ export default async function CourseDetailPage({
                     </>
                   )}
                 </div>
-                {!isLoggedIn && (
-                  <div className="mt-5 text-xs text-text-subtle text-center">
-                    לאחר ההרשמה, ניתן לרכוש גישה דרך Bit.
-                    <br />
-                    הגישה תופעל באופן ידני תוך שעות ספורות.
-                  </div>
-                )}
               </div>
             </div>
           )}
