@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import Link from "next/link";
 import { Loader2, UserPlus, Mail, Lock, User, Phone, Building } from "lucide-react";
 import { registerAction, type RegisterState } from "./actions";
 
@@ -77,6 +78,31 @@ export function RegisterForm() {
         disabled={pending}
         error={state?.fieldErrors?.institution}
       />
+
+      <label className="flex items-start gap-2 mt-1">
+        <input
+          type="checkbox"
+          name="agreedToTerms"
+          required
+          disabled={pending}
+          className="mt-0.5 h-4 w-4 shrink-0 rounded border-border-strong accent-primary-600"
+        />
+        <span className="text-xs text-text-muted leading-relaxed">
+          קראתי ואני מסכים/ה ל
+          <Link
+            href="/terms"
+            target="_blank"
+            className="font-semibold text-primary-600 underline underline-offset-2 hover:text-primary-700 dark:text-primary-400"
+          >
+            תנאי השימוש ומדיניות הפרטיות
+          </Link>
+        </span>
+      </label>
+      {state?.fieldErrors?.agreedToTerms && (
+        <span className="text-xs text-rose-600 dark:text-rose-400">
+          {state.fieldErrors.agreedToTerms}
+        </span>
+      )}
 
       {state?.error && (
         <div className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs text-rose-700 dark:border-rose-800 dark:bg-rose-950/30 dark:text-rose-300">

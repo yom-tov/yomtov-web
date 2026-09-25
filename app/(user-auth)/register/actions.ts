@@ -44,6 +44,7 @@ export async function registerAction(
     lastName: formData.get("lastName") as string,
     phone: (formData.get("phone") as string) || "",
     institution: (formData.get("institution") as string) || "",
+    agreedToTerms: formData.get("agreedToTerms") as string,
   };
 
   const parsed = UserRegistrationSchema.safeParse(raw);
