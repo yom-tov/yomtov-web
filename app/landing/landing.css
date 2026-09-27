@@ -1,0 +1,493 @@
+/* ============================================================================
+ * /landing — marketing page styles.
+ *
+ * Plain CSS on top of the design tokens in globals.css (no @apply, so this
+ * file doesn't need Tailwind's @reference). App Router loads it as a global
+ * stylesheet, so every class here is lp-* / data-attribute scoped and only
+ * ever appears in app/landing/*. Motion is transform/opacity only.
+ * ==========================================================================*/
+
+@property --lp-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: true;
+}
+
+/* ---------------------------------------------------------------------------
+ * Scroll reveal — LandingEffects flips data-inview="true" once an element
+ * scrolls into view. Always put data-reveal on a wrapper, never on an element
+ * that has its own hover transition (this unlayered `transition` would win
+ * over Tailwind's layered one).
+ * -------------------------------------------------------------------------*/
+[data-reveal] {
+  opacity: 0;
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: var(--d, 0ms);
+}
+[data-reveal="up"]    { transform: translateY(48px); }
+[data-reveal="scale"] { transform: scale(0.9); }
+[data-reveal="blur"]  { transform: translateY(24px); filter: blur(14px); }
+[data-reveal="right"] { transform: translateX(72px); }
+[data-reveal="left"]  { transform: translateX(-72px); }
+[data-reveal="tilt"]  {
+  transform: perspective(1100px) rotateX(24deg) translateY(72px);
+  transform-origin: 50% 100%;
+}
+[data-reveal][data-inview="true"] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * Hero
+ * -------------------------------------------------------------------------*/
+@keyframes lp-word-in {
+  to { opacity: 1; transform: none; filter: none; }
+}
+.lp-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.45em);
+  filter: blur(10px);
+  animation: lp-word-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+@keyframes lp-shimmer {
+  to { background-position: -250% 0; }
+}
+.lp-shimmer {
+  display: inline-block;
+  padding-bottom: 0.08em; /* keeps descenders inside the clipped gradient */
+  background-image: linear-gradient(
+    100deg,
+    var(--primary-600) 0%,
+    var(--accent-500) 22%,
+    var(--joy-fuchsia) 45%,
+    var(--joy-amber) 65%,
+    var(--primary-600) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0;
+  transform: translateY(0.45em);
+  filter: blur(10px);
+  animation:
+    lp-word-in 1s cubic-bezier(0.2, 0.7, 0.2, 1) forwards,
+    lp-shimmer 9s linear infinite;
+  animation-delay: var(--d, 0ms), 0ms;
+}
+:root.dark .lp-shimmer {
+  background-image: linear-gradient(
+    100deg,
+    #8FB2FF 0%,
+    var(--accent-400) 22%,
+    #F0ABFC 45%,
+    #FCD34D 65%,
+    #8FB2FF 100%
+  );
+}
+
+/* Fade-up for the rest of the hero copy, on load (no JS needed). */
+.lp-rise {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: lp-word-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+
+/* Drifting aurora blobs — soft radial gradients instead of filter: blur so
+   the animation stays on the compositor. */
+.lp-aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.75;
+}
+:root.dark .lp-aurora { opacity: 1; }
+.lp-aurora > span {
+  position: absolute;
+  border-radius: 9999px;
+  animation: lp-drift 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+.lp-aurora > span:nth-child(1) {
+  width: 60rem; height: 60rem; top: -28rem; right: -16rem;
+  background: radial-gradient(circle, rgba(217, 70, 239, 0.30), transparent 62%);
+}
+.lp-aurora > span:nth-child(2) {
+  width: 54rem; height: 54rem; top: -6rem; left: -20rem;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.32), transparent 62%);
+  animation-duration: 28s;
+  animation-delay: -7s;
+}
+.lp-aurora > span:nth-child(3) {
+  width: 46rem; height: 46rem; bottom: -26rem; left: 30%;
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.24), transparent 62%);
+  animation-duration: 32s;
+  animation-delay: -12s;
+}
+.lp-aurora > span:nth-child(4) {
+  width: 40rem; height: 40rem; bottom: -10rem; right: 10%;
+  background: radial-gradient(circle, rgba(34, 70, 197, 0.26), transparent 62%);
+  animation-duration: 26s;
+  animation-delay: -4s;
+}
+@keyframes lp-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  50%  { transform: translate3d(6%, -7%, 0) scale(1.12); }
+  100% { transform: translate3d(-7%, 5%, 0) scale(0.94); }
+}
+
+/* Dot grid, faded out toward the edges. */
+.lp-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--text) 22%, transparent) 1px,
+    transparent 1.3px
+  );
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, #000 25%, transparent 75%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 35%, #000 25%, transparent 75%);
+  opacity: 0.45;
+}
+
+/* PCB traces with glowing "current" pulses (paths use pathLength="100"). */
+.lp-trace {
+  fill: none;
+  stroke: color-mix(in oklab, var(--text) 11%, transparent);
+  stroke-width: 1.5;
+}
+.lp-via {
+  fill: var(--bg);
+  stroke: color-mix(in oklab, var(--text) 20%, transparent);
+  stroke-width: 1.5;
+}
+.lp-pulse {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 7 93;
+  stroke-dashoffset: 100;
+  animation: lp-flow var(--dur, 6s) linear infinite;
+  animation-delay: var(--d, 0s);
+  filter: drop-shadow(0 0 5px currentColor);
+}
+@keyframes lp-flow {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Scroll cue */
+.lp-mouse {
+  position: relative;
+  width: 26px;
+  height: 42px;
+  border: 2px solid var(--border-strong);
+  border-radius: 14px;
+}
+.lp-mouse::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--accent-500);
+  animation: lp-wheel 1.8s ease-in-out infinite;
+}
+@keyframes lp-wheel {
+  0%   { opacity: 0; transform: translateY(0); }
+  30%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(13px); }
+}
+
+/* ---------------------------------------------------------------------------
+ * Shared motion helpers
+ * -------------------------------------------------------------------------*/
+.lp-float {
+  animation: lp-float var(--dur, 6s) ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+@keyframes lp-float {
+  0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  50%      { transform: translateY(-14px) rotate(var(--r, 0deg)); }
+}
+
+.lp-spin     { animation: lp-spin var(--dur, 40s) linear infinite; }
+.lp-spin-rev { animation: lp-spin var(--dur, 30s) linear infinite reverse; }
+@keyframes lp-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mouse parallax: HeroVisual writes --mx/--my (-1..1) on the container.
+   Uses the standalone `translate` property so it composes with any
+   transform-based animation on the same element. */
+.lp-parallax {
+  translate:
+    calc(var(--mx, 0) * var(--depth, 12px))
+    calc(var(--my, 0) * var(--depth, 12px));
+  transition: translate 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Oscilloscope trace: the path spans exactly two periods, so shifting it by
+   half its own box loops seamlessly. */
+.lp-wave {
+  transform-box: fill-box;
+  animation: lp-wave var(--dur, 2.4s) linear infinite;
+}
+@keyframes lp-wave {
+  to { transform: translateX(-50%); }
+}
+
+/* Conductor with electrons: dashes marching along a closed path. */
+.lp-electrons {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 2 10;
+  animation: lp-electrons 0.9s linear infinite;
+}
+@keyframes lp-electrons {
+  to { stroke-dashoffset: -24; }
+}
+
+.lp-glow-pulse { animation: lp-glow-pulse 1.6s ease-in-out infinite; }
+@keyframes lp-glow-pulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+/* Typing caret */
+.lp-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-inline-start: 2px;
+  vertical-align: -0.15em;
+  background: var(--accent-500);
+  animation: lp-blink 1s steps(1) infinite;
+}
+@keyframes lp-blink {
+  50% { opacity: 0; }
+}
+
+/* ---------------------------------------------------------------------------
+ * Marquee — the track holds the list twice; shifting it by exactly half its
+ * width loops seamlessly. Spacing lives on each item (not `gap`) so the two
+ * halves are identical in width.
+ * -------------------------------------------------------------------------*/
+.lp-marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to left, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to left, transparent, #000 8%, #000 92%, transparent);
+}
+.lp-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: lp-marquee var(--dur, 70s) linear infinite;
+}
+.lp-marquee-track[data-reverse="true"] { animation-direction: reverse; }
+.lp-marquee-track > * { margin-inline-end: 0.75rem; }
+.lp-marquee:hover .lp-marquee-track { animation-play-state: paused; }
+@keyframes lp-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(50%); }
+}
+
+/* ---------------------------------------------------------------------------
+ * Cards
+ * -------------------------------------------------------------------------*/
+/* Cursor spotlight — LandingEffects writes --sx/--sy on [data-spot]. */
+.lp-spot { position: relative; isolation: isolate; }
+.lp-spot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--sx, 50%) var(--sy, 50%),
+    color-mix(in oklab, var(--spot, var(--accent-500)) 22%, transparent),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.lp-spot:hover::before { opacity: 1; }
+
+.lp-tilt {
+  transform: perspective(1000px);
+  transition:
+    transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.5s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+.lp-tilt:hover {
+  transform: perspective(1000px) rotateX(4deg) rotateY(-5deg) translateY(-6px);
+}
+
+/* Animated rainbow border (conic gradient spinning via @property). */
+.lp-conic {
+  position: relative;
+  isolation: isolate;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--lp-angle),
+    var(--joy-rose), var(--joy-amber), var(--joy-emerald),
+    var(--joy-cyan), var(--joy-violet), var(--joy-fuchsia), var(--joy-rose)
+  );
+  animation: lp-angle 7s linear infinite;
+}
+.lp-conic::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  z-index: -1;
+  border-radius: inherit;
+  background: inherit;
+  filter: blur(28px);
+  opacity: 0.55;
+}
+@keyframes lp-angle {
+  to { --lp-angle: 360deg; }
+}
+
+/* ---------------------------------------------------------------------------
+ * Night sections (stats band, courses) — navy in both themes.
+ * -------------------------------------------------------------------------*/
+.lp-night {
+  position: relative;
+  isolation: isolate;
+  color: #EDF1FF;
+  background:
+    radial-gradient(60rem 30rem at 85% 0%, rgba(217, 70, 239, 0.20), transparent 60%),
+    radial-gradient(50rem 28rem at 10% 100%, rgba(6, 182, 212, 0.22), transparent 60%),
+    linear-gradient(180deg, #0B1E3A 0%, #081226 100%);
+}
+.lp-night::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 30%, transparent 80%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 30%, transparent 80%);
+}
+
+/* ---------------------------------------------------------------------------
+ * Tool art
+ * -------------------------------------------------------------------------*/
+/* Israeli-style traffic light sequence: red → red+yellow → green → yellow */
+.lp-tl-red    { animation: lp-tl-red 8s infinite; }
+.lp-tl-yellow { animation: lp-tl-yellow 8s infinite; }
+.lp-tl-green  { animation: lp-tl-green 8s infinite; }
+@keyframes lp-tl-red {
+  0%, 49.9%  { opacity: 1; }
+  50%, 100%  { opacity: 0.14; }
+}
+@keyframes lp-tl-yellow {
+  0%, 37.9%  { opacity: 0.14; }
+  38%, 49.9% { opacity: 1; }
+  50%, 87.9% { opacity: 0.14; }
+  88%, 100%  { opacity: 1; }
+}
+@keyframes lp-tl-green {
+  0%, 49.9%  { opacity: 0.14; }
+  50%, 87.9% { opacity: 1; }
+  88%, 100%  { opacity: 0.14; }
+}
+
+/* ---------------------------------------------------------------------------
+ * "How to start" wire — StartSteps writes --p (0..1) on the container.
+ * -------------------------------------------------------------------------*/
+.lp-wire-fill {
+  transform-origin: top;
+  transform: scaleY(var(--p, 0));
+}
+.lp-node {
+  transition: background-color 0.5s ease, box-shadow 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+}
+.lp-node[data-lit="true"] {
+  background: var(--accent-500);
+  border-color: var(--accent-400);
+  color: #fff;
+  box-shadow:
+    0 0 0 6px color-mix(in oklab, var(--accent-500) 18%, transparent),
+    0 0 28px color-mix(in oklab, var(--accent-500) 70%, transparent);
+}
+
+/* ---------------------------------------------------------------------------
+ * FAQ
+ * -------------------------------------------------------------------------*/
+.lp-faq > summary { list-style: none; cursor: pointer; }
+.lp-faq > summary::-webkit-details-marker { display: none; }
+.lp-faq .lp-faq-icon { transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.lp-faq[open] .lp-faq-icon { transform: rotate(45deg); }
+.lp-faq[open] .lp-faq-body { animation: lp-faq-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1); }
+@keyframes lp-faq-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------------------------
+ * Accessibility
+ * -------------------------------------------------------------------------*/
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  .lp-word,
+  .lp-shimmer,
+  .lp-rise {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
+  }
+  .lp-aurora > span,
+  .lp-pulse,
+  .lp-mouse::after,
+  .lp-float,
+  .lp-spin,
+  .lp-spin-rev,
+  .lp-wave,
+  .lp-electrons,
+  .lp-glow-pulse,
+  .lp-caret,
+  .lp-marquee-track,
+  .lp-conic,
+  .lp-tl-red,
+  .lp-tl-yellow,
+  .lp-tl-green {
+    animation: none;
+  }
+  .lp-parallax { translate: none; }
+  .lp-tilt:hover { transform: none; }
+}
+
+/* High contrast (site a11y widget): drop purely decorative backdrops. */
+html[data-a11y-contrast="high"] .lp-aurora,
+html[data-a11y-contrast="high"] .lp-grid,
+html[data-a11y-contrast="high"] .lp-circuit,
+html[data-a11y-contrast="high"] .lp-spot::before {
+  display: none !important;
+}
