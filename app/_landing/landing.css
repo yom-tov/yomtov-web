@@ -1,10 +1,10 @@
 /* ============================================================================
- * /landing — marketing page styles.
+ * Home page (landing) styles.
  *
  * Plain CSS on top of the design tokens in globals.css (no @apply, so this
  * file doesn't need Tailwind's @reference). App Router loads it as a global
  * stylesheet, so every class here is lp-* / data-attribute scoped and only
- * ever appears in app/landing/*. Motion is transform/opacity only.
+ * ever appears in app/page.tsx and app/_landing/*. Motion is transform/opacity only.
  * ==========================================================================*/
 
 @property --lp-angle {

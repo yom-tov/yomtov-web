@@ -23,7 +23,11 @@ const nextConfig: NextConfig = {
     // redirects to its new English counterpart with a 301 so external inbound
     // links keep working. Deduplicated by `source`.
     const seen = new Set<string>();
-    const uniq: Redirect[] = [];
+    const uniq: Redirect[] = [
+      // The landing page was briefly live at /landing before becoming the
+      // home page itself.
+      { source: "/landing", destination: "/", permanent: true },
+    ];
     for (const r of redirectsData as Redirect[]) {
       if (seen.has(r.source)) continue;
       seen.add(r.source);
