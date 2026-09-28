@@ -11,6 +11,7 @@ export function DangerConfirm({
   confirmText,
   title = "מחיקה - פעולה בלתי הפיכה",
   description = "פעולה זו תמחק את הפריט מהאתר ואת כל קובצי ה-PDF שלו מהריפו. אי אפשר לבטל.",
+  children,
 }: {
   open: boolean;
   onClose: () => void;
@@ -19,6 +20,8 @@ export function DangerConfirm({
   confirmText: string; // user must type this exactly
   title?: string;
   description?: string;
+  /** Extra options shown under the description (e.g. a checkbox). */
+  children?: React.ReactNode;
 }) {
   const [typed, setTyped] = useState("");
   const [busy, setBusy] = useState(false);
@@ -50,6 +53,7 @@ export function DangerConfirm({
             <div>
               <h3 className="text-base font-bold text-text">{title}</h3>
               <p className="mt-1 text-sm text-text-muted">{description}</p>
+              {children && <div className="mt-3">{children}</div>}
             </div>
           </div>
           <button

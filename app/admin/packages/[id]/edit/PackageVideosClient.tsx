@@ -3,10 +3,14 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Plus, Trash2, Loader2 } from "lucide-react";
+import { clsx } from "clsx";
+import { Loader2, Plus, Sparkles, Trash2 } from "lucide-react";
+import { Badge, Btn, EmptyState, Select } from "@/components/admin/ui/primitives";
+import { SortableList } from "@/components/admin/ui/interactive";
 import {
   assignVideoToPackageAction,
   removeVideoFromPackageAction,
+  reorderPackageVideosAction,
 } from "../../actions";
 
 interface AssignedVideo {
@@ -15,6 +19,7 @@ interface AssignedVideo {
   muxPlaybackId: string;
   durationSeconds: number | null;
   displayOrder: number;
+  hidden: boolean;
 }
 
 interface AvailableVideo {
@@ -23,168 +28,131 @@ interface AvailableVideo {
   durationSeconds: number | null;
 }
 
+function formatDuration(sec: number | null) {
+  if (!sec) return "-";
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  if (h > 0) return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  return `${m}:${String(s).padStart(2, "0")}`;
+}
+
 export function PackageVideosClient({
   packageId,
   assignedVideos,
   availableVideos,
+  promoMinutes,
 }: {
   packageId: string;
   assignedVideos: AssignedVideo[];
   availableVideos: AvailableVideo[];
+  promoMinutes: number;
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const [items, setItems] = useState(assignedVideos);
   const [selectedVideo, setSelectedVideo] = useState("");
-  const [order, setOrder] = useState(0);
+
+  const promoId = items.find((v) => !v.hidden)?.videoId;
+
+  const reorder = (next: AssignedVideo[]) => {
+    const prev = items;
+    setItems(next);
+    startTransition(async () => {
+      const res = await reorderPackageVideosAction(packageId, next.map((v) => v.videoId));
+      if (!res.ok) {
+        toast.error(res.error ?? "הסידור נכשל");
+        setItems(prev);
+        return;
+      }
+      router.refresh();
+    });
+  };
 
   const handleAssign = () => {
     if (!selectedVideo) return;
+    const nextOrder = items.reduce((m, v) => Math.max(m, v.displayOrder), 0) + 1;
     startTransition(async () => {
-      const res = await assignVideoToPackageAction({
-        packageId,
-        videoId: selectedVideo,
-        displayOrder: order,
-      });
+      const res = await assignVideoToPackageAction({ packageId, videoId: selectedVideo, displayOrder: nextOrder });
       if (res.ok) {
-        toast.success("הסרטון שויך לחבילה");
+        toast.success("הסרטון נוסף לסוף הקורס");
         setSelectedVideo("");
-        setOrder(0);
         router.refresh();
-      } else {
-        toast.error(res.error ?? "שגיאה");
-      }
+      } else toast.error(res.error ?? "שגיאה");
     });
   };
 
-  const handleRemove = (videoId: string) => {
+  const handleRemove = (v: AssignedVideo) => {
+    if (!confirm(`להסיר את "${v.videoTitle}" מהקורס? (הסרטון עצמו לא נמחק)`)) return;
     startTransition(async () => {
-      const res = await removeVideoFromPackageAction(packageId, videoId);
+      const res = await removeVideoFromPackageAction(packageId, v.videoId);
       if (res.ok) {
-        toast.success("הסרטון הוסר מהחבילה");
+        setItems((all) => all.filter((x) => x.videoId !== v.videoId));
+        toast.success("הסרטון הוסר מהקורס");
         router.refresh();
-      } else {
-        toast.error(res.error ?? "שגיאה");
-      }
+      } else toast.error(res.error ?? "שגיאה");
     });
-  };
-
-  const formatDuration = (sec: number | null) => {
-    if (!sec) return "-";
-    const h = Math.floor(sec / 3600);
-    const m = Math.floor((sec % 3600) / 60);
-    const s = sec % 60;
-    if (h > 0) return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-    return `${m}:${String(s).padStart(2, "0")}`;
   };
 
   return (
     <div className="space-y-4">
-      {assignedVideos.length > 0 ? (
-        <div className="rounded-xl border border-border bg-surface overflow-hidden">
-          <table className="w-full text-sm">
-            <thead className="bg-surface-2/60 text-right">
-              <tr>
-                <th className="px-3 py-2 text-xs font-bold text-text-muted">
-                  סרטון
-                </th>
-                <th className="px-3 py-2 text-xs font-bold text-text-muted">
-                  משך
-                </th>
-                <th className="px-3 py-2 text-xs font-bold text-text-muted">
-                  סדר
-                </th>
-                <th className="px-3 py-2 text-xs font-bold text-text-muted w-0">
-                  פעולות
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {assignedVideos.map((v) => (
-                <tr
-                  key={v.videoId}
-                  className="border-t border-border hover:bg-surface-2/40"
-                >
-                  <td className="px-3 py-2">
-                    <div className="font-semibold text-text">
-                      {v.videoTitle}
-                    </div>
-                    <div className="mt-0.5 font-mono text-[11px] text-text-subtle">
-                      {v.muxPlaybackId}
-                    </div>
-                  </td>
-                  <td className="px-3 py-2 num">
-                    {formatDuration(v.durationSeconds)}
-                  </td>
-                  <td className="px-3 py-2 num">{v.displayOrder}</td>
-                  <td className="px-3 py-2">
-                    <button
-                      type="button"
-                      onClick={() => handleRemove(v.videoId)}
-                      disabled={pending}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" /> הסר
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {items.length === 0 ? (
+        <EmptyState title="אין עדיין סרטונים בקורס" description="בחר סרטון מהרשימה למטה כדי להוסיף." />
       ) : (
-        <div className="rounded-xl border border-dashed border-border bg-surface-2/30 px-4 py-8 text-center text-sm text-text-subtle">
-          אין סרטונים משויכים לחבילה זו עדיין
-        </div>
+        <>
+          <p className="text-xs text-text-muted">
+            גרור כדי לסדר. <b>הסרטון הראשון</b> הוא הפרומו — {promoMinutes} הדקות הראשונות שלו פתוחות לכולם בחינם.
+          </p>
+          <SortableList
+            items={items}
+            getKey={(v) => v.videoId}
+            onReorder={reorder}
+            disabled={pending}
+            renderItem={(v, i) => (
+              <div className={clsx("flex items-center gap-3", v.hidden && "opacity-55")}>
+                <span className="num w-6 shrink-0 text-center text-xs font-bold text-text-subtle">{i + 1}</span>
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-sm font-semibold text-text">{v.videoTitle}</div>
+                  <div className="mt-0.5 flex flex-wrap items-center gap-1.5">
+                    <span className="num text-[11px] text-text-subtle">{formatDuration(v.durationSeconds)}</span>
+                    {v.videoId === promoId && (
+                      <Badge tone="warn">
+                        <Sparkles className="h-3 w-3" />
+                        פרומו חינם
+                      </Badge>
+                    )}
+                    {v.hidden && <Badge>מוסתר</Badge>}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleRemove(v)}
+                  disabled={pending}
+                  className="rounded-lg p-1.5 text-text-subtle hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10"
+                  aria-label="הסר מהקורס"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
+            )}
+          />
+        </>
       )}
 
       {availableVideos.length > 0 && (
-        <div className="flex flex-wrap items-end gap-3 rounded-xl border border-border bg-surface p-3">
-          <label className="flex flex-1 min-w-[200px] flex-col gap-1">
-            <span className="text-[10px] font-semibold text-text-subtle">
-              הוסף סרטון
-            </span>
-            <select
-              value={selectedVideo}
-              onChange={(e) => setSelectedVideo(e.target.value)}
-              className="h-9 rounded-lg border border-border bg-surface px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
-            >
-              <option value="">בחר סרטון...</option>
-              {availableVideos.map((v) => (
-                <option key={v.id} value={v.id}>
-                  {v.title}{" "}
-                  {v.durationSeconds
-                    ? `(${formatDuration(v.durationSeconds)})`
-                    : ""}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="flex flex-col gap-1">
-            <span className="text-[10px] font-semibold text-text-subtle">
-              סדר
-            </span>
-            <input
-              type="number"
-              value={order}
-              onChange={(e) => setOrder(Number(e.target.value))}
-              min={0}
-              max={999}
-              className="h-9 w-20 rounded-lg border border-border bg-surface px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
-            />
-          </label>
-          <button
-            type="button"
-            onClick={handleAssign}
-            disabled={!selectedVideo || pending}
-            className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-primary-600 px-3 text-xs font-semibold text-white hover:bg-primary-700 disabled:opacity-50"
-          >
-            {pending ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin" />
-            ) : (
-              <Plus className="h-3.5 w-3.5" />
-            )}
-            שייך
-          </button>
+        <div className="flex flex-wrap items-center gap-2 rounded-xl border border-dashed border-border-strong p-3">
+          <Select value={selectedVideo} onChange={(e) => setSelectedVideo(e.target.value)} className="min-w-0 flex-1">
+            <option value="">הוספת סרטון קיים לקורס…</option>
+            {availableVideos.map((v) => (
+              <option key={v.id} value={v.id}>
+                {v.title} ({formatDuration(v.durationSeconds)})
+              </option>
+            ))}
+          </Select>
+          <Btn variant="primary" onClick={handleAssign} disabled={!selectedVideo || pending}>
+            {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+            הוסף
+          </Btn>
         </div>
       )}
     </div>

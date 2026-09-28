@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { contentPackages, packageVideos } from "@/lib/db/schema";
-import { eq, sql } from "drizzle-orm";
+import { sql } from "drizzle-orm";
 import { PackagesListClient } from "./PackagesListClient";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +21,7 @@ export default async function AdminPackagesPage() {
       )`,
     })
     .from(contentPackages)
-    .orderBy(contentPackages.displayOrder);
+    .orderBy(contentPackages.displayOrder, contentPackages.createdAt);
 
-  return <PackagesListClient items={pkgs} />;
+  return <PackagesListClient key={pkgs.map((p) => `${p.id}:${p.published}`).join()} items={pkgs} />;
 }

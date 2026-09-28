@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { db } from "@/lib/db";
-import { contentPackages, packageVideos, videos } from "@/lib/db/schema";
+import { contentPackages } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
 import { Play, ShoppingBag, CheckCircle, Clock } from "lucide-react";
 import { LessonsCta } from "./LessonsCta";
@@ -40,19 +40,20 @@ export default async function CoursesPage() {
       thumbnailUrl: contentPackages.thumbnailUrl,
       priceDisplay: contentPackages.priceDisplay,
       videoCount: sql<number>`(
-        SELECT COUNT(*)::int FROM ${packageVideos}
-        WHERE ${packageVideos.packageId} = ${contentPackages.id}
+        SELECT COUNT(*)::int FROM "package_videos"
+        INNER JOIN "videos" ON "videos"."id" = "package_videos"."video_id"
+        WHERE "package_videos"."package_id" = "content_packages"."id" AND "videos"."hidden" = false
       )`,
       firstPlaybackId: sql<string | null>`(
         SELECT "videos"."mux_playback_id" FROM "package_videos"
         INNER JOIN "videos" ON "videos"."id" = "package_videos"."video_id"
-        WHERE "package_videos"."package_id" = "content_packages"."id"
-        ORDER BY "package_videos"."display_order" LIMIT 1
+        WHERE "package_videos"."package_id" = "content_packages"."id" AND "videos"."hidden" = false
+        ORDER BY "package_videos"."display_order", "videos"."created_at" LIMIT 1
       )`,
       totalDurationSeconds: sql<number>`(
         SELECT COALESCE(SUM("videos"."duration_seconds"), 0)::int FROM "package_videos"
         INNER JOIN "videos" ON "videos"."id" = "package_videos"."video_id"
-        WHERE "package_videos"."package_id" = "content_packages"."id"
+        WHERE "package_videos"."package_id" = "content_packages"."id" AND "videos"."hidden" = false
       )`,
       firstVideoThumbnail: sql<string | null>`(
         SELECT "videos"."thumbnail_url" FROM "package_videos"

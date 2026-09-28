@@ -42,7 +42,7 @@ export default async function WatchPage({
     .where(eq(videos.id, videoId))
     .limit(1);
 
-  if (!video) notFound();
+  if (!video || video.hidden) notFound();
 
   const allowed = await canWatchVideo(session.sub, videoId);
 

@@ -11,6 +11,7 @@ import {
 } from "@/lib/db/schema";
 import { eq, sql, and, desc } from "drizzle-orm";
 import { UserDetailClient } from "./UserDetailClient";
+import { UserAdminTools } from "./UserAdminTools";
 
 export const dynamic = "force-dynamic";
 
@@ -120,25 +121,37 @@ export default async function UserDetailPage({
     .limit(30);
 
   return (
-    <UserDetailClient
-      user={{
-        id: user.id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        phone: user.phone,
-        institution: user.institution,
-        emailVerified: user.emailVerified,
-        active: user.active,
-        createdAt: user.createdAt,
-      }}
-      purchases={purchases}
-      allPackages={allPackages}
-      videoProgress={progressRows}
-      allVideos={allVideos}
-      packagesInfo={packagesInfo}
-      promoViews={promoViews}
-      recentActivity={recentActivity}
-    />
+    <div className="max-w-4xl space-y-6">
+      <UserDetailClient
+        user={{
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
+          institution: user.institution,
+          emailVerified: user.emailVerified,
+          active: user.active,
+          createdAt: user.createdAt,
+        }}
+        purchases={purchases}
+        allPackages={allPackages}
+        videoProgress={progressRows}
+        allVideos={allVideos}
+        packagesInfo={packagesInfo}
+        promoViews={promoViews}
+        recentActivity={recentActivity}
+      />
+      <UserAdminTools
+        user={{
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phone: user.phone,
+          institution: user.institution,
+        }}
+      />
+    </div>
   );
 }

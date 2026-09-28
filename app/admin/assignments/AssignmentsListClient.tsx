@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Edit3, Trash2, Plus, Search, X } from "lucide-react";
 import { DangerConfirm } from "@/components/admin/DangerConfirm";
+import { HiddenToggle } from "@/components/admin/HiddenToggle";
 import { deleteAssignmentAction } from "./actions";
 import type { Assignment, SubjectId } from "@/types/content";
 import { SUBJECT_IDS, SUBJECT_LABEL_HE } from "@/lib/admin/slug";
@@ -95,7 +96,7 @@ export function AssignmentsListClient({ items }: { items: Assignment[] }) {
           </thead>
           <tbody>
             {filtered.map((a) => (
-              <tr key={a.id} className="border-t border-border hover:bg-surface-2/40">
+              <tr key={a.id} className={`border-t border-border hover:bg-surface-2/40 ${a.hidden ? "opacity-60" : ""}`}>
                 <Td>
                   <div className="font-semibold text-text">{a.title}</div>
                   <div className="mt-0.5 font-mono text-[11px] text-text-subtle">{a.slug}</div>
@@ -104,6 +105,7 @@ export function AssignmentsListClient({ items }: { items: Assignment[] }) {
                 <Td className="num">{a.files.length}</Td>
                 <Td>
                   <div className="flex gap-1">
+                    <HiddenToggle kind="assignment" id={a.id} hidden={!!a.hidden} compact />
                     <Link
                       href={`/admin/assignments/${encodeURIComponent(a.id)}/edit`}
                       className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"

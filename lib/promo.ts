@@ -1,4 +1,4 @@
-// The free promo of a course is its FIRST video — the one with the lowest
+// The free promo of a course is its first visible video — the one with the lowest
 // package_videos.display_order (ties broken by video creation time). This is
 // the same ordering the course page uses to render the list and build the
 // "watch the promo" link, so the two can never disagree.
@@ -25,14 +25,15 @@ export async function findPromoCourse(
     })
     .from(packageVideos)
     .innerJoin(contentPackages, eq(packageVideos.packageId, contentPackages.id))
-    .where(and(eq(packageVideos.videoId, videoId), eq(contentPackages.published, true)));
+    .innerJoin(videos, eq(packageVideos.videoId, videos.id))
+    .where(and(eq(packageVideos.videoId, videoId), eq(contentPackages.published, true), eq(videos.hidden, false)));
 
   for (const course of courses) {
     const [first] = await db
       .select({ videoId: packageVideos.videoId })
       .from(packageVideos)
       .innerJoin(videos, eq(packageVideos.videoId, videos.id))
-      .where(eq(packageVideos.packageId, course.id))
+      .where(and(eq(packageVideos.packageId, course.id), eq(videos.hidden, false)))
       .orderBy(...PACKAGE_VIDEO_ORDER)
       .limit(1);
     if (first?.videoId === videoId) return course;

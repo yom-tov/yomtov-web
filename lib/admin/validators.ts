@@ -12,10 +12,14 @@ const versionSchema = z.enum(["a", "b", "combined"]).nullable();
 // upload to Vercel Blob. The server action fetches the URL and commits the
 // binary to GitHub, then deletes the blob.
 const blobRefSchema = z.object({
-  url: z.string().url().refine(
-    (u) => u.includes(".blob.vercel-storage.com") || u.includes(".public.blob.vercel-storage.com"),
-    "Not a Vercel Blob URL"
-  ),
+  url: z.string().url().refine((u) => {
+    try {
+      const { protocol, hostname } = new URL(u);
+      return protocol === "https:" && hostname.endsWith(".blob.vercel-storage.com");
+    } catch {
+      return false;
+    }
+  }, "Not a Vercel Blob URL"),
   sizeBytes: z.number().int().positive().max(30 * 1024 * 1024, "Max 30 MB"),
   pathname: z.string(),
 });
@@ -58,13 +62,19 @@ export const AssignmentCreateSchema = z.object({
 });
 export type AssignmentCreateInput = z.infer<typeof AssignmentCreateSchema>;
 
-export const AssignmentUpdateSchema = z.object({
-  subject: subjectSchema,
-  title: z.string().min(1).max(200),
-  topic: z.string().max(100).nullable().optional(),
-  files: z.array(blobRefSchema).max(6).optional(),
-  keepExistingFiles: z.boolean().default(true),
-});
+// keep = indexes of the current files to keep, in their new order; new
+// uploads are appended after them. The first file is the exercise, the rest
+// are (password-locked) solutions.
+export const AssignmentUpdateSchema = z
+  .object({
+    subject: subjectSchema,
+    title: z.string().min(1).max(200),
+    topic: z.string().max(100).nullable().optional(),
+    keep: z.array(z.number().int().min(0)).max(6),
+    files: z.array(blobRefSchema).max(6).default([]),
+  })
+  .refine((d) => d.keep.length + d.files.length >= 1, "צריך לפחות קובץ אחד")
+  .refine((d) => d.keep.length + d.files.length <= 6, "עד 6 קבצים למטלה");
 export type AssignmentUpdateInput = z.infer<typeof AssignmentUpdateSchema>;
 
 export const SubjectUpdateSchema = z.object({
@@ -87,3 +97,20 @@ export const LabUpdateSchema = z.object({
   youtubeId: z.string().min(5).max(20),
 });
 export type LabUpdateInput = z.infer<typeof LabUpdateSchema>;
+
+export const FormulaCreateSchema = z.object({
+  subject: subjectSchema,
+  title: z.string().min(1).max(200),
+  slug: z.string().regex(/^[a-z0-9-]{2,60}$/, "Slug: 2-60 chars a-z 0-9 -").optional(),
+  file: blobRefSchema,
+});
+export type FormulaCreateInput = z.infer<typeof FormulaCreateSchema>;
+
+export const FormulaUpdateSchema = z.object({
+  title: z.string().min(1).max(200),
+  file: blobRefSchema.nullable().optional(),
+});
+export type FormulaUpdateInput = z.infer<typeof FormulaUpdateSchema>;
+
+export const HiddenKindSchema = z.enum(["exam", "assignment", "formula", "lab", "subject"]);
+export type HiddenKind = z.infer<typeof HiddenKindSchema>;

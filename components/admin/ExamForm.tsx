@@ -128,7 +128,7 @@ export function ExamForm({ mode, initial }: { mode: Mode; initial?: Exam }) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="תחום">
-          <Select value={subject} onChange={(v) => setSubject(v as SubjectId)} disabled={mode === "edit"}>
+          <Select value={subject} onChange={(v) => setSubject(v as SubjectId)}>
             {SUBJECT_IDS.map((s) => (
               <option key={s} value={s}>
                 {SUBJECT_LABEL_HE[s]}
@@ -137,7 +137,7 @@ export function ExamForm({ mode, initial }: { mode: Mode; initial?: Exam }) {
           </Select>
         </Field>
         <Field label="מקור">
-          <Select value={source} onChange={(v) => setSource(v as ExamSource)} disabled={mode === "edit"}>
+          <Select value={source} onChange={(v) => setSource(v as ExamSource)}>
             {EXAM_SOURCES.map((s) => (
               <option key={s} value={s}>
                 {SOURCE_LABEL_HE[s]}
@@ -200,9 +200,9 @@ export function ExamForm({ mode, initial }: { mode: Mode; initial?: Exam }) {
           Slug (URL) יווצר אוטומטית:{" "}
           <span className="font-mono text-text">{previewSlug || "-"}</span>
         </div>
-        {mode === "edit" && (
-          <div className="mt-1 text-xs text-rose-700">
-            שינוי שנה/מועד/גרסה יגרום להתנגשות slug - לא נתמך בעדכון. מחק וצור מבחן חדש במקום.
+        {mode === "edit" && initial && (previewSlug !== initial.slug || subject !== initial.subject || source !== initial.source) && (
+          <div className="mt-1 text-xs text-amber-700 dark:text-amber-300">
+            השינוי יעביר את המבחן (וקבצי ה-PDF שלו) לכתובת חדשה באתר. הכתובת הישנה תפסיק לעבוד.
           </div>
         )}
       </div>

@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { getSubject } from "@/lib/content";
@@ -13,7 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default async function MathPage() {
-  const s = getSubject("math")!;
+  const s = getSubject("math");
+  if (!s) notFound(); // hidden in the admin
   const [t, videos] = await Promise.all([getSection("math.page"), getCollection("math")]);
 
   return (

@@ -5,6 +5,7 @@ import { revalidateCoursePages } from "@/lib/admin/revalidate";
 import { requireSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { videos } from "@/lib/db/schema";
+import { getMuxClient } from "@/lib/mux/client";
 import { eq } from "drizzle-orm";
 import {
   VideoCreateSchema,
@@ -107,7 +108,6 @@ export async function syncVideoFromMuxAction(
       .limit(1);
     if (!video) return { ok: false, error: "סרטון לא נמצא" };
 
-    const { getMuxClient } = await import("@/lib/mux/client");
     const mux = getMuxClient();
     const asset = await mux.video.assets.retrieve(video.muxAssetId);
 
@@ -127,14 +127,37 @@ export async function syncVideoFromMuxAction(
   }
 }
 
-export async function deleteVideoAction(id: string): Promise<ActionResult> {
+export async function deleteVideoAction(id: string, alsoFromMux = false): Promise<ActionResult> {
   try {
     await requireSession();
   } catch {
     return { ok: false, error: "לא מאומת" };
   }
   try {
-    await db.delete(videos).where(eq(videos.id, id));
+    const [row] = await db.delete(videos).where(eq(videos.id, id)).returning({ muxAssetId: videos.muxAssetId });
+    revalidatePath("/admin/videos");
+    revalidateCoursePages();
+    if (alsoFromMux && row?.muxAssetId) {
+      // Only when no other video row still uses the same asset.
+      const [other] = await db.select({ id: videos.id }).from(videos).where(eq(videos.muxAssetId, row.muxAssetId)).limit(1);
+      if (!other) {
+        try {
+          await getMuxClient().video.assets.delete(row.muxAssetId);
+        } catch (e) {
+          return { ok: true, error: `הסרטון נמחק מהאתר, אבל לא מ-Mux: ${(e as Error).message}` };
+        }
+      }
+    }
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}
+
+export async function setVideoHiddenAction(id: string, hidden: boolean): Promise<ActionResult> {
+  try {
+    await requireSession();
+    await db.update(videos).set({ hidden }).where(eq(videos.id, id));
     revalidatePath("/admin/videos");
     revalidateCoursePages();
     return { ok: true };

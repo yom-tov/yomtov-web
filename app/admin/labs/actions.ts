@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { requireSession } from "@/lib/auth";
-import { createLab, updateLab, deleteLab } from "@/lib/admin/mutations";
+import { createLab, updateLab, deleteLab, reorderLabs } from "@/lib/admin/mutations";
 import {
   LabCreateSchema,
   LabUpdateSchema,
@@ -44,6 +44,15 @@ export async function deleteLabAction(id: string): Promise<ActionResult> {
   const g = await guard(); if (g) return g;
   try {
     const c = await deleteLab(id);
+    revalidatePath("/admin/labs");
+    return { ok: true, commitUrl: c.url };
+  } catch (e) { return { ok: false, error: (e as Error).message }; }
+}
+
+export async function reorderLabsAction(ids: string[]): Promise<ActionResult> {
+  const g = await guard(); if (g) return g;
+  try {
+    const c = await reorderLabs(ids);
     revalidatePath("/admin/labs");
     return { ok: true, commitUrl: c.url };
   } catch (e) { return { ok: false, error: (e as Error).message }; }

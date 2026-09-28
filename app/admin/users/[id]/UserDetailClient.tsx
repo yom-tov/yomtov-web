@@ -26,6 +26,7 @@ import {
   toggleUserActiveAction,
   resendVerificationAction,
 } from "../actions";
+import { ExtendAccessButton } from "./ExtendAccessButton";
 
 interface User {
   id: string;
@@ -444,6 +445,7 @@ function PurchasesTab({
                 >
                   <td className="px-3 py-2 font-semibold text-text">
                     {p.packageTitle}
+                    {p.adminNotes && <div className="mt-0.5 text-[11px] font-normal text-text-subtle">{p.adminNotes}</div>}
                   </td>
                   <td className="px-3 py-2 num text-text-muted">
                     {fmtDate(p.grantedAt)}
@@ -459,14 +461,17 @@ function PurchasesTab({
                   </td>
                   <td className="px-3 py-2">
                     {p.status === "active" && (
-                      <button
-                        type="button"
-                        onClick={() => handleRevoke(p.purchaseId)}
-                        disabled={pending}
-                        className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
-                      >
-                        <Ban className="h-3.5 w-3.5" /> שלול
-                      </button>
+                      <div className="flex flex-wrap items-center gap-1">
+                        <ExtendAccessButton purchaseId={p.purchaseId} expiresAt={p.expiresAt} />
+                        <button
+                          type="button"
+                          onClick={() => handleRevoke(p.purchaseId)}
+                          disabled={pending}
+                          className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
+                        >
+                          <Ban className="h-3.5 w-3.5" /> שלול
+                        </button>
+                      </div>
                     )}
                   </td>
                 </tr>

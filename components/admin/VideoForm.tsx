@@ -9,6 +9,7 @@ import {
   createVideoAction,
   updateVideoAction,
 } from "@/app/admin/videos/actions";
+import { MuxUploader } from "./MuxUploader";
 import { FileUpload, type UploadedFile } from "@/components/admin/FileUpload";
 
 type Mode = "create" | "edit";
@@ -133,13 +134,24 @@ export function VideoForm({
         />
       </Field>
 
+      {mode === "create" && (
+        <MuxUploader
+          onReady={(r) => {
+            setMuxAssetId(r.assetId);
+            setMuxPlaybackId(r.playbackId);
+            if (r.durationSeconds) setDurationSeconds(String(r.durationSeconds));
+            if (!title.trim()) setTitle(r.fileName.replace(/.[^.]+$/, ""));
+          }}
+        />
+      )}
+
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Mux Asset ID">
           <input
             value={muxAssetId}
             onChange={(e) => setMuxAssetId(e.target.value)}
             className="input font-mono text-xs"
-            placeholder="מה-dashboard של Mux"
+            placeholder="מתמלא אוטומטית אחרי העלאה"
           />
         </Field>
         <Field label="Mux Playback ID">
@@ -147,7 +159,7 @@ export function VideoForm({
             value={muxPlaybackId}
             onChange={(e) => setMuxPlaybackId(e.target.value)}
             className="input font-mono text-xs"
-            placeholder="מה-dashboard של Mux"
+            placeholder="מתמלא אוטומטית אחרי העלאה"
           />
         </Field>
         <Field label="משך (שניות)">

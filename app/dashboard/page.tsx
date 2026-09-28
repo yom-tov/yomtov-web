@@ -3,8 +3,8 @@ import Link from "next/link";
 import { requireUserSession } from "@/lib/user-auth";
 import { getUserPackages } from "@/lib/admin/purchase-helpers";
 import { db } from "@/lib/db";
-import { users, packageVideos } from "@/lib/db/schema";
-import { eq, sql } from "drizzle-orm";
+import { users, packageVideos, videos } from "@/lib/db/schema";
+import { and, eq, sql } from "drizzle-orm";
 import { Play, ShoppingBag, User } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -100,7 +100,8 @@ async function DashboardPackageCard({
       count: sql<number>`COUNT(*)::int`,
     })
     .from(packageVideos)
-    .where(eq(packageVideos.packageId, packageId));
+    .innerJoin(videos, eq(packageVideos.videoId, videos.id))
+    .where(and(eq(packageVideos.packageId, packageId), eq(videos.hidden, false)));
 
   const videoCount = countRow?.count ?? 0;
 

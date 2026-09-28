@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Edit3, Trash2, Plus, Search, X } from "lucide-react";
 import { DangerConfirm } from "@/components/admin/DangerConfirm";
+import { HiddenToggle } from "@/components/admin/HiddenToggle";
 import { deleteExamAction } from "./actions";
 import type { Exam, SubjectId, ExamSource } from "@/types/content";
 import { SUBJECT_IDS, EXAM_SOURCES, SUBJECT_LABEL_HE, SOURCE_LABEL_HE, SEASON_LABEL_HE, VERSION_LABEL_HE } from "@/lib/admin/slug";
@@ -165,7 +166,7 @@ export function ExamsListClient({ items }: { items: Exam[] }) {
           </thead>
           <tbody>
             {filtered.map((e) => (
-              <tr key={e.id} className="border-t border-border hover:bg-surface-2/40">
+              <tr key={e.id} className={`border-t border-border hover:bg-surface-2/40 ${e.hidden ? "opacity-60" : ""}`}>
                 <Td>
                   <div className="font-semibold text-text">{e.title}</div>
                   <div className="mt-0.5 font-mono text-[11px] text-text-subtle">{e.slug}</div>
@@ -181,6 +182,7 @@ export function ExamsListClient({ items }: { items: Exam[] }) {
                 <Td>{e.solution ? "✓" : "-"}</Td>
                 <Td>
                   <div className="flex gap-1">
+                    <HiddenToggle kind="exam" id={e.id} hidden={!!e.hidden} compact />
                     <Link
                       href={`/admin/exams/${encodeURIComponent(e.id)}/edit`}
                       className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"

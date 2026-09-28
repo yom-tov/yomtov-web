@@ -15,11 +15,17 @@ import type {
   SearchItem,
 } from "@/types/content";
 
-export const subjects = subjectsRaw as Subject[];
-export const exams = examsRaw as Exam[];
-export const assignments = assignmentsRaw as Assignment[];
-export const formulas = formulasRaw as Formula[];
-export const labs = labsRaw as Lab[];
+// Items the admin hid stay in the JSON (so they can be shown again) but never
+// reach the public site: everything exported here is already filtered.
+const isVisible = <T extends { hidden?: boolean }>(x: T) => !x.hidden;
+
+const allSubjects = subjectsRaw as Subject[];
+export const subjects = allSubjects.filter(isVisible);
+export const exams = (examsRaw as Exam[]).filter(isVisible);
+export const assignments = (assignmentsRaw as Assignment[]).filter(isVisible);
+export const formulas = (formulasRaw as Formula[]).filter(isVisible);
+// Higher "order" first — the admin can reorder labs.
+export const labs = (labsRaw as Lab[]).filter(isVisible).sort((a, b) => b.order - a.order);
 export const searchIndex = searchIndexRaw as SearchItem[];
 
 export function getSubject(id: SubjectId): Subject | undefined {
@@ -108,12 +114,15 @@ export function formatSize(bytes: number | null | undefined): string {
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
+// Names come from subjects.json so renaming a subject in the admin updates
+// every label on the site.
 export const SUBJECT_TITLE_HE: Record<SubjectId, string> = {
   electricity: "חשמל",
   analog: "אלקטרוניקה תקבילית",
   digital: "אלקטרוניקה ספרתית",
   math: "מתמטיקה",
   physics: "פיסיקה",
+  ...Object.fromEntries(allSubjects.map((s) => [s.id, s.hebrewTitle])),
 };
 
 export const SOURCE_TITLE_HE: Record<ExamSource, string> = {

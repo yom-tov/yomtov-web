@@ -33,7 +33,7 @@ import { db } from "@/lib/db";
 import { fill, getSection, lines, parseLinks, visible } from "@/lib/site-content";
 import { RichText } from "@/components/content/RichText";
 import { subjectIcon } from "@/lib/subject-icons";
-import { contentPackages, packageVideos } from "@/lib/db/schema";
+import { contentPackages } from "@/lib/db/schema";
 import {
   assignmentsFor,
   counts,
@@ -97,13 +97,14 @@ async function getCourses(): Promise<CourseRow[]> {
         slug: contentPackages.slug,
         title: contentPackages.title,
         videoCount: sql<number>`(
-          SELECT COUNT(*)::int FROM ${packageVideos}
-          WHERE ${packageVideos.packageId} = ${contentPackages.id}
+          SELECT COUNT(*)::int FROM "package_videos"
+          INNER JOIN "videos" ON "videos"."id" = "package_videos"."video_id"
+          WHERE "package_videos"."package_id" = "content_packages"."id" AND "videos"."hidden" = false
         )`,
         totalDurationSeconds: sql<number>`(
           SELECT COALESCE(SUM("videos"."duration_seconds"), 0)::int FROM "package_videos"
           INNER JOIN "videos" ON "videos"."id" = "package_videos"."video_id"
-          WHERE "package_videos"."package_id" = "content_packages"."id"
+          WHERE "package_videos"."package_id" = "content_packages"."id" AND "videos"."hidden" = false
         )`,
       })
       .from(contentPackages)

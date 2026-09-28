@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { revalidateCoursePages } from "@/lib/admin/revalidate";
 import { requireSession } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -169,6 +170,61 @@ export async function removeVideoFromPackageAction(
         ),
       );
     revalidatePath(`/admin/packages/${packageId}/edit`);
+    revalidateCoursePages();
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}
+
+const uuidList = z.array(z.string().uuid()).min(1).max(500);
+
+/** videoIds in the new order — the first one becomes the free promo video. */
+export async function reorderPackageVideosAction(packageId: string, videoIds: string[]): Promise<ActionResult> {
+  try {
+    await requireSession();
+    const pid = z.string().uuid().parse(packageId);
+    const ids = uuidList.parse(videoIds);
+    const [first, ...rest] = ids.map((videoId, i) =>
+      db
+        .update(packageVideos)
+        .set({ displayOrder: i + 1 })
+        .where(and(eq(packageVideos.packageId, pid), eq(packageVideos.videoId, videoId))),
+    );
+    await db.batch([first, ...rest]);
+    revalidatePath(`/admin/packages/${pid}/edit`);
+    revalidateCoursePages();
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}
+
+/** Package ids in the order they should appear on the site. */
+export async function reorderPackagesAction(packageIds: string[]): Promise<ActionResult> {
+  try {
+    await requireSession();
+    const ids = uuidList.parse(packageIds);
+    const [first, ...rest] = ids.map((id, i) =>
+      db.update(contentPackages).set({ displayOrder: i + 1, updatedAt: new Date() }).where(eq(contentPackages.id, id)),
+    );
+    await db.batch([first, ...rest]);
+    revalidatePath("/admin/packages");
+    revalidateCoursePages();
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}
+
+export async function setPackagePublishedAction(id: string, published: boolean): Promise<ActionResult> {
+  try {
+    await requireSession();
+    await db
+      .update(contentPackages)
+      .set({ published, updatedAt: new Date() })
+      .where(eq(contentPackages.id, z.string().uuid().parse(id)));
+    revalidatePath("/admin/packages");
     revalidateCoursePages();
     return { ok: true };
   } catch (e) {

@@ -40,10 +40,12 @@ export async function canWatchVideo(
       packageVideos,
       eq(userPurchases.packageId, packageVideos.packageId),
     )
+    .innerJoin(videos, eq(packageVideos.videoId, videos.id))
     .where(
       and(
         eq(userPurchases.userId, userId),
         eq(packageVideos.videoId, videoId),
+        eq(videos.hidden, false),
         eq(userPurchases.status, "active"),
         or(isNull(userPurchases.expiresAt), gt(userPurchases.expiresAt, now)),
       ),
@@ -93,8 +95,8 @@ export async function getPackageVideos(packageId: string) {
     })
     .from(packageVideos)
     .innerJoin(videos, eq(packageVideos.videoId, videos.id))
-    .where(eq(packageVideos.packageId, packageId))
-    .orderBy(packageVideos.displayOrder);
+    .where(and(eq(packageVideos.packageId, packageId), eq(videos.hidden, false)))
+    .orderBy(packageVideos.displayOrder, videos.createdAt);
 }
 
 export async function getUserVideoProgress(

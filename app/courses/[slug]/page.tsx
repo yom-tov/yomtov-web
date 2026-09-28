@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { contentPackages, packageVideos, videos } from "@/lib/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { Play, Lock, Clock, ArrowLeft, ShoppingBag, CheckCircle, ExternalLink, Sparkles } from "lucide-react";
 import { PurchaseButton } from "./PurchaseButton";
 import { fill, getGlobalVars, getSection, visible } from "@/lib/site-content";
@@ -67,7 +67,7 @@ export default async function CourseDetailPage({
     })
     .from(packageVideos)
     .innerJoin(videos, eq(packageVideos.videoId, videos.id))
-    .where(eq(packageVideos.packageId, pkg.id))
+    .where(and(eq(packageVideos.packageId, pkg.id), eq(videos.hidden, false)))
     .orderBy(...PACKAGE_VIDEO_ORDER);
 
   const totalDuration = pkgVideos.reduce(

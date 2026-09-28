@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Edit3, Trash2, Plus, RefreshCw } from "lucide-react";
+import { Edit3, RefreshCw, Search, Trash2, Video } from "lucide-react";
 import { DangerConfirm } from "@/components/admin/DangerConfirm";
-import { deleteVideoAction, syncVideoFromMuxAction } from "./actions";
+import { Badge, DataTable, EmptyState, Input, LinkBtn, PageHeader, THead, Td, Th, Tr } from "@/components/admin/ui/primitives";
+import { VisibilityToggle } from "@/components/admin/ui/interactive";
+import { deleteVideoAction, setVideoHiddenAction, syncVideoFromMuxAction } from "./actions";
 
 interface VideoRow {
   id: string;
@@ -16,140 +18,163 @@ interface VideoRow {
   muxPlaybackId: string;
   durationSeconds: number | null;
   displayOrder: number;
+  hidden: boolean;
   createdAt: Date;
-  packageCount: number;
+  courses: string[];
+}
+
+function formatDuration(sec: number | null) {
+  if (!sec) return "-";
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  if (h > 0) return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  return `${m}:${String(s).padStart(2, "0")}`;
 }
 
 export function VideosListClient({ items }: { items: VideoRow[] }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const [q, setQ] = useState("");
   const [toDelete, setToDelete] = useState<VideoRow | null>(null);
-  const [syncing, setSyncing] = useState<string | null>(null);
+  const [deleteFromMux, setDeleteFromMux] = useState(false);
+  const [busy, setBusy] = useState<string | null>(null);
+
+  const filtered = useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    if (!needle) return items;
+    return items.filter((v) => `${v.title} ${v.courses.join(" ")}`.toLowerCase().includes(needle));
+  }, [items, q]);
 
   const doSync = (videoId: string) => {
-    setSyncing(videoId);
+    setBusy(videoId);
     startTransition(async () => {
       const res = await syncVideoFromMuxAction(videoId);
+      setBusy(null);
       if (res.ok) {
-        toast.success("נתוני הסרטון עודכנו מ-Mux");
+        toast.success("המשך עודכן מ-Mux");
         router.refresh();
-      } else {
-        toast.error(res.error ?? "סנכרון נכשל");
+      } else toast.error(res.error ?? "סנכרון נכשל");
+    });
+  };
+
+  const toggleHidden = (v: VideoRow) => {
+    setBusy(v.id);
+    startTransition(async () => {
+      const res = await setVideoHiddenAction(v.id, !v.hidden);
+      setBusy(null);
+      if (!res.ok) {
+        toast.error(res.error ?? "שגיאה");
+        return;
       }
-      setSyncing(null);
+      toast.success(v.hidden ? "הסרטון מוצג שוב בקורסים" : "הסרטון הוסתר מכל הקורסים");
+      router.refresh();
     });
   };
 
   const doDelete = () => {
     if (!toDelete) return;
     startTransition(async () => {
-      const res = await deleteVideoAction(toDelete.id);
+      const res = await deleteVideoAction(toDelete.id, deleteFromMux);
       if (res.ok) {
-        toast.success("הסרטון נמחק");
+        if (res.error) toast.warning(res.error);
+        else toast.success(deleteFromMux ? "הסרטון נמחק מהאתר ומ-Mux" : "הסרטון נמחק מהאתר");
         setToDelete(null);
         router.refresh();
-      } else {
-        toast.error(res.error ?? "מחיקה נכשלה");
-      }
+      } else toast.error(res.error ?? "מחיקה נכשלה");
     });
   };
 
-  const formatDuration = (sec: number | null) => {
-    if (!sec) return "-";
-    const h = Math.floor(sec / 3600);
-    const m = Math.floor((sec % 3600) / 60);
-    const s = sec % 60;
-    if (h > 0) return `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-    return `${m}:${String(s).padStart(2, "0")}`;
-  };
-
   return (
-    <div>
-      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-extrabold text-text">סרטונים</h1>
-          <p className="text-sm text-text-muted num">{items.length} סרטונים</p>
-        </div>
-        <Link
-          href="/admin/videos/new"
-          className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-l from-primary-700 to-primary-500 px-4 py-2 text-sm font-semibold text-white shadow-md hover:brightness-105"
-        >
-          <Plus className="h-4 w-4" />
-          סרטון חדש
-        </Link>
-      </div>
+    <div className="max-w-6xl">
+      <PageHeader
+        icon={<Video className="h-5 w-5" />}
+        title="סרטוני קורס (Mux)"
+        description={`${items.length} סרטונים · סרטון מוסתר לא מופיע באף קורס ולא ניתן לצפייה`}
+        actions={
+          <LinkBtn href="/admin/videos/new" variant="primary">
+            + העלאת סרטון
+          </LinkBtn>
+        }
+      />
 
-      <div className="overflow-x-auto rounded-2xl border border-border bg-surface">
-        <table className="w-full min-w-[640px] text-sm">
-          <thead className="bg-surface-2/60 text-right">
-            <tr>
-              <Th>כותרת</Th>
-              <Th>Playback ID</Th>
-              <Th>משך</Th>
-              <Th>חבילות</Th>
-              <Th>סדר</Th>
-              <Th className="w-0">פעולות</Th>
-            </tr>
-          </thead>
+      <label className="relative mb-4 block max-w-md">
+        <Search className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-subtle" />
+        <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="חיפוש לפי שם סרטון או קורס…" className="pr-9" />
+      </label>
+
+      {filtered.length === 0 ? (
+        <EmptyState title={items.length ? "אין תוצאות" : "אין סרטונים עדיין"} />
+      ) : (
+        <DataTable>
+          <THead>
+            <Th>כותרת</Th>
+            <Th>משך</Th>
+            <Th>בקורסים</Th>
+            <Th className="w-0">פעולות</Th>
+          </THead>
           <tbody>
-            {items.map((v) => (
-              <tr
-                key={v.id}
-                className="border-t border-border hover:bg-surface-2/40"
-              >
+            {filtered.map((v) => (
+              <Tr key={v.id} muted={v.hidden}>
                 <Td>
                   <div className="font-semibold text-text">{v.title}</div>
+                  <div className="mt-0.5 font-mono text-[10px] text-text-subtle" dir="ltr">
+                    {v.muxPlaybackId.slice(0, 18)}…
+                  </div>
+                </Td>
+                <Td className="num whitespace-nowrap">{formatDuration(v.durationSeconds)}</Td>
+                <Td>
+                  {v.courses.length ? (
+                    <div className="flex flex-wrap gap-1">
+                      {v.courses.map((c, i) => (
+                        <Badge key={i} tone="primary">
+                          {c}
+                        </Badge>
+                      ))}
+                    </div>
+                  ) : (
+                    <span className="text-xs text-text-subtle">לא משויך לקורס</span>
+                  )}
                 </Td>
                 <Td>
-                  <span className="font-mono text-[11px] text-text-subtle">
-                    {v.muxPlaybackId.slice(0, 16)}...
-                  </span>
-                </Td>
-                <Td className="num">{formatDuration(v.durationSeconds)}</Td>
-                <Td className="num">{v.packageCount}</Td>
-                <Td className="num">{v.displayOrder}</Td>
-                <Td>
-                  <div className="flex gap-1">
+                  <div className="flex items-center gap-1">
+                    <VisibilityToggle compact hidden={v.hidden} pending={busy === v.id} onToggle={() => toggleHidden(v)} />
                     <button
                       type="button"
                       onClick={() => doSync(v.id)}
-                      disabled={pending || syncing === v.id}
-                      title="סנכרון משך מ-Mux"
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-accent-300 hover:text-accent-700 disabled:opacity-50"
+                      disabled={pending}
+                      title="עדכון המשך מ-Mux"
+                      className="rounded-lg p-1.5 text-text-subtle hover:bg-surface-2 hover:text-text disabled:opacity-50"
                     >
-                      <RefreshCw className={`h-3.5 w-3.5 ${syncing === v.id ? "animate-spin" : ""}`} /> סנכרון
+                      <RefreshCw className="h-4 w-4" />
                     </button>
                     <Link
                       href={`/admin/videos/${v.id}/edit`}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
+                      prefetch={false}
+                      className="rounded-lg p-1.5 text-text-subtle hover:bg-surface-2 hover:text-text"
+                      aria-label="עריכה"
                     >
-                      <Edit3 className="h-3.5 w-3.5" /> ערוך
+                      <Edit3 className="h-4 w-4" />
                     </Link>
                     <button
                       type="button"
-                      onClick={() => setToDelete(v)}
+                      onClick={() => {
+                        setDeleteFromMux(false);
+                        setToDelete(v);
+                      }}
                       disabled={pending}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
+                      className="rounded-lg p-1.5 text-text-subtle hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10"
+                      aria-label="מחק"
                     >
-                      <Trash2 className="h-3.5 w-3.5" /> מחק
+                      <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
                 </Td>
-              </tr>
+              </Tr>
             ))}
-            {items.length === 0 && (
-              <tr>
-                <td
-                  colSpan={6}
-                  className="px-4 py-10 text-center text-sm text-text-subtle"
-                >
-                  אין סרטונים עדיין
-                </td>
-              </tr>
-            )}
           </tbody>
-        </table>
-      </div>
+        </DataTable>
+      )}
 
       <DangerConfirm
         open={!!toDelete}
@@ -158,33 +183,18 @@ export function VideosListClient({ items }: { items: VideoRow[] }) {
         itemLabel={toDelete ? toDelete.title : ""}
         confirmText={toDelete?.title ?? ""}
         title="מחיקת סרטון"
-        description="מחיקת הסרטון תסיר אותו מכל החבילות שהוא משויך אליהן. הסרטון ב-Mux לא יימחק."
-      />
+        description="הסרטון יוסר מכל הקורסים שהוא משויך אליהם, וההתקדמות של התלמידים בו תימחק. אם רק רוצים להוריד אותו זמנית — עדיף להסתיר (העין)."
+      >
+        <label className="flex items-center gap-2 text-sm text-text">
+          <input
+            type="checkbox"
+            checked={deleteFromMux}
+            onChange={(e) => setDeleteFromMux(e.target.checked)}
+            className="h-4 w-4 accent-rose-600"
+          />
+          למחוק את הקובץ גם מ-Mux (חוסך בעלויות אחסון, אי אפשר לשחזר)
+        </label>
+      </DangerConfirm>
     </div>
-  );
-}
-
-function Th({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <th className={`px-3 py-2.5 text-xs font-bold text-text-muted ${className}`}>
-      {children}
-    </th>
-  );
-}
-function Td({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <td className={`px-3 py-2.5 align-top ${className}`}>{children}</td>
   );
 }

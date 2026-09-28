@@ -211,3 +211,20 @@ export async function extendAccessAction(
     return { ok: false, error: (e as Error).message };
   }
 }
+
+/** Permanently deletes a user with their purchases, progress and activity. */
+export async function deleteUserAction(userId: string): Promise<ActionResult> {
+  try {
+    await requireSession();
+  } catch {
+    return { ok: false, error: "לא מאומת" };
+  }
+  try {
+    await db.delete(users).where(eq(users.id, userId));
+    revalidatePath("/admin/users");
+    revalidatePath("/admin");
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}

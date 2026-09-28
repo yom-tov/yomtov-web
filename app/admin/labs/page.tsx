@@ -1,26 +1,28 @@
-import Link from "next/link";
+import { Beaker } from "lucide-react";
 import { readLabs } from "@/lib/admin/content-io";
+import { LinkBtn, PageHeader } from "@/components/admin/ui/primitives";
 import { LabsListClient } from "./LabsListClient";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminLabsPage() {
   const { data } = await readLabs();
+  // Same order as the public /labs page: higher "order" first.
+  const labs = [...data].sort((a, b) => b.order - a.order);
+  const hidden = labs.filter((l) => l.hidden).length;
   return (
-    <>
-      <div className="mb-4 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-extrabold text-text">סרטוני מעבדה</h1>
-          <p className="text-sm text-text-muted num">{data.length} סרטונים</p>
-        </div>
-        <Link
-          href="/admin/labs/new"
-          className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-l from-primary-700 to-primary-500 px-4 py-2 text-sm font-semibold text-white shadow-md hover:brightness-105"
-        >
-          + סרטון חדש
-        </Link>
-      </div>
-      <LabsListClient items={data} />
-    </>
+    <div className="max-w-4xl">
+      <PageHeader
+        icon={<Beaker className="h-5 w-5" />}
+        title="סרטוני מעבדה"
+        description={`${labs.length} סרטונים${hidden ? ` · ${hidden} מוסתרים` : ""} · שינויים מופיעים באתר תוך כדקה`}
+        actions={
+          <LinkBtn href="/admin/labs/new" variant="primary">
+            + סרטון חדש
+          </LinkBtn>
+        }
+      />
+      <LabsListClient key={labs.map((l) => `${l.id}:${l.hidden ? 1 : 0}`).join()} items={labs} />
+    </div>
   );
 }

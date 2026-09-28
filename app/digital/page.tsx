@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, NotebookPen } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
@@ -16,7 +17,8 @@ export const metadata: Metadata = {
 };
 
 export default async function DigitalPage() {
-  const s = getSubject("digital")!;
+  const s = getSubject("digital");
+  if (!s) notFound(); // hidden in the admin
   const asg = assignmentsFor("digital");
   const [t, [main], shorts] = await Promise.all([
     getSection("digital.page"),
