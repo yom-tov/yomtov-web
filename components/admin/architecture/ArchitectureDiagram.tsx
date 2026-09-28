@@ -135,13 +135,13 @@ export function ArchitectureDiagram({ services, flows }: { services: DiagramServ
         )}
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_300px]">
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
         {/* Diagram */}
         <div className="min-w-0 rounded-2xl border border-border bg-surface p-2">
           <div className="overflow-x-auto">
             <svg
               viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
-              className="h-auto w-full min-w-[680px]"
+              className="h-auto w-full min-w-[640px]"
               role="img"
               aria-label="תרשים השירותים של האתר והקשרים ביניהם"
             >

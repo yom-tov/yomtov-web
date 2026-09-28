@@ -10,7 +10,7 @@ import { refreshIfStale } from "@/lib/admin/health/store";
 import { SESSION_COOKIE, verifySession } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "אדמין | אבי יומטוביאן",
+  title: { absolute: "מרכז ניהול | אבי יומטוביאן" },
   robots: { index: false, follow: false },
 };
 

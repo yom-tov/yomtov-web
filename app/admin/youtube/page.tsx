@@ -31,7 +31,7 @@ export default async function YoutubeAdminPage({ searchParams }: { searchParams:
     <div className="max-w-5xl">
       <PageHeader
         icon={<MonitorPlay className="h-5 w-5" />}
-        title="YouTube ו-Shorts"
+        title="סרטוני YouTube ו-Shorts"
         description="הסרטונים החינמיים שמוטמעים באתר. מוסיפים בהדבקת קישור, גוררים כדי לסדר, ולוחצים על העין כדי להסתיר. כל שינוי מופיע באתר מיד. סרטוני המעבדה נערכים בעמוד &quot;מעבדות&quot;."
       />
       <YoutubeManager collections={COLLECTIONS} rows={rows} initialCollection={initial} />

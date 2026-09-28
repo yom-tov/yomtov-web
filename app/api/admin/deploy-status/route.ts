@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireSession } from "@/lib/auth";
-import { getLatestDeployment } from "@/lib/admin/deployments";
+import { getLatestDeployment, vercelConfigured } from "@/lib/admin/deployments";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,6 +10,9 @@ export async function GET() {
     await requireSession();
   } catch {
     return NextResponse.json({ error: "UNAUTHENTICATED" }, { status: 401 });
+  }
+  if (!vercelConfigured()) {
+    return NextResponse.json({ deployment: null, error: "VERCEL_TOKEN not configured" });
   }
   try {
     const d = await getLatestDeployment();

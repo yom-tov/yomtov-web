@@ -54,7 +54,7 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       { href: "/admin/packages", label: "קורסים", icon: Package },
       { href: "/admin/videos", label: "סרטוני קורס", icon: Video },
-      { href: "/admin/youtube", label: "YouTube ו-Shorts", icon: MonitorPlay },
+      { href: "/admin/youtube", label: "סרטוני YouTube", icon: MonitorPlay },
     ],
   },
   {
