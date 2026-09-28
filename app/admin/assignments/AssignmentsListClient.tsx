@@ -8,7 +8,7 @@ import { Edit3, Trash2, Plus, Search, X } from "lucide-react";
 import { DangerConfirm } from "@/components/admin/DangerConfirm";
 import { deleteAssignmentAction } from "./actions";
 import type { Assignment, SubjectId } from "@/types/content";
-import { SUBJECT_LABEL_HE } from "@/lib/admin/slug";
+import { SUBJECT_IDS, SUBJECT_LABEL_HE } from "@/lib/admin/slug";
 
 export function AssignmentsListClient({ items }: { items: Assignment[] }) {
   const router = useRouter();
@@ -70,7 +70,7 @@ export function AssignmentsListClient({ items }: { items: Assignment[] }) {
             <span className="text-[10px] font-semibold text-text-subtle">תחום</span>
             <select value={subject} onChange={(e) => setSubject(e.target.value as SubjectId | "")} className="select">
               <option value="">הכל</option>
-              {(["electricity", "analog", "digital"] as const).map((s) => (
+              {SUBJECT_IDS.map((s) => (
                 <option key={s} value={s}>{SUBJECT_LABEL_HE[s]}</option>
               ))}
             </select>

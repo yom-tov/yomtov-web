@@ -20,8 +20,7 @@ import {
   stringifyJson,
   examPdfPath,
   assignmentPdfPath,
-  readExams,
-  readAssignments,
+  readIndexedContent,
   readSubjects,
   readLabs,
   examId as buildExamId,
@@ -61,10 +60,7 @@ async function cleanupBlobs(urls: string[]): Promise<void> {
 // Exams
 // ---------------------------------------------------------------------------
 export async function createExam(input: ExamCreateInput): Promise<CommitResult> {
-  const [{ data: exams }, { data: assignments }] = await Promise.all([
-    readExams(),
-    readAssignments(),
-  ]);
+  const { exams, assignments, formulas } = await readIndexedContent();
 
   const slug = examSlug({
     year: input.year,
@@ -125,7 +121,7 @@ export async function createExam(input: ExamCreateInput): Promise<CommitResult> 
   };
 
   const nextExams = [...exams, newExam];
-  const searchIndex = buildSearchIndex(nextExams, assignments);
+  const searchIndex = buildSearchIndex(nextExams, assignments, formulas);
 
   const writes: FileWrite[] = [
     { path: CONTENT_PATHS.exams, kind: "text", content: stringifyJson(nextExams) },
@@ -140,10 +136,7 @@ export async function createExam(input: ExamCreateInput): Promise<CommitResult> 
 }
 
 export async function updateExam(id: string, input: ExamUpdateInput): Promise<CommitResult> {
-  const [{ data: exams }, { data: assignments }] = await Promise.all([
-    readExams(),
-    readAssignments(),
-  ]);
+  const { exams, assignments, formulas } = await readIndexedContent();
   const idx = exams.findIndex((e) => e.id === id);
   if (idx === -1) throw new Error(`NOT_FOUND: exam ${id}`);
   const cur = exams[idx];
@@ -211,7 +204,7 @@ export async function updateExam(id: string, input: ExamUpdateInput): Promise<Co
 
   const nextExams = [...exams];
   nextExams[idx] = updated;
-  const searchIndex = buildSearchIndex(nextExams, assignments);
+  const searchIndex = buildSearchIndex(nextExams, assignments, formulas);
 
   const writes: FileWrite[] = [
     { path: CONTENT_PATHS.exams, kind: "text", content: stringifyJson(nextExams) },
@@ -224,16 +217,13 @@ export async function updateExam(id: string, input: ExamUpdateInput): Promise<Co
 }
 
 export async function deleteExam(id: string): Promise<CommitResult> {
-  const [{ data: exams }, { data: assignments }] = await Promise.all([
-    readExams(),
-    readAssignments(),
-  ]);
+  const { exams, assignments, formulas } = await readIndexedContent();
   const idx = exams.findIndex((e) => e.id === id);
   if (idx === -1) throw new Error(`NOT_FOUND: exam ${id}`);
   const cur = exams[idx];
 
   const nextExams = exams.filter((_, i) => i !== idx);
-  const searchIndex = buildSearchIndex(nextExams, assignments);
+  const searchIndex = buildSearchIndex(nextExams, assignments, formulas);
 
   // Delete PDFs from R2
   await deleteFromR2(gitPathToR2Key(examPdfPath(cur, "exam")));
@@ -253,10 +243,7 @@ export async function deleteExam(id: string): Promise<CommitResult> {
 // Assignments
 // ---------------------------------------------------------------------------
 export async function createAssignment(input: AssignmentCreateInput): Promise<CommitResult> {
-  const [{ data: exams }, { data: assignments }] = await Promise.all([
-    readExams(),
-    readAssignments(),
-  ]);
+  const { exams, assignments, formulas } = await readIndexedContent();
   const slug =
     input.slug ??
     assignmentSlug({ englishHint: null, title: input.title });
@@ -293,7 +280,7 @@ export async function createAssignment(input: AssignmentCreateInput): Promise<Co
     originalDetailUrl: null,
   };
   const nextAssignments = [...assignments, newA];
-  const searchIndex = buildSearchIndex(exams, nextAssignments);
+  const searchIndex = buildSearchIndex(exams, nextAssignments, formulas);
 
   const writes: FileWrite[] = [
     { path: CONTENT_PATHS.assignments, kind: "text", content: stringifyJson(nextAssignments) },
@@ -306,10 +293,7 @@ export async function createAssignment(input: AssignmentCreateInput): Promise<Co
 }
 
 export async function updateAssignment(id: string, input: AssignmentUpdateInput): Promise<CommitResult> {
-  const [{ data: exams }, { data: assignments }] = await Promise.all([
-    readExams(),
-    readAssignments(),
-  ]);
+  const { exams, assignments, formulas } = await readIndexedContent();
   const idx = assignments.findIndex((a) => a.id === id);
   if (idx === -1) throw new Error(`NOT_FOUND: assignment ${id}`);
   const cur = assignments[idx];
@@ -354,7 +338,7 @@ export async function updateAssignment(id: string, input: AssignmentUpdateInput)
   };
   const nextAssignments = [...assignments];
   nextAssignments[idx] = updated;
-  const searchIndex = buildSearchIndex(exams, nextAssignments);
+  const searchIndex = buildSearchIndex(exams, nextAssignments, formulas);
 
   const writes: FileWrite[] = [
     { path: CONTENT_PATHS.assignments, kind: "text", content: stringifyJson(nextAssignments) },
@@ -367,15 +351,12 @@ export async function updateAssignment(id: string, input: AssignmentUpdateInput)
 }
 
 export async function deleteAssignment(id: string): Promise<CommitResult> {
-  const [{ data: exams }, { data: assignments }] = await Promise.all([
-    readExams(),
-    readAssignments(),
-  ]);
+  const { exams, assignments, formulas } = await readIndexedContent();
   const idx = assignments.findIndex((a) => a.id === id);
   if (idx === -1) throw new Error(`NOT_FOUND: assignment ${id}`);
   const cur = assignments[idx];
   const nextAssignments = assignments.filter((_, i) => i !== idx);
-  const searchIndex = buildSearchIndex(exams, nextAssignments);
+  const searchIndex = buildSearchIndex(exams, nextAssignments, formulas);
 
   // Delete PDFs from R2
   await Promise.allSettled(
@@ -416,7 +397,7 @@ export async function createLab(input: LabCreateInput): Promise<CommitResult> {
   }
   const maxOrder = labs.reduce((m, l) => Math.max(m, l.order), 0);
   const newLab: Lab = {
-    id: buildLabId(input.slug),
+    id: buildLabId(maxOrder + 1),
     slug: input.slug,
     title: input.title,
     youtubeId: input.youtubeId,

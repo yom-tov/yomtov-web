@@ -15,6 +15,8 @@ import {
   VERSION_LABEL_HE,
   SUBJECT_LABEL_HE,
   SOURCE_LABEL_HE,
+  SUBJECT_IDS,
+  EXAM_SOURCES,
 } from "@/lib/admin/slug";
 import type { Exam, SubjectId, ExamSource, Season, ExamVersion } from "@/types/content";
 
@@ -127,7 +129,7 @@ export function ExamForm({ mode, initial }: { mode: Mode; initial?: Exam }) {
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="תחום">
           <Select value={subject} onChange={(v) => setSubject(v as SubjectId)} disabled={mode === "edit"}>
-            {(["electricity", "analog", "digital"] as const).map((s) => (
+            {SUBJECT_IDS.map((s) => (
               <option key={s} value={s}>
                 {SUBJECT_LABEL_HE[s]}
               </option>
@@ -136,7 +138,7 @@ export function ExamForm({ mode, initial }: { mode: Mode; initial?: Exam }) {
         </Field>
         <Field label="מקור">
           <Select value={source} onChange={(v) => setSource(v as ExamSource)} disabled={mode === "edit"}>
-            {(["mahat", "education"] as const).map((s) => (
+            {EXAM_SOURCES.map((s) => (
               <option key={s} value={s}>
                 {SOURCE_LABEL_HE[s]}
               </option>

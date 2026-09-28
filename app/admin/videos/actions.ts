@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { revalidateCoursePages } from "@/lib/admin/revalidate";
 import { requireSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { videos } from "@/lib/db/schema";
@@ -44,6 +45,7 @@ export async function createVideoAction(
       displayOrder: parsed.data.displayOrder,
     });
     revalidatePath("/admin/videos");
+    revalidateCoursePages();
     return { ok: true };
   } catch (e) {
     return { ok: false, error: (e as Error).message };
@@ -81,6 +83,7 @@ export async function updateVideoAction(
       })
       .where(eq(videos.id, id));
     revalidatePath("/admin/videos");
+    revalidateCoursePages();
     revalidatePath(`/admin/videos/${id}/edit`);
     return { ok: true };
   } catch (e) {
@@ -116,8 +119,8 @@ export async function syncVideoFromMuxAction(
       .where(eq(videos.id, id));
 
     revalidatePath("/admin/videos");
+    revalidateCoursePages();
     revalidatePath(`/admin/videos/${id}/edit`);
-    revalidatePath("/courses");
     return { ok: true };
   } catch (e) {
     return { ok: false, error: (e as Error).message };
@@ -133,6 +136,7 @@ export async function deleteVideoAction(id: string): Promise<ActionResult> {
   try {
     await db.delete(videos).where(eq(videos.id, id));
     revalidatePath("/admin/videos");
+    revalidateCoursePages();
     return { ok: true };
   } catch (e) {
     return { ok: false, error: (e as Error).message };

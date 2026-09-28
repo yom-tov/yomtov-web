@@ -1,14 +1,7 @@
 import Link from "next/link";
-import { Zap, CircuitBoard, Binary, Sigma, Atom, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { subjectIcon } from "@/lib/subject-icons";
 import type { Subject } from "@/types/content";
-
-const ICONS: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
-  Zap,
-  CircuitBoard,
-  Binary,
-  Sigma,
-  Atom,
-};
 
 export function SubjectCard({
   subject,
@@ -19,7 +12,7 @@ export function SubjectCard({
   stats?: string;
   size?: "md" | "lg";
 }) {
-  const Icon = ICONS[subject.icon] || Zap;
+  const Icon = subjectIcon(subject.icon);
   return (
     <Link
       href={`/${subject.id}`}

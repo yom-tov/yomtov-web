@@ -5,6 +5,9 @@
 // Writes:  content/*.json  (loaded at build time by app)
 //          scripts/crawl-output/download-manifest.json
 //          scripts/crawl-output/redirects.json
+//
+// WARNING: one-time Wix import. Re-running it OVERWRITES content/*.json and
+// wipes everything added since (admin-panel edits, labs, formulas).
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -327,17 +330,24 @@ writeFileSync(join(OUT_DIR, 'exams.json'), JSON.stringify(uniqExams, null, 2), '
 writeFileSync(join(OUT_DIR, 'assignments.json'), JSON.stringify(uniqAssignments, null, 2), 'utf8');
 writeFileSync(join(OUT_DIR, 'labs.json'), JSON.stringify([], null, 2), 'utf8');
 
-// Search index (lightweight)
+// Search index (lightweight). Keep in sync with buildSearchIndex() in
+// lib/admin/content-io.ts, which is what the admin panel uses after import.
+const EXAM_URL_SEGMENT = {
+  mahat: 'mahat-exams',
+  education: 'ministry-exams',
+  technician: 'technician-exams',
+  'electrical-systems': 'electrical-systems-exams',
+};
 const searchIndex = [
   ...uniqExams.map((e) => ({
     id: e.id,
-    type: e.source === 'mahat' ? 'exam-mahat' : 'exam-education',
+    type: `exam-${e.source}`,
     title: e.title,
     subject: e.subject,
     year: e.year,
     season: e.season,
     version: e.version,
-    url: `/${e.subject}/${e.source === 'mahat' ? 'mahat-exams' : 'ministry-exams'}/${e.slug}`,
+    url: `/${e.subject}/${EXAM_URL_SEGMENT[e.source]}/${e.slug}`,
   })),
   ...uniqAssignments.map((a) => ({
     id: a.id,

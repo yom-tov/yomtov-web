@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { revalidateCoursePages } from "@/lib/admin/revalidate";
 import { requireSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { contentPackages, packageVideos } from "@/lib/db/schema";
@@ -53,6 +54,7 @@ export async function createPackageAction(
       published: parsed.data.published,
     });
     revalidatePath("/admin/packages");
+    revalidateCoursePages();
     return { ok: true };
   } catch (e) {
     return { ok: false, error: (e as Error).message };
@@ -89,6 +91,7 @@ export async function updatePackageAction(
       })
       .where(eq(contentPackages.id, id));
     revalidatePath("/admin/packages");
+    revalidateCoursePages();
     revalidatePath(`/admin/packages/${id}/edit`);
     return { ok: true };
   } catch (e) {
@@ -105,6 +108,7 @@ export async function deletePackageAction(id: string): Promise<ActionResult> {
   try {
     await db.delete(contentPackages).where(eq(contentPackages.id, id));
     revalidatePath("/admin/packages");
+    revalidateCoursePages();
     return { ok: true };
   } catch (e) {
     return { ok: false, error: (e as Error).message };
@@ -139,6 +143,7 @@ export async function assignVideoToPackageAction(
         set: { displayOrder: parsed.data.displayOrder },
       });
     revalidatePath(`/admin/packages/${parsed.data.packageId}/edit`);
+    revalidateCoursePages();
     return { ok: true };
   } catch (e) {
     return { ok: false, error: (e as Error).message };
@@ -164,6 +169,7 @@ export async function removeVideoFromPackageAction(
         ),
       );
     revalidatePath(`/admin/packages/${packageId}/edit`);
+    revalidateCoursePages();
     return { ok: true };
   } catch (e) {
     return { ok: false, error: (e as Error).message };

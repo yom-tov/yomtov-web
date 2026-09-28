@@ -116,6 +116,10 @@ export const VERSION_LABEL_HE: Record<NonNullable<ExamVersion>, string> = {
   b: "מועד ב",
   combined: "מועד א/ב",
 };
+// Canonical option lists for admin selects/filters.
+export const SUBJECT_IDS = ["electricity", "analog", "digital", "math", "physics"] as const satisfies readonly SubjectId[];
+export const EXAM_SOURCES = ["mahat", "education", "technician", "electrical-systems"] as const satisfies readonly ExamSource[];
+
 export const SUBJECT_LABEL_HE: Record<SubjectId, string> = {
   electricity: "חשמל",
   analog: "אלקטרוניקה תקבילית",

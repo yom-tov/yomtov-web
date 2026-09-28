@@ -6,6 +6,7 @@
 import type {
   Exam,
   Assignment,
+  Formula,
   Lab,
   Subject,
   SearchItem,
@@ -20,6 +21,7 @@ export const CONTENT_PATHS = {
   exams: "content/exams.json",
   assignments: "content/assignments.json",
   labs: "content/labs.json",
+  formulas: "content/formulas.json",
   searchIndex: "content/search-index.json",
 } as const;
 
@@ -35,31 +37,74 @@ export async function readAssignments() {
 export async function readLabs() {
   return (await readJson<Lab[]>(CONTENT_PATHS.labs)) ?? { data: [], sha: "" };
 }
+export async function readFormulas() {
+  return (await readJson<Formula[]>(CONTENT_PATHS.formulas)) ?? { data: [], sha: "" };
+}
 
-// Rebuild the search index from the current exams + assignments in one place.
-// Also lives inline in scripts/build-content.mjs; keeping the shape identical
-// so both paths produce byte-equal files.
-export function buildSearchIndex(exams: Exam[], assignments: Assignment[]): SearchItem[] {
+// Everything the search index is built from, read in one go.
+export async function readIndexedContent() {
+  const [{ data: exams }, { data: assignments }, { data: formulas }] = await Promise.all([
+    readExams(),
+    readAssignments(),
+    readFormulas(),
+  ]);
+  return { exams, assignments, formulas };
+}
+
+// Search-index type + URL segment per exam source. Mirrors SOURCE_SLUG in
+// lib/content.ts (the public routes read that map).
+const EXAM_INDEX_TYPE: Record<ExamSource, Extract<SearchItem, { year: number | null }>["type"]> = {
+  mahat: "exam-mahat",
+  education: "exam-education",
+  technician: "exam-technician",
+  "electrical-systems": "exam-electrical-systems",
+};
+const EXAM_URL_SEGMENT: Record<ExamSource, string> = {
+  mahat: "mahat-exams",
+  education: "ministry-exams",
+  technician: "technician-exams",
+  "electrical-systems": "electrical-systems-exams",
+};
+
+// Rebuild the search index from the current exams + assignments + formulas.
+// Hidden items are left out so they never show up in the public search.
+export function buildSearchIndex(
+  exams: Exam[],
+  assignments: Assignment[],
+  formulas: Formula[],
+): SearchItem[] {
   const out: SearchItem[] = [];
   for (const e of exams) {
+    if (e.hidden) continue;
     out.push({
       id: e.id,
-      type: e.source === "mahat" ? "exam-mahat" : "exam-education",
+      type: EXAM_INDEX_TYPE[e.source],
       title: e.title,
       subject: e.subject,
       year: e.year,
       season: e.season,
       version: e.version,
-      url: `/${e.subject}/${e.source === "mahat" ? "mahat-exams" : "ministry-exams"}/${e.slug}`,
+      url: `/${e.subject}/${EXAM_URL_SEGMENT[e.source]}/${e.slug}`,
     });
   }
   for (const a of assignments) {
+    if (a.hidden) continue;
     out.push({
       id: a.id,
       type: "assignment",
       title: a.title,
       subject: a.subject,
       url: `/${a.subject}/assignments/${a.slug}`,
+    });
+  }
+  for (const f of formulas) {
+    if (f.hidden) continue;
+    out.push({
+      id: f.id,
+      type: "formula",
+      title: f.title,
+      subject: f.subject,
+      url: `/${f.subject}/formulas/${f.slug}`,
     });
   }
   return out;
@@ -84,14 +129,17 @@ export function assignmentPdfPath(a: Pick<Assignment, "subject" | "slug">, idx: 
 
 // Composite id used everywhere (URLs, admin routing).
 export function examId(subject: SubjectId, source: ExamSource, slug: string): string {
-  const t = source === "mahat" ? "exam-mahat" : "exam-education";
-  return `${subject}/${t}/${slug}`;
+  return `${subject}/${EXAM_INDEX_TYPE[source]}/${slug}`;
 }
 export function assignmentId(subject: SubjectId, slug: string): string {
   return `${subject}/assignments/${slug}`;
 }
-export function labId(slug: string): string {
-  return `labs/${slug}`;
+export function formulaId(subject: SubjectId, slug: string): string {
+  return `${subject}/formulas/${slug}`;
+}
+// Lab ids follow the original "lab-NN" convention (NN = order, zero-padded).
+export function labId(order: number): string {
+  return `lab-${String(order).padStart(2, "0")}`;
 }
 
 export const SOURCE_LABEL = SOURCE_LABEL_HE; // re-export for admin UI

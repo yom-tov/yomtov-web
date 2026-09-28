@@ -5,13 +5,11 @@ import { eq, sql } from "drizzle-orm";
 import {
   Accessibility,
   ArrowLeft,
-  Atom,
   Binary,
   BookOpen,
   Brain,
   Calculator,
   CheckCircle2,
-  CircuitBoard,
   Clock,
   Cpu,
   FileText,
@@ -26,14 +24,13 @@ import {
   Plus,
   School,
   Search,
-  Sigma,
   Smartphone,
   Sparkles,
   Video,
   Waves,
-  Zap,
 } from "lucide-react";
 import { db } from "@/lib/db";
+import { subjectIcon } from "@/lib/subject-icons";
 import { contentPackages, packageVideos } from "@/lib/db/schema";
 import {
   assignmentsFor,
@@ -139,14 +136,6 @@ const SOURCE_DOT: Record<ExamSource, string> = {
   education: "text-cyan-600 dark:text-cyan-300",
   technician: "text-orange-600 dark:text-orange-300",
   "electrical-systems": "text-rose-600 dark:text-rose-300",
-};
-
-const SUBJECT_ICONS: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
-  Zap,
-  CircuitBoard,
-  Binary,
-  Sigma,
-  Atom,
 };
 
 // What each subject page offers beyond the countable JSON content.
@@ -674,7 +663,7 @@ export default async function Home() {
           />
           <div className="mt-14 grid auto-rows-[minmax(210px,auto)] gap-4 md:grid-cols-2 lg:grid-cols-4">
             {subjectTiles.map(({ s, total, chips }, i) => {
-              const Icon = SUBJECT_ICONS[s.icon] || Zap;
+              const Icon = subjectIcon(s.icon);
               const big = s.id === "electricity";
               return (
                 <div

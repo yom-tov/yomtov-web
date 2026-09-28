@@ -7,8 +7,9 @@ import { toast } from "sonner";
 import { Loader2, Save, ArrowLeft } from "lucide-react";
 import { updateSubjectAction } from "@/app/admin/subjects/actions";
 import type { Subject } from "@/types/content";
+import { SUBJECT_ICON_NAMES } from "@/lib/subject-icons";
 
-const ICON_OPTIONS = ["Zap", "CircuitBoard", "Binary", "Beaker", "Calculator", "ClipboardCheck"] as const;
+const ICON_OPTIONS = SUBJECT_ICON_NAMES;
 
 const COLOR_PRESETS: { label: string; value: string }[] = [
   { label: "כתום → ורוד", value: "from-amber-500 via-orange-500 to-rose-500" },

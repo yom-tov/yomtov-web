@@ -10,6 +10,8 @@ export interface Subject {
   icon: string;
   color: string;
   hebrewOriginalPath: string;
+  /** Hidden from the public site (admin-only). */
+  hidden?: boolean;
 }
 
 export interface FileRef {
@@ -33,6 +35,7 @@ export interface Exam {
   solution: FileRef | null;
   originalListUrl: string;
   originalDetailUrl: string | null;
+  hidden?: boolean;
 }
 
 export interface Assignment {
@@ -44,6 +47,7 @@ export interface Assignment {
   files: FileRef[];
   originalListUrl: string;
   originalDetailUrl: string | null;
+  hidden?: boolean;
 }
 
 export interface Formula {
@@ -52,6 +56,7 @@ export interface Formula {
   subject: SubjectId;
   title: string;
   files: FileRef[];
+  hidden?: boolean;
 }
 
 export interface Lab {
@@ -60,6 +65,7 @@ export interface Lab {
   title: string;
   youtubeId: string;
   order: number;
+  hidden?: boolean;
 }
 
 export type SearchItem =

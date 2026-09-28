@@ -9,7 +9,9 @@ import { Badge } from "@/components/ui/Badge";
 
 const TYPE_LABEL: Record<string, string> = {
   "exam-mahat": 'מבחן מה"ט',
-  "exam-education": "מבחן מ״החינוך",
+  "exam-education": "מבחן משרד החינוך",
+  "exam-technician": "מבחן טכנאי חשמל",
+  "exam-electrical-systems": "מבחן מערכות חשמל",
   assignment: "מטלה",
   formula: "נוסחאון",
 };

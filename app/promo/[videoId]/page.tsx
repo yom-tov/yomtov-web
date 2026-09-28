@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { db } from "@/lib/db";
-import { videos, packageVideos, contentPackages } from "@/lib/db/schema";
-import { eq, and } from "drizzle-orm";
+import { videos } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
+import { findPromoCourse } from "@/lib/promo";
 import { ArrowLeft, Clock, Sparkles } from "lucide-react";
 import { PromoClient } from "./PromoClient";
 
@@ -46,31 +47,7 @@ export default async function PromoPage({
 
   if (!video) notFound();
 
-  const [link] = await db
-    .select({
-      packageId: packageVideos.packageId,
-      displayOrder: packageVideos.displayOrder,
-    })
-    .from(packageVideos)
-    .where(
-      and(
-        eq(packageVideos.videoId, videoId),
-        eq(packageVideos.displayOrder, 1),
-      ),
-    )
-    .limit(1);
-
-  if (!link) notFound();
-
-  const [pkg] = await db
-    .select({
-      slug: contentPackages.slug,
-      title: contentPackages.title,
-    })
-    .from(contentPackages)
-    .where(eq(contentPackages.id, link.packageId))
-    .limit(1);
-
+  const pkg = await findPromoCourse(videoId);
   if (!pkg) notFound();
 
   return (

@@ -9,6 +9,7 @@ import { PurchaseButton } from "./PurchaseButton";
 import { signThumbnailToken } from "@/lib/mux/playback";
 import { getOptionalUserSession } from "@/lib/user-auth";
 import { hasActiveAccess } from "@/lib/admin/purchase-helpers";
+import { PACKAGE_VIDEO_ORDER } from "@/lib/promo";
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +62,7 @@ export default async function CourseDetailPage({
     .from(packageVideos)
     .innerJoin(videos, eq(packageVideos.videoId, videos.id))
     .where(eq(packageVideos.packageId, pkg.id))
-    .orderBy(packageVideos.displayOrder);
+    .orderBy(...PACKAGE_VIDEO_ORDER);
 
   const totalDuration = pkgVideos.reduce(
     (sum, v) => sum + (v.durationSeconds ?? 0),

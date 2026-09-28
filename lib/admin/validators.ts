@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SUBJECT_ICON_NAMES } from "@/lib/subject-icons";
 
 const currentYear = new Date().getFullYear();
 
@@ -69,7 +70,7 @@ export type AssignmentUpdateInput = z.infer<typeof AssignmentUpdateSchema>;
 export const SubjectUpdateSchema = z.object({
   hebrewTitle: z.string().min(1).max(80),
   description: z.string().min(1).max(500),
-  icon: z.enum(["Zap", "CircuitBoard", "Binary", "Beaker", "Calculator", "ClipboardCheck"]),
+  icon: z.enum(SUBJECT_ICON_NAMES),
   color: z.string().min(3).max(120),
 });
 export type SubjectUpdateInput = z.infer<typeof SubjectUpdateSchema>;

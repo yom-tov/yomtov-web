@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { ThemeScript } from "@/components/layout/ThemeScript";
 import { AccessibilityScript } from "@/components/layout/AccessibilityScript";
 import { AccessibilityWidget } from "@/components/layout/AccessibilityWidget";
@@ -78,13 +79,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           דלג לתוכן הראשי
         </a>
-        <Header />
-        <main id="main" className="flex-1">
+        <SiteChrome
+          header={<Header />}
+          footer={<Footer />}
+          extras={
+            <>
+              <AccessibilityWidget />
+              <CookieBanner />
+            </>
+          }
+        >
           {children}
-        </main>
-        <Footer />
-        <AccessibilityWidget />
-        <CookieBanner />
+        </SiteChrome>
         <Analytics />
       </body>
     </html>

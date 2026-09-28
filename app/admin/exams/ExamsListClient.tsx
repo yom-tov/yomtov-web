@@ -8,7 +8,7 @@ import { Edit3, Trash2, Plus, Search, X } from "lucide-react";
 import { DangerConfirm } from "@/components/admin/DangerConfirm";
 import { deleteExamAction } from "./actions";
 import type { Exam, SubjectId, ExamSource } from "@/types/content";
-import { SUBJECT_LABEL_HE, SOURCE_LABEL_HE, SEASON_LABEL_HE, VERSION_LABEL_HE } from "@/lib/admin/slug";
+import { SUBJECT_IDS, EXAM_SOURCES, SUBJECT_LABEL_HE, SOURCE_LABEL_HE, SEASON_LABEL_HE, VERSION_LABEL_HE } from "@/lib/admin/slug";
 
 export function ExamsListClient({ items }: { items: Exam[] }) {
   const router = useRouter();
@@ -99,7 +99,7 @@ export function ExamsListClient({ items }: { items: Exam[] }) {
           <F label="תחום">
             <select value={subject} onChange={(e) => setSubject(e.target.value as SubjectId | "")} className="select">
               <option value="">הכל</option>
-              {(["electricity", "analog", "digital"] as const).map((s) => (
+              {SUBJECT_IDS.map((s) => (
                 <option key={s} value={s}>
                   {SUBJECT_LABEL_HE[s]}
                 </option>
@@ -109,7 +109,7 @@ export function ExamsListClient({ items }: { items: Exam[] }) {
           <F label="מקור">
             <select value={source} onChange={(e) => setSource(e.target.value as ExamSource | "")} className="select">
               <option value="">הכל</option>
-              {(["mahat", "education"] as const).map((s) => (
+              {EXAM_SOURCES.map((s) => (
                 <option key={s} value={s}>
                   {SOURCE_LABEL_HE[s]}
                 </option>

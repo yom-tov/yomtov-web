@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { Loader2, Save, ArrowLeft, Plus, Trash } from "lucide-react";
 import { FileUpload, type UploadedFile } from "./FileUpload";
 import { createAssignmentAction, updateAssignmentAction } from "@/app/admin/assignments/actions";
-import { assignmentSlug, SUBJECT_LABEL_HE } from "@/lib/admin/slug";
+import { assignmentSlug, SUBJECT_IDS, SUBJECT_LABEL_HE } from "@/lib/admin/slug";
 import type { Assignment, SubjectId } from "@/types/content";
 
 type Mode = "create" | "edit";
@@ -79,7 +79,7 @@ export function AssignmentForm({ mode, initial }: { mode: Mode; initial?: Assign
             disabled={mode === "edit"}
             className="input"
           >
-            {(["electricity", "analog", "digital"] as const).map((s) => (
+            {SUBJECT_IDS.map((s) => (
               <option key={s} value={s}>{SUBJECT_LABEL_HE[s]}</option>
             ))}
           </select>
