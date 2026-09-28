@@ -45,6 +45,12 @@ const CANONICAL_HOST = "www.yomtovian.com";
 export async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
 
+  // Cron jobs call the deployment directly and do not follow redirects. They
+  // must also keep working when the custom domain itself is broken (DNS).
+  if (path.startsWith("/api/cron/")) {
+    return NextResponse.next();
+  }
+
   if (process.env.VERCEL_ENV === "production") {
     const host = req.headers.get("host") || "";
     if (host && host !== CANONICAL_HOST) {

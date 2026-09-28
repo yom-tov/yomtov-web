@@ -127,7 +127,7 @@ export function FileUpload({
             type="button"
             onClick={() => onChange(null)}
             aria-label="הסר קובץ"
-            className="rounded-lg p-1.5 text-text-subtle hover:bg-white hover:text-danger"
+            className="rounded-lg p-1.5 text-text-subtle hover:bg-surface hover:text-danger"
           >
             <X className="h-4 w-4" />
           </button>

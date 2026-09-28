@@ -5,6 +5,7 @@ import { contentPackages, packageVideos, videos } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
 import { Play, ShoppingBag, CheckCircle, Clock } from "lucide-react";
 import { LessonsCta } from "./LessonsCta";
+import { getSection, visible } from "@/lib/site-content";
 import { signThumbnailToken } from "@/lib/mux/playback";
 import { getOptionalUserSession } from "@/lib/user-auth";
 import { getUserPackages } from "@/lib/admin/purchase-helpers";
@@ -18,6 +19,11 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function CoursesPage() {
+  const [t, lessons, contact] = await Promise.all([
+    getSection("courses.list"),
+    getSection("courses.lessons"),
+    getSection("global.contact"),
+  ]);
   const session = await getOptionalUserSession();
   const ownedPackages = new Map<string, Date | null>();
   if (session) {
@@ -81,15 +87,14 @@ export default async function CoursesPage() {
     <div className="container-page py-10">
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-extrabold text-text sm:text-4xl">
-          קורסים ותכנים בתשלום
+          {t.title}
         </h1>
         <p className="mt-3 text-base text-text-muted max-w-xl mx-auto">
-          שיעורי וידאו מקצועיים מאת אבי יומטוביאן - הסברים ברורים ומפורטים
-          שיעזרו לך להצליח בלימודים
+          {t.subtitle}
         </p>
       </div>
 
-      <LessonsCta />
+      <LessonsCta content={{ ...lessons, modalItems: visible(lessons.modalItems) }} email={contact.lessonsEmail} />
 
       {packagesWithThumbnails.length > 0 ? (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -172,10 +177,10 @@ export default async function CoursesPage() {
         <div className="rounded-2xl border border-dashed border-border bg-surface-2/30 py-16 text-center">
           <ShoppingBag className="mx-auto h-12 w-12 text-text-subtle" />
           <p className="mt-4 text-lg font-semibold text-text-subtle">
-            קורסים חדשים בקרוב!
+            {t.emptyTitle}
           </p>
           <p className="mt-1 text-sm text-text-subtle">
-            אנחנו עובדים על תכנים חדשים. חזרו בקרוב.
+            {t.emptyText}
           </p>
         </div>
       )}

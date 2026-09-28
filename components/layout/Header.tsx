@@ -6,7 +6,14 @@ import { Menu, Search, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { UserNav } from "@/components/user/UserNav";
 
-const NAV = [
+export interface NavLink {
+  href: string;
+  label: string;
+}
+
+// Defaults match the admin registry (lib/site-content/sections/global.ts);
+// the root layout passes the admin-edited values.
+const DEFAULT_NAV: NavLink[] = [
   { href: "/electricity", label: "חשמל" },
   { href: "/analog", label: "תקבילית" },
   { href: "/digital", label: "ספרתית" },
@@ -19,12 +26,20 @@ const NAV = [
   { href: "/courses", label: "קורסים" },
 ];
 
-export function Header() {
+export function Header({
+  nav = DEFAULT_NAV,
+  siteName = "אבי יומטוביאן",
+  tagline = "פשוט להבין!",
+}: {
+  nav?: NavLink[];
+  siteName?: string;
+  tagline?: string;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-surface/85 backdrop-blur-md">
       <div className="flex h-16 items-center gap-4 px-4 md:px-6 lg:px-8">
-        <Link href="/" className="group flex shrink-0 items-center gap-3 whitespace-nowrap" aria-label="דף הבית - אבי יומטוביאן">
+        <Link href="/" className="group flex shrink-0 items-center gap-3 whitespace-nowrap" aria-label={`דף הבית - ${siteName}`}>
           <Image
             src="/images/mark.png"
             alt=""
@@ -35,16 +50,16 @@ export function Header() {
           />
           <span className="flex flex-col leading-none">
             <span className="text-base font-extrabold tracking-tight text-primary-900 dark:text-white">
-              אבי יומטוביאן
+              {siteName}
             </span>
             <span className="text-[11px] font-semibold text-accent-600">
-              פשוט להבין!
+              {tagline}
             </span>
           </span>
         </Link>
 
         <nav className="hidden md:flex mx-auto items-center gap-1" aria-label="ראשי">
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -101,7 +116,7 @@ export function Header() {
       {open && (
         <div className="md:hidden border-t border-border bg-surface">
           <nav className="container-page flex flex-col py-2" aria-label="תפריט נייד">
-            {NAV.map((item) => (
+            {nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

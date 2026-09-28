@@ -72,7 +72,7 @@ export function DangerConfirm({
           <input
             value={typed}
             onChange={(e) => setTyped(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-border bg-white px-3 py-2 font-mono text-sm text-text focus:border-rose-500 focus:outline-none"
+            className="mt-1 w-full rounded-lg border border-border bg-surface px-3 py-2 font-mono text-sm text-text focus:border-rose-500 focus:outline-none"
             autoFocus
           />
         </div>

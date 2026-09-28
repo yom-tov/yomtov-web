@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import type { Metadata } from "next";
+import { getSection } from "@/lib/site-content";
+import { getCollection } from "@/lib/site-content/youtube";
 
 export const metadata: Metadata = {
   title: "הכנה לפסיכומטרי/פסיכוטכני",
@@ -9,11 +11,8 @@ export const metadata: Metadata = {
     "סרטון הכנה מקיף לפסיכומטרי ופסיכוטכני — הקבלות מילוליות, סדרות, חשבון, סדרות צורניות, אוצר מילים, הגיון והבנה טכנית.",
 };
 
-const VIDEO_ID = "9o_SrVCz4NY";
-const VIDEO_TITLE =
-  "פסיכומטרי/פסיכוטכני │הקבלות מילוליות, סדרות, חשבון, סדרות צורניות, אוצר מילים, הגיון, הבנה טכנית│חלק 1.0";
-
-export default function PsychometricPage() {
+export default async function PsychometricPage() {
+  const [t, videos] = await Promise.all([getSection("psychometric.page"), getCollection("psychometric")]);
   return (
     <div className="container-page py-8">
       <Breadcrumbs
@@ -27,29 +26,26 @@ export default function PsychometricPage() {
         <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-br from-sky-500 via-blue-500 to-indigo-500 px-3 py-1 text-xs font-semibold text-white shadow-sm">
           תחום לימוד
         </div>
-        <h1 className="mt-3 text-3xl font-extrabold text-text sm:text-4xl">
-          הכנה לפסיכומטרי/פסיכוטכני
-        </h1>
-        <p className="mt-2 max-w-3xl text-base text-text-muted">
-          סרטון הכנה מקיף הכולל הקבלות מילוליות, סדרות, חשבון, סדרות צורניות,
-          אוצר מילים, הגיון והבנה טכנית.
-        </p>
+        <h1 className="mt-3 text-3xl font-extrabold text-text sm:text-4xl">{t.title}</h1>
+        <p className="mt-2 max-w-3xl text-base text-text-muted">{t.text}</p>
       </header>
 
-      <section className="mt-10">
-        <h2 className="text-xl font-extrabold text-text">{VIDEO_TITLE}</h2>
-        <div className="mt-4 overflow-hidden rounded-2xl border border-border shadow-lg">
-          <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-            <iframe
-              className="absolute inset-0 h-full w-full"
-              src={`https://www.youtube.com/embed/${VIDEO_ID}`}
-              title={VIDEO_TITLE}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
+      {videos.map((v) => (
+        <section key={v.id} className="mt-10">
+          <h2 className="text-xl font-extrabold text-text">{v.title}</h2>
+          <div className="mt-4 overflow-hidden rounded-2xl border border-border shadow-lg">
+            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+              <iframe
+                className="absolute inset-0 h-full w-full"
+                src={`https://www.youtube.com/embed/${v.youtubeId}`}
+                title={v.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ))}
 
       <div className="mt-10">
         <Link

@@ -96,7 +96,7 @@ export function PackagesListClient({ items }: { items: PackageRow[] }) {
                   <div className="flex gap-1">
                     <Link
                       href={`/admin/packages/${pkg.id}/edit`}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
                     >
                       <Edit3 className="h-3.5 w-3.5" /> ערוך
                     </Link>
@@ -104,7 +104,7 @@ export function PackagesListClient({ items }: { items: PackageRow[] }) {
                       type="button"
                       onClick={() => setToDelete(pkg)}
                       disabled={pending}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
                     >
                       <Trash2 className="h-3.5 w-3.5" /> מחק
                     </button>

@@ -75,7 +75,7 @@ export function UsersListClient({ items }: { items: UserRow[] }) {
         </div>
         <a
           href="/api/admin/users-export"
-          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-white px-3 py-2 text-xs font-semibold text-text-muted hover:border-primary-300 hover:text-primary-700"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-2 text-xs font-semibold text-text-muted hover:border-primary-300 hover:text-primary-700"
         >
           <Download className="h-3.5 w-3.5" />
           ייצוא CSV
@@ -85,7 +85,7 @@ export function UsersListClient({ items }: { items: UserRow[] }) {
       <div className="mb-4 rounded-2xl border border-border bg-surface p-3">
         <div className="flex flex-wrap items-end gap-3">
           <div className="flex-1 min-w-[220px]">
-            <label className="flex items-center gap-2 rounded-xl border border-border bg-white px-3 py-2 focus-within:border-primary-500">
+            <label className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2 focus-within:border-primary-500">
               <Search className="h-4 w-4 text-text-subtle" />
               <input
                 value={q}
@@ -140,7 +140,7 @@ export function UsersListClient({ items }: { items: UserRow[] }) {
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-3 py-2 text-xs text-text-muted hover:text-text"
+              className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-3 py-2 text-xs text-text-muted hover:text-text"
             >
               <X className="h-3.5 w-3.5" />
               נקה ({activeFilters})
@@ -229,7 +229,7 @@ export function UsersListClient({ items }: { items: UserRow[] }) {
                 <Td>
                   <Link
                     href={`/admin/users/${u.id}`}
-                    className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
+                    className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
                   >
                     צפה
                   </Link>
@@ -256,7 +256,7 @@ export function UsersListClient({ items }: { items: UserRow[] }) {
           padding: 0 10px;
           border-radius: 8px;
           border: 1px solid var(--border);
-          background: white;
+          background: var(--surface);
           color: var(--text);
           font-size: 13px;
         }

@@ -7,8 +7,11 @@ import {
   integer,
   real,
   timestamp,
+  date,
+  jsonb,
   primaryKey,
   uniqueIndex,
+  index,
 } from "drizzle-orm/pg-core";
 
 export const users = pgTable(
@@ -57,6 +60,8 @@ export const videos = pgTable("videos", {
   thumbnailUrl: varchar("thumbnail_url", { length: 500 }),
   thumbnailTime: real("thumbnail_time").default(0),
   displayOrder: integer("display_order").default(0).notNull(),
+  // Hidden videos are skipped on course pages, the dashboard and playback.
+  hidden: boolean("hidden").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -135,3 +140,85 @@ export const passwordResetTokens = pgTable("password_reset_tokens", {
   used: boolean("used").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+// ---------------------------------------------------------------------------
+// Admin: system health & alerts
+// ---------------------------------------------------------------------------
+
+// One row per distinct problem (stable `key`, e.g. "vercel.deploy.dpl_123").
+// Health runs upsert rows they still see and resolve the ones that vanished.
+export const systemAlerts = pgTable(
+  "system_alerts",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    key: varchar("key", { length: 200 }).notNull(),
+    source: varchar("source", { length: 40 }).notNull(),
+    severity: varchar("severity", { length: 20 }).$type<"critical" | "warning" | "info">().notNull(),
+    title: varchar("title", { length: 300 }).notNull(),
+    detail: text("detail"),
+    actionHint: text("action_hint"),
+    link: varchar("link", { length: 500 }),
+    firstSeenAt: timestamp("first_seen_at").defaultNow().notNull(),
+    lastSeenAt: timestamp("last_seen_at").defaultNow().notNull(),
+    resolvedAt: timestamp("resolved_at"),
+    acknowledgedAt: timestamp("acknowledged_at"),
+    lastEmailedAt: timestamp("last_emailed_at"),
+  },
+  (t) => [uniqueIndex("system_alerts_key_idx").on(t.key)],
+);
+
+export const healthRuns = pgTable("health_runs", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  ranAt: timestamp("ran_at").defaultNow().notNull(),
+  trigger: varchar("trigger", { length: 20 }).notNull(), // cron | manual | visit
+  results: jsonb("results").notNull(),
+  durationMs: integer("duration_ms").notNull(),
+});
+
+// Owner-maintained details about each paid service (plan, cost, renewal date).
+// `serviceId` matches an id in lib/admin/architecture.ts.
+export const serviceAccounts = pgTable(
+  "service_accounts",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    serviceId: varchar("service_id", { length: 40 }).notNull(),
+    plan: varchar("plan", { length: 100 }),
+    monthlyCost: varchar("monthly_cost", { length: 50 }),
+    renewalDate: date("renewal_date"),
+    remindDaysBefore: integer("remind_days_before").default(14).notNull(),
+    accountHint: varchar("account_hint", { length: 200 }),
+    notes: text("notes"),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (t) => [uniqueIndex("service_accounts_service_idx").on(t.serviceId)],
+);
+
+// ---------------------------------------------------------------------------
+// Admin-editable site content (texts, lists, YouTube collections)
+// ---------------------------------------------------------------------------
+
+// Key/value store for editable site sections. `key` is a section id from
+// lib/site-content/registry.ts; `value` holds only the fields the admin has
+// changed — everything else falls back to the defaults in code.
+export const siteContent = pgTable("site_content", {
+  key: varchar("key", { length: 120 }).primaryKey(),
+  value: jsonb("value").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const youtubeVideos = pgTable(
+  "youtube_videos",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    collection: varchar("collection", { length: 40 }).notNull(),
+    youtubeId: varchar("youtube_id", { length: 20 }).notNull(),
+    title: varchar("title", { length: 200 }).notNull(),
+    description: text("description"),
+    isShort: boolean("is_short").default(false).notNull(),
+    displayOrder: integer("display_order").default(0).notNull(),
+    hidden: boolean("hidden").default(false).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (t) => [index("youtube_videos_collection_idx").on(t.collection, t.displayOrder)],
+);

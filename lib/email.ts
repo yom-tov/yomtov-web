@@ -151,3 +151,89 @@ export function getEmailProvider(): EmailProvider {
   }
   return _provider;
 }
+
+// ---------------------------------------------------------------------------
+// Admin alert emails (daily health digest + "send test" button)
+// ---------------------------------------------------------------------------
+export interface AdminAlertEmailItem {
+  severity: "critical" | "warning" | "info";
+  title: string;
+  detail: string | null;
+  actionHint: string | null;
+  link: string | null;
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function absoluteLink(link: string): string {
+  return link.startsWith("/") ? `${getBaseUrl()}${link}` : link;
+}
+
+export function renderAdminAlertEmail(items: AdminAlertEmailItem[], opts: { test?: boolean } = {}): {
+  subject: string;
+  html: string;
+} {
+  const critical = items.filter((i) => i.severity === "critical").length;
+  const subject = opts.test
+    ? "בדיקה: מייל ההתראות של yomtovian.com"
+    : critical
+      ? `🔴 yomtovian.com: ${critical} תקלות דחופות${items.length > critical ? ` ועוד ${items.length - critical} אזהרות` : ""}`
+      : `🟡 yomtovian.com: ${items.length} דברים דורשים תשומת לב`;
+
+  const rows = items
+    .map((i) => {
+      const color = i.severity === "critical" ? "#e11d48" : i.severity === "warning" ? "#d97706" : "#0284c7";
+      const label = i.severity === "critical" ? "דחוף" : i.severity === "warning" ? "אזהרה" : "מידע";
+      return `<div style="border:1px solid #e5e7eb;border-right:4px solid ${color};border-radius:10px;padding:14px 16px;margin:0 0 12px;">
+  <div style="font-size:11px;font-weight:700;color:${color};margin-bottom:4px;">${label}</div>
+  <div style="font-size:15px;font-weight:700;color:#0f172a;">${escapeHtml(i.title)}</div>
+  ${i.detail ? `<div style="font-size:13px;color:#475569;line-height:1.6;margin-top:6px;">${escapeHtml(i.detail)}</div>` : ""}
+  ${i.actionHint ? `<div style="font-size:13px;color:#0f172a;line-height:1.6;margin-top:8px;background:#f8fafc;border-radius:8px;padding:8px 10px;"><b>מה לעשות:</b> ${escapeHtml(i.actionHint)}</div>` : ""}
+  ${i.link ? `<div style="margin-top:8px;"><a href="${escapeHtml(absoluteLink(i.link))}" style="font-size:13px;color:#1e40af;">לפרטים ←</a></div>` : ""}
+</div>`;
+    })
+    .join("\n");
+
+  const intro = opts.test
+    ? "זה מייל בדיקה. כך ייראה מייל ההתראות היומי כשתהיה בעיה באתר."
+    : "הבדיקה היומית של האתר מצאה את הדברים הבאים:";
+
+  const html = emailWrapper(`
+    <h2 style="margin:0 0 8px;color:#0f172a;font-size:20px;">דוח מצב האתר</h2>
+    <p style="color:#475569;font-size:14px;line-height:1.7;margin:0 0 16px;">${intro}</p>
+    ${rows}
+    ${actionButton(`${getBaseUrl()}/admin/health`, "למצב המערכת בפאנל")}
+    <p style="color:#94a3b8;font-size:12px;line-height:1.6;">
+      המייל נשלח רק כשיש בעיה פתוחה. לחיצה על "ראיתי" בפאנל עוצרת את התזכורת עבור אותה בעיה.
+    </p>
+  `);
+  return { subject, html };
+}
+
+/**
+ * Send an email to the site owner. Tries the configured sender first and
+ * falls back to Resend's shared sender (which works even when the site's
+ * domain isn't verified in Resend yet).
+ */
+export async function sendOwnerEmail(to: string, subject: string, html: string): Promise<{ ok: boolean; error?: string }> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn(`[EMAIL] RESEND_API_KEY not set — owner email "${subject}" to ${to} not sent`);
+    return { ok: false, error: "RESEND_API_KEY לא מוגדר" };
+  }
+  const resend = new Resend(apiKey);
+  const primaryFrom = process.env.EMAIL_FROM || "אבי יומטוביאן <noreply@yomtovian.com>";
+  const first = await resend.emails.send({ from: primaryFrom, to, subject, html });
+  if (!first.error) return { ok: true };
+
+  const fallback = await resend.emails.send({ from: "Yomtovian Alerts <onboarding@resend.dev>", to, subject, html });
+  if (!fallback.error) return { ok: true };
+  console.error("[EMAIL] owner email failed", first.error, fallback.error);
+  return { ok: false, error: fallback.error.message || first.error.message };
+}

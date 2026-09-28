@@ -25,7 +25,7 @@ export default async function AdminSubjectsPage() {
               <p className="mt-3 text-sm text-text-muted line-clamp-3">{s.description}</p>
               <Link
                 href={`/admin/subjects/${s.id}/edit`}
-                className="mt-4 inline-flex items-center gap-1 rounded-lg border border-border bg-white px-3 py-1.5 text-xs font-semibold text-text-muted hover:border-primary-300 hover:text-primary-700"
+                className="mt-4 inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-text-muted hover:border-primary-300 hover:text-primary-700"
               >
                 <Edit3 className="h-3.5 w-3.5" /> ערוך
               </Link>

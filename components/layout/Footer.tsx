@@ -1,71 +1,53 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Mail, Globe, Code2 } from "lucide-react";
+import { getSection, visible } from "@/lib/site-content";
 
-const CONTACT_EMAIL = "yomtov7@gmail.com";
+function socials(links: { youtube: string; tiktok: string; email: string }) {
+  return [
+    {
+      label: "YouTube",
+      href: links.youtube,
+      style: "bg-rose-50 text-rose-600 hover:bg-rose-100 hover:text-rose-700 dark:bg-rose-500/10 dark:text-rose-400 dark:hover:bg-rose-500/20 dark:hover:text-rose-300",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" />
+          <path d="m9.545 15.568 6.273-3.568-6.273-3.568v7.136z" fill="white" />
+        </svg>
+      ),
+    },
+    {
+      label: "TikTok",
+      href: links.tiktok,
+      style: "bg-fuchsia-50 text-fuchsia-600 hover:bg-fuchsia-100 hover:text-fuchsia-700 dark:bg-fuchsia-500/10 dark:text-fuchsia-400 dark:hover:bg-fuchsia-500/20 dark:hover:text-fuchsia-300",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.75a8.18 8.18 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.18z" />
+        </svg>
+      ),
+    },
+    {
+      label: "אימייל",
+      href: `mailto:${links.email}`,
+      style: "bg-sky-50 text-sky-600 hover:bg-sky-100 hover:text-sky-700 dark:bg-sky-500/10 dark:text-sky-400 dark:hover:bg-sky-500/20 dark:hover:text-sky-300",
+      icon: <Mail className="h-6 w-6" />,
+    },
+  ];
+}
 
-const SOCIALS = [
-  {
-    label: "YouTube",
-    href: "https://www.youtube.com/@yomtov7",
-    style: "bg-rose-50 text-rose-600 hover:bg-rose-100 hover:text-rose-700 dark:bg-rose-500/10 dark:text-rose-400 dark:hover:bg-rose-500/20 dark:hover:text-rose-300",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
-        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" />
-        <path d="m9.545 15.568 6.273-3.568-6.273-3.568v7.136z" fill="white" />
-      </svg>
-    ),
-  },
-  {
-    label: "TikTok",
-    href: "https://www.tiktok.com/@avi_yomtovian",
-    style: "bg-fuchsia-50 text-fuchsia-600 hover:bg-fuchsia-100 hover:text-fuchsia-700 dark:bg-fuchsia-500/10 dark:text-fuchsia-400 dark:hover:bg-fuchsia-500/20 dark:hover:text-fuchsia-300",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6">
-        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.75a8.18 8.18 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.18z" />
-      </svg>
-    ),
-  },
-  {
-    label: "אימייל",
-    href: `mailto:${CONTACT_EMAIL}`,
-    style: "bg-sky-50 text-sky-600 hover:bg-sky-100 hover:text-sky-700 dark:bg-sky-500/10 dark:text-sky-400 dark:hover:bg-sky-500/20 dark:hover:text-sky-300",
-    icon: <Mail className="h-6 w-6" />,
-  },
-];
-
-const SECTIONS = [
-  {
-    title: "תחומי לימוד",
-    links: [
-      { href: "/electricity", label: "חשמל" },
-      { href: "/analog", label: "תקבילית" },
-      { href: "/digital", label: "ספרתית" },
-      { href: "/math", label: "מתמטיקה" },
-      { href: "/physics", label: "פיסיקה" },
-      { href: "/psychometric", label: "פסיכומטרי" },
-    ],
-  },
-  {
-    title: "כלים",
-    links: [
-      { href: "/labs", label: "מעבדות" },
-      { href: "/calculator", label: "מחשבון" },
-      { href: "/exams", label: "כל המבחנים" },
-    ],
-  },
-  {
-    title: "מידע",
-    links: [
-      { href: "/search", label: "חיפוש" },
-      { href: "/about", label: "אודות" },
-      { href: "/accessibility", label: "הצהרת נגישות" },
-      { href: "/terms", label: "תנאי שימוש ופרטיות" },
-    ],
-  },
-];
-
-export function Footer() {
+export async function Footer() {
+  const [brand, social, contact, footer] = await Promise.all([
+    getSection("global.brand"),
+    getSection("global.social"),
+    getSection("global.contact"),
+    getSection("global.footer"),
+  ]);
+  const SOCIALS = socials({ youtube: social.youtubeUrl, tiktok: social.tiktokUrl, email: contact.footerEmail });
+  const SECTIONS = [
+    { title: footer.col1Title, links: visible(footer.col1Links) },
+    { title: footer.col2Title, links: visible(footer.col2Links) },
+    { title: footer.col3Title, links: visible(footer.col3Links) },
+  ].filter((c) => c.links.length > 0);
   return (
     <footer className="mt-16 border-t border-border bg-surface">
       <div
@@ -85,16 +67,15 @@ export function Footer() {
               />
               <div className="flex flex-col leading-none">
                 <span className="text-base font-extrabold text-primary-900 dark:text-white">
-                  אבי יומטוביאן
+                  {brand.siteName}
                 </span>
                 <span className="text-xs font-semibold text-accent-600">
-                  פשוט להבין!
+                  {brand.tagline}
                 </span>
               </div>
             </div>
             <p className="mt-4 text-sm leading-6 text-text-muted">
-              מאגר לימוד לסטודנטים ללימודי חשמל ואלקטרוניקה - מבחני מה&quot;ט,
-              מבחני משרד החינוך, מטלות, מעבדות ומחשבונים.
+              {brand.footerAbout}
             </p>
             <div className="mt-5 flex items-center gap-3">
               {SOCIALS.map((s) => (
@@ -115,8 +96,8 @@ export function Footer() {
             <div key={s.title}>
               <div className="text-sm font-semibold text-text">{s.title}</div>
               <ul className="mt-3 space-y-2">
-                {s.links.map((l) => (
-                  <li key={l.href}>
+                {s.links.map((l, i) => (
+                  <li key={i}>
                     <Link
                       href={l.href}
                       className="text-sm text-text-muted transition-colors hover:text-primary-700 dark:hover:text-primary-300"
@@ -130,7 +111,7 @@ export function Footer() {
           ))}
         </div>
         <div className="mt-10 border-t border-border pt-6 text-xs text-text-subtle">
-          <div>© {new Date().getFullYear()} אבי יומטוביאן · כל הזכויות שמורות.</div>
+          <div>© {new Date().getFullYear()} {brand.siteName} · כל הזכויות שמורות.</div>
           <div className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1">
             <span className="inline-flex items-center gap-1">
               <Code2 className="h-3.5 w-3.5 text-text-subtle" />

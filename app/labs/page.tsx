@@ -15,6 +15,7 @@ import {
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { labs } from "@/lib/content";
 import { getAssetUrl } from "@/lib/pdf-url";
+import { getSection, visible } from "@/lib/site-content";
 import LabsClient from "./LabsClient";
 import CircuitSimulator from "./CircuitSimulator";
 
@@ -24,89 +25,27 @@ export const metadata: Metadata = {
     "סרטוני הדרכה קצרים וחומרי עזר למעבדות פרקטיות בחשמל ואלקטרוניקה — סקופ, מולטימטר, קוד נגדים, קבלים ועוד.",
 };
 
-const guides = [
-  {
-    title: "הנחיות בטיחות במעבדה",
-    description: "13 כללי בטיחות חובה לפני כל עבודה במעבדת חשמל ואלקטרוניקה.",
-    href: getAssetUrl("/pdfs/labs/safety-guidelines.pdf"),
-    icon: ShieldCheck,
-    gradient: "from-rose-500 to-red-600",
-    bgLight: "bg-rose-50 dark:bg-rose-500/10",
-    textColor: "text-rose-700 dark:text-rose-300",
-    label: "צפה ב-PDF",
-    labelIcon: ExternalLink,
-  },
-  {
-    title: "קוד צבעים לנגדים",
-    description: "טבלת קוד צבעים מלאה — 4, 5 ו-6 פסים, כולל מכפיל וסבילות.",
-    href: getAssetUrl("/pdfs/labs/resistor-color-code.pdf"),
-    icon: Palette,
-    gradient: "from-amber-500 to-orange-500",
-    bgLight: "bg-amber-50 dark:bg-amber-500/10",
-    textColor: "text-amber-700 dark:text-amber-300",
-    label: "צפה ב-PDF",
-    labelIcon: ExternalLink,
-  },
-  {
-    title: "קבלים וסלילים",
-    description:
-      "מדריך קריאת ערכים, קודי קבלים, טבלת המרה, וקוד צבעים לסלילים.",
-    href: getAssetUrl("/pdfs/labs/capacitors-inductors.pdf"),
-    icon: CircuitBoard,
-    gradient: "from-emerald-500 to-teal-500",
-    bgLight: "bg-emerald-50 dark:bg-emerald-500/10",
-    textColor: "text-emerald-700 dark:text-emerald-300",
-    label: "צפה ב-PDF",
-    labelIcon: ExternalLink,
-  },
-  {
-    title: "טבלת קודי קבלים",
-    description:
-      "טבלת המרה מלאה בין פיקופראד, ננופראד, מיקרופראד וקוד קבלים.",
-    href: "/labs/capacitor-codes.jpeg",
-    icon: Table2,
-    gradient: "from-blue-500 to-indigo-500",
-    bgLight: "bg-blue-50 dark:bg-blue-500/10",
-    textColor: "text-blue-700 dark:text-blue-300",
-    label: "צפה בתמונה",
-    labelIcon: ImageIcon,
-  },
-  {
-    title: "מבוא ל-Matlab",
-    description: "מדריך מבוא לסביבת Matlab — התקנה, ממשק, פקודות בסיסיות וגרפים.",
-    href: getAssetUrl("/pdfs/labs/matlab-intro.pdf"),
-    icon: Code2,
-    gradient: "from-violet-500 to-purple-600",
-    bgLight: "bg-violet-50 dark:bg-violet-500/10",
-    textColor: "text-violet-700 dark:text-violet-300",
-    label: "צפה ב-PDF",
-    labelIcon: ExternalLink,
-  },
-  {
-    title: "התפלגות נורמלית",
-    description: "סרטון הדמייה מוחשית של עקומת ההתפלגות הנורמלית (גאוסיאנית).",
-    href: "/labs/normal-distribution.mp4",
-    icon: MonitorPlay,
-    gradient: "from-cyan-500 to-sky-600",
-    bgLight: "bg-cyan-50 dark:bg-cyan-500/10",
-    textColor: "text-cyan-700 dark:text-cyan-300",
-    label: "צפה בסרטון",
-    labelIcon: ExternalLink,
-  },
-  {
-    title: "סימולטור מעגלים",
-    description: "סימולטור מעגלים אינטראקטיבי — בנו, בדקו ולמדו מעגלים בזמן אמת.",
-    href: "/simulator",
-    icon: Cpu,
-    gradient: "from-lime-500 to-green-600",
-    bgLight: "bg-lime-50 dark:bg-lime-500/10",
-    textColor: "text-lime-700 dark:text-lime-300",
-    label: "פתח סימולטור",
-    labelIcon: ExternalLink,
-  },
+// Look of each guide card, by position. Texts and links come from the admin
+// ("טקסטים ודפים" → מעבדות).
+const GUIDE_STYLES = [
+  { icon: ShieldCheck, gradient: "from-rose-500 to-red-600", bgLight: "bg-rose-50 dark:bg-rose-500/10", textColor: "text-rose-700 dark:text-rose-300" },
+  { icon: Palette, gradient: "from-amber-500 to-orange-500", bgLight: "bg-amber-50 dark:bg-amber-500/10", textColor: "text-amber-700 dark:text-amber-300" },
+  { icon: CircuitBoard, gradient: "from-emerald-500 to-teal-500", bgLight: "bg-emerald-50 dark:bg-emerald-500/10", textColor: "text-emerald-700 dark:text-emerald-300" },
+  { icon: Table2, gradient: "from-blue-500 to-indigo-500", bgLight: "bg-blue-50 dark:bg-blue-500/10", textColor: "text-blue-700 dark:text-blue-300" },
+  { icon: Code2, gradient: "from-violet-500 to-purple-600", bgLight: "bg-violet-50 dark:bg-violet-500/10", textColor: "text-violet-700 dark:text-violet-300" },
+  { icon: MonitorPlay, gradient: "from-cyan-500 to-sky-600", bgLight: "bg-cyan-50 dark:bg-cyan-500/10", textColor: "text-cyan-700 dark:text-cyan-300" },
+  { icon: Cpu, gradient: "from-lime-500 to-green-600", bgLight: "bg-lime-50 dark:bg-lime-500/10", textColor: "text-lime-700 dark:text-lime-300" },
 ];
 
-export default function LabsPage() {
+
+export default async function LabsPage() {
+  const t = await getSection("labs.guides");
+  const guides = visible(t.guides).map((g, i) => ({
+    ...g,
+    ...GUIDE_STYLES[i % GUIDE_STYLES.length],
+    href: getAssetUrl(g.href),
+    labelIcon: /.(jpe?g|png|webp)$/i.test(g.href) ? ImageIcon : ExternalLink,
+  }));
   return (
     <div className="container-page py-8">
       <Breadcrumbs
@@ -114,24 +53,17 @@ export default function LabsPage() {
       />
 
       <header className="mt-6">
-        <h1 className="text-3xl font-extrabold text-text sm:text-4xl">
-          מעבדות
-        </h1>
-        <p className="mt-2 max-w-2xl text-base text-text-muted">
-          חומרי עזר וסרטוני הדרכה קצרים למעבדות פרקטיות בחשמל ואלקטרוניקה.
-        </p>
+        <h1 className="text-3xl font-extrabold text-text sm:text-4xl">{t.pageTitle}</h1>
+        <p className="mt-2 max-w-2xl text-base text-text-muted">{t.pageText}</p>
       </header>
 
       {/* ── Circuit Simulator ── */}
       <section className="mt-8">
         <div className="flex items-center gap-2">
           <Cpu className="h-5 w-5 text-primary-600" />
-          <h2 className="text-xl font-bold text-text">סימולטור מעגלים</h2>
+          <h2 className="text-xl font-bold text-text">{t.simulatorTitle}</h2>
         </div>
-        <p className="mt-1 text-sm text-text-muted">
-          סימולטור מעגלים אינטראקטיבי — בנו מעגלים, הריצו סימולציה וצפו
-          בתוצאות בזמן אמת.
-        </p>
+        <p className="mt-1 text-sm text-text-muted">{t.simulatorText}</p>
         <div className="mt-4">
           <CircuitSimulator />
         </div>
@@ -144,16 +76,14 @@ export default function LabsPage() {
       <section className="mt-8">
         <div className="flex items-center gap-2">
           <FileText className="h-5 w-5 text-primary-600" />
-          <h2 className="text-xl font-bold text-text">חומרי עזר למעבדה</h2>
+          <h2 className="text-xl font-bold text-text">{t.guidesTitle}</h2>
         </div>
-        <p className="mt-1 text-sm text-text-muted">
-          מדריכים וטבלאות חיוניות — לחצו כדי לצפות
-        </p>
+        <p className="mt-1 text-sm text-text-muted">{t.guidesText}</p>
 
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {guides.map((g) => (
+          {guides.map((g, i) => (
             <Link
-              key={g.href}
+              key={i}
               href={g.href}
               target="_blank"
               rel="noopener noreferrer"
@@ -206,12 +136,9 @@ export default function LabsPage() {
             <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z" />
             <path d="m9.545 15.568 6.273-3.568-6.273-3.568v7.136z" fill="white" />
           </svg>
-          <h2 className="text-xl font-bold text-text">סרטוני הדרכה</h2>
+          <h2 className="text-xl font-bold text-text">{t.videosTitle}</h2>
         </div>
-        <p className="mt-1 text-sm text-text-muted">
-          סרטוני YouTube Shorts קצרים — סקופ, מולטימטר, מחולל אותות, מגבר שרת
-          ועוד. לחצו על סרטון כדי לצפות.
-        </p>
+        <p className="mt-1 text-sm text-text-muted">{t.videosText}</p>
         <LabsClient labs={labs} />
       </section>
     </div>

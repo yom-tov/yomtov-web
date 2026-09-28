@@ -17,7 +17,7 @@ import {
 import { clsx } from "clsx";
 
 const STORAGE_KEY = "yomtov-a11y";
-const CONTACT_EMAIL = "contact@yomtovian.com";
+const DEFAULT_CONTACT_EMAIL = "contact@yomtovian.com";
 
 interface A11ySettings {
   fontSize: number; // 100 | 110 | 120 | 130 | 140
@@ -53,7 +53,7 @@ function applyToDom(s: A11ySettings) {
   else html.removeAttribute("data-a11y-readable-font");
 }
 
-export function AccessibilityWidget() {
+export function AccessibilityWidget({ contactEmail = DEFAULT_CONTACT_EMAIL }: { contactEmail?: string }) {
   const [open, setOpen] = useState(false);
   const [settings, setSettings] = useState<A11ySettings>(DEFAULTS);
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -234,7 +234,7 @@ export function AccessibilityWidget() {
               הצהרת נגישות
             </Link>
             <a
-              href={`mailto:${CONTACT_EMAIL}`}
+              href={`mailto:${contactEmail}`}
               className="flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-text-muted hover:bg-surface-2 hover:text-text"
             >
               <Mail className="h-3.5 w-3.5" />

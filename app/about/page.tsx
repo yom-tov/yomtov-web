@@ -1,52 +1,37 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
 import { Mail, Crown, Code2, Globe } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { counts } from "@/lib/content";
-
-const CONTACT_EMAIL = "contact@yomtovian.com";
+import { getSection } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "אודות",
   description: "אודות פלטפורמת הלימוד של אבי יומטוביאן.",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
   const c = counts();
+  const [t, contact] = await Promise.all([getSection("about.main"), getSection("global.contact")]);
+  const CONTACT_EMAIL = contact.contactEmail;
   return (
     <div className="container-page py-8">
       <Breadcrumbs items={[{ label: "ראשי", href: "/" }, { label: "אודות" }]} />
       <div className="mt-8 grid gap-10 md:grid-cols-[minmax(0,1fr)_220px]">
         <div>
-          <h1 className="text-3xl font-extrabold text-text sm:text-4xl">
-            אודות
-          </h1>
+          <h1 className="text-3xl font-extrabold text-text sm:text-4xl">{t.title}</h1>
           <div className="mt-6 space-y-4 text-base leading-7 text-text-muted">
             <p>
-              <strong className="text-text">אבי יומטוביאן - פשוט להבין!</strong>{" "}
-              פלטפורמה חינמית לסטודנטים ללימודי חשמל, אלקטרוניקה תקבילית
-              ואלקטרוניקה ספרתית. המאגר מרכז מבחני מה&quot;ט, מבחני משרד החינוך,
-              מטלות, מעבדות ומחשבונים.
+              {t.introBold && <strong className="text-text">{t.introBold}</strong>} {t.intro}
             </p>
-            <p>
-              המטרה: להנגיש חומרי לימוד מקצועיים לסטודנטים בכל שלב הלימודים -
-              בממשק מודרני, חיפוש חופשי, פילטרים חכמים וחוויית שימוש מהירה במחשב
-              ובנייד.
-            </p>
+            <p>{t.goal}</p>
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
               <Stat label='מבחני מה"ט' value={c.mahatExams} tone="primary" />
               <Stat label="מבחני משרד החינוך" value={c.ministryExams} tone="accent" />
               <Stat label="מטלות ותרגולים" value={c.assignments} tone="fuchsia" />
               <Stat label="תחומי לימוד" value={c.subjects} tone="emerald" />
             </ul>
-            <p className="mt-8">
-              שאלה, טעות במאגר או תרומת תוכן?{" "}
-              <Link href="/search" className="prose-link">
-                התחל בחיפוש
-              </Link>{" "}
-              או צור קשר ישירות במייל.
-            </p>
+            <p className="mt-8">{t.contactText}</p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-text transition-colors hover:border-primary-300 hover:text-primary-700 dark:hover:text-primary-300"
@@ -57,9 +42,7 @@ export default function AboutPage() {
 
             <div className="mt-10 overflow-hidden rounded-2xl border border-primary-200/60 bg-gradient-to-br from-primary-50/80 via-surface to-accent-50/50 shadow-lg shadow-primary-500/5 dark:border-primary-400/20 dark:from-primary-500/10 dark:via-surface dark:to-accent-500/5 dark:shadow-primary-500/10">
               <div className="border-b border-primary-100/60 bg-primary-50/50 px-4 py-3 sm:px-7 sm:py-4 dark:border-primary-400/15 dark:bg-primary-500/5">
-                <h3 className="text-base font-bold text-primary-800 dark:text-primary-200">
-                  צוות האתר
-                </h3>
+                <h3 className="text-base font-bold text-primary-800 dark:text-primary-200">{t.teamTitle}</h3>
               </div>
               <div className="divide-y-2 divide-primary-200 dark:divide-primary-400/30">
                 <div className="flex items-center gap-3 px-4 py-4 sm:gap-5 sm:px-7 sm:py-5">
@@ -67,16 +50,16 @@ export default function AboutPage() {
                     <Crown className="h-5 w-5 sm:h-6 sm:w-6" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-text-subtle">בעלים ומנהל האתר</div>
+                    <div className="text-sm font-semibold text-text-subtle">{t.ownerRole}</div>
                     <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
-                      <div className="text-lg font-bold text-text">אבי יומטוביאן</div>
+                      <div className="text-lg font-bold text-text">{t.ownerName}</div>
                       <a
-                        href="mailto:contact@yomtovian.com"
+                        href={`mailto:${CONTACT_EMAIL}`}
                         dir="ltr"
                         className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 transition-colors hover:text-primary-800 sm:text-[17px] dark:text-primary-400 dark:hover:text-primary-200"
                       >
                         <Mail className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
-                        contact@yomtovian.com
+                        {CONTACT_EMAIL}
                       </a>
                     </div>
                   </div>

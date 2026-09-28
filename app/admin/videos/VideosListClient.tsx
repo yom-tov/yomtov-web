@@ -115,13 +115,13 @@ export function VideosListClient({ items }: { items: VideoRow[] }) {
                       onClick={() => doSync(v.id)}
                       disabled={pending || syncing === v.id}
                       title="סנכרון משך מ-Mux"
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-accent-300 hover:text-accent-700 disabled:opacity-50"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-accent-300 hover:text-accent-700 disabled:opacity-50"
                     >
                       <RefreshCw className={`h-3.5 w-3.5 ${syncing === v.id ? "animate-spin" : ""}`} /> סנכרון
                     </button>
                     <Link
                       href={`/admin/videos/${v.id}/edit`}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
                     >
                       <Edit3 className="h-3.5 w-3.5" /> ערוך
                     </Link>
@@ -129,7 +129,7 @@ export function VideosListClient({ items }: { items: VideoRow[] }) {
                       type="button"
                       onClick={() => setToDelete(v)}
                       disabled={pending}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
                     >
                       <Trash2 className="h-3.5 w-3.5" /> מחק
                     </button>

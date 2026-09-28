@@ -13,9 +13,27 @@ import {
   Phone,
 } from "lucide-react";
 
-const LESSONS_EMAIL = "lessons@yomtovian.com";
+export interface LessonsCtaContent {
+  badge: string;
+  title: string;
+  text: string;
+  button: string;
+  buttonSub: string;
+  modalTitle: string;
+  modalIntro: string;
+  modalItems: { title: string; text: string }[];
+  modalButton: string;
+}
 
-export function LessonsCta() {
+// Icon + colour per "what to include" row, by position.
+const ITEM_STYLES = [
+  { icon: User, cls: "bg-primary-100 text-primary-600" },
+  { icon: BookOpen, cls: "bg-accent-100 text-accent-600" },
+  { icon: FileText, cls: "bg-emerald-100 text-emerald-600" },
+  { icon: Phone, cls: "bg-violet-100 text-violet-600" },
+];
+
+export function LessonsCta({ content: c, email: lessonsEmail }: { content: LessonsCtaContent; email: string }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -44,14 +62,13 @@ export function LessonsCta() {
           <div className="flex-1">
             <div className="inline-flex items-center gap-1.5 rounded-full bg-accent-400/30 backdrop-blur-sm px-3 py-1 text-xs font-bold text-accent-100 mb-3 border border-accent-300/30">
               <Sparkles className="h-3.5 w-3.5" />
-              שיעור אישי 1 על 1
+              {c.badge}
             </div>
             <h2 className="text-2xl font-extrabold text-white sm:text-3xl drop-shadow-sm">
-              שיעורים פרטיים בזום
+              {c.title}
             </h2>
             <p className="mt-2 text-sm text-primary-100 max-w-lg leading-relaxed">
-              למידה מותאמת אישית, בקצב שלך, עם הסברים ברורים ומפורטים.
-              מתאים להכנה למבחנים, השלמת פערים, או העמקה בנושאים מורכבים.
+              {c.text}
             </p>
           </div>
           <button
@@ -61,16 +78,16 @@ export function LessonsCta() {
           >
             <span className="inline-flex items-center gap-2">
               <Mail className="h-4.5 w-4.5" />
-              לפרטים ותיאום
+              {c.button}
               <ArrowLeft className="h-4 w-4" />
             </span>
-            <span className="mt-1">נא לפנות במייל</span>
+            <span className="mt-1">{c.buttonSub}</span>
           </button>
         </div>
         <div className="relative border-t border-white/15 bg-white/10 backdrop-blur-sm px-6 py-4 text-center sm:px-10 sm:text-right">
           <span className="text-lg text-white font-bold tracking-wide">
             <Mail className="inline h-5 w-5 ml-2 -mt-0.5" />
-            {LESSONS_EMAIL}
+            {lessonsEmail}
           </span>
         </div>
       </div>
@@ -96,80 +113,43 @@ export function LessonsCta() {
                 <X className="h-4 w-4" />
               </button>
               <h3 className="text-xl font-extrabold text-white">
-                איך לפנות אלינו?
+                {c.modalTitle}
               </h3>
               <p className="mt-1 text-sm text-primary-100">
-                נשמח לעזור לך! יש לשלוח מייל עם הפרטים הבאים:
+                {c.modalIntro}
               </p>
             </div>
 
             {/* Content */}
             <div className="px-6 py-5 space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
-                  <User className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-text">שם מלא</div>
-                  <div className="text-sm text-text-muted">
-                    כדי שנדע למי לפנות
+              {c.modalItems.map((item, i) => {
+                const st = ITEM_STYLES[i % ITEM_STYLES.length];
+                return (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${st.cls}`}>
+                      <st.icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-text">{item.title}</div>
+                      <div className="text-sm text-text-muted">{item.text}</div>
+                    </div>
                   </div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-100 text-accent-600">
-                  <BookOpen className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-text">
-                    החומר המתבקש לשיעור
-                  </div>
-                  <div className="text-sm text-text-muted">
-                    נושא, קורס, או תחום שתרצו ללמוד
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600">
-                  <FileText className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-text">
-                    פרטים נוספים
-                  </div>
-                  <div className="text-sm text-text-muted">
-                    רמת הידע, מועד מבחן, או כל מידע רלוונטי
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-violet-100 text-violet-600">
-                  <Phone className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-text">מספר טלפון</div>
-                  <div className="text-sm text-text-muted">
-                    ליצירת קשר מהירה ותיאום
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
 
             {/* Email CTA */}
             <div className="border-t border-border bg-surface-2/50 px-6 py-5 text-center">
               <a
-                href={`mailto:${LESSONS_EMAIL}`}
+                href={`mailto:${lessonsEmail}`}
                 className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-l from-primary-700 to-primary-600 px-7 py-3 text-sm font-bold text-white shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg"
               >
                 <Mail className="h-5 w-5" />
-                שלח מייל עכשיו
+                {c.modalButton}
               </a>
               <div className="mt-3" dir="ltr">
                 <span className="text-lg font-bold text-primary-700 tracking-wide">
-                  {LESSONS_EMAIL}
+                  {lessonsEmail}
                 </span>
               </div>
             </div>

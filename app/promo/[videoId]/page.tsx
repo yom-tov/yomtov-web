@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { videos } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { findPromoCourse } from "@/lib/promo";
+import { getSection } from "@/lib/site-content";
 import { ArrowLeft, Clock, Sparkles } from "lucide-react";
 import { PromoClient } from "./PromoClient";
 
@@ -22,9 +23,10 @@ export async function generateMetadata({
     .where(eq(videos.id, videoId))
     .limit(1);
   if (!video) return {};
+  const { promoMinutes } = await getSection("global.promo");
   return {
     title: `פרומו - ${video.title}`,
-    description: `צפו ב-30 הדקות הראשונות של ${video.title} בחינם`,
+    description: `צפו ב-${promoMinutes} הדקות הראשונות של ${video.title} בחינם`,
   };
 }
 
@@ -49,6 +51,7 @@ export default async function PromoPage({
 
   const pkg = await findPromoCourse(videoId);
   if (!pkg) notFound();
+  const { promoMinutes } = await getSection("global.promo");
 
   return (
     <div className="container-page py-10">
@@ -70,10 +73,10 @@ export default async function PromoPage({
             </div>
             <div className="flex-1">
               <h2 className="text-base font-bold text-amber-900">
-                צפייה בפרומו - 30 דקות ראשונות בחינם
+                צפייה בפרומו - {promoMinutes} דקות ראשונות בחינם
               </h2>
               <p className="mt-1 text-sm text-text-muted">
-                אתם צופים ב-30 הדקות הראשונות של{" "}
+                אתם צופים ב-{promoMinutes} הדקות הראשונות של{" "}
                 <span className="font-semibold">{video.title}</span> מתוך
                 הקורס{" "}
                 <Link

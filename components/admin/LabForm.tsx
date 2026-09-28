@@ -140,7 +140,7 @@ export function LabForm({ mode, initial }: { mode: Mode; initial?: Lab }) {
           padding: 0 12px;
           border-radius: 10px;
           border: 1px solid var(--border);
-          background: white;
+          background: var(--surface);
           color: var(--text);
           font-size: 14px;
         }

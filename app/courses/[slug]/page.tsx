@@ -6,6 +6,7 @@ import { contentPackages, packageVideos, videos } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { Play, Lock, Clock, ArrowLeft, ShoppingBag, CheckCircle, ExternalLink, Sparkles } from "lucide-react";
 import { PurchaseButton } from "./PurchaseButton";
+import { fill, getGlobalVars, getSection, visible } from "@/lib/site-content";
 import { signThumbnailToken } from "@/lib/mux/playback";
 import { getOptionalUserSession } from "@/lib/user-auth";
 import { hasActiveAccess } from "@/lib/admin/purchase-helpers";
@@ -46,6 +47,11 @@ export default async function CourseDetailPage({
 
   if (!pkg || !pkg.published) notFound();
 
+  const [detail, purchase, vars] = await Promise.all([
+    getSection("courses.detail"),
+    getSection("courses.purchase"),
+    getGlobalVars(),
+  ]);
   const session = await getOptionalUserSession();
   const isLoggedIn = !!session;
   const isOwned = session ? await hasActiveAccess(session.sub, pkg.id) : false;
@@ -209,19 +215,18 @@ export default async function CourseDetailPage({
                   <div className="flex items-center gap-2 justify-center">
                     <Sparkles className="h-5 w-5 text-amber-600" />
                     <h3 className="text-base font-extrabold text-amber-900">
-                      30 דקות ראשונות בחינם
+                      {fill(detail.promoBadge, vars)}
                     </h3>
                   </div>
                   <p className="mt-2 text-center text-sm text-amber-800/80">
-                    רוצים לראות את איכות ההוראה לפני שרוכשים? צפו בפרומו ללא
-                    עלות ובלי הרשמה.
+                    {fill(detail.promoText, vars)}
                   </p>
                   <Link
                     href={`/promo/${firstVideo.videoId}`}
                     className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-amber-600 to-amber-500 px-4 py-3 text-sm font-bold text-white shadow-md hover:brightness-105 transition"
                   >
                     <Play className="h-4 w-4" />
-                    צפייה בפרומו חינם
+                    {fill(detail.promoButton, vars)}
                   </Link>
                 </div>
               )}
@@ -238,7 +243,10 @@ export default async function CourseDetailPage({
                 </div>
                 <div className="mt-6 space-y-3">
                   {isLoggedIn ? (
-                    <PurchaseButton />
+                    <PurchaseButton
+                      content={{ ...purchase, modalItems: visible(purchase.modalItems) }}
+                      email={String(vars.coursesEmail)}
+                    />
                   ) : (
                     <>
                       <Link

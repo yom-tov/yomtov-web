@@ -3,9 +3,20 @@
 import { useState, useEffect } from "react";
 import { ShoppingBag, X, Mail, BookOpen, HelpCircle } from "lucide-react";
 
-const COURSES_EMAIL = "courses@yomtovian.com";
+export interface PurchaseContent {
+  button: string;
+  modalTitle: string;
+  modalIntro: string;
+  modalItems: { title: string; text: string }[];
+  modalButton: string;
+}
 
-export function PurchaseButton() {
+const ITEM_STYLES = [
+  { icon: BookOpen, cls: "bg-primary-100 text-primary-600" },
+  { icon: HelpCircle, cls: "bg-accent-100 text-accent-600" },
+];
+
+export function PurchaseButton({ content: c, email: coursesEmail }: { content: PurchaseContent; email: string }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -27,7 +38,7 @@ export function PurchaseButton() {
         className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-primary-700 to-primary-500 px-4 py-3.5 text-base font-bold text-white shadow-lg transition-all duration-300 hover:brightness-105 hover:shadow-xl hover:scale-[1.02] cursor-pointer"
       >
         <ShoppingBag className="h-5 w-5" />
-        לרכישה
+        {c.button}
       </button>
 
       {open && (
@@ -50,57 +61,43 @@ export function PurchaseButton() {
                 <X className="h-4 w-4" />
               </button>
               <h3 className="text-xl font-extrabold text-white">
-                רכישת קורס
+                {c.modalTitle}
               </h3>
               <p className="mt-1 text-sm text-primary-100">
-                על מנת לרכוש את הקורס — יש לפנות אלינו במייל
+                {c.modalIntro}
               </p>
             </div>
 
             {/* Content */}
             <div className="px-6 py-5 space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
-                  <BookOpen className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-text">
-                    באיזה קורס אתם מעוניינים
+              {c.modalItems.map((item, i) => {
+                const st = ITEM_STYLES[i % ITEM_STYLES.length];
+                return (
+                  <div key={i} className="flex items-start gap-3">
+                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${st.cls}`}>
+                      <st.icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-text">{item.title}</div>
+                      <div className="text-sm text-text-muted">{item.text}</div>
+                    </div>
                   </div>
-                  <div className="text-sm text-text-muted">
-                    ציינו את שם הקורס שתרצו לרכוש
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-100 text-accent-600">
-                  <HelpCircle className="h-5 w-5" />
-                </div>
-                <div>
-                  <div className="text-sm font-bold text-text">
-                    שאלות נוספות
-                  </div>
-                  <div className="text-sm text-text-muted">
-                    כל שאלה לגבי התוכן, משך הגישה, או כל מידע
-                    אחר
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
 
             {/* Email CTA */}
             <div className="border-t border-border bg-surface-2/50 px-6 py-5 text-center">
               <a
-                href={`mailto:${COURSES_EMAIL}`}
+                href={`mailto:${coursesEmail}`}
                 className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-l from-primary-700 to-primary-600 px-7 py-3 text-sm font-bold text-white shadow-md transition-all duration-300 hover:scale-105 hover:shadow-lg"
               >
                 <Mail className="h-5 w-5" />
-                שלח מייל עכשיו
+                {c.modalButton}
               </a>
               <div className="mt-3" dir="ltr">
                 <span className="text-lg font-bold text-primary-700 tracking-wide">
-                  {COURSES_EMAIL}
+                  {coursesEmail}
                 </span>
               </div>
             </div>

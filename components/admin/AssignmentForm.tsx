@@ -130,7 +130,7 @@ export function AssignmentForm({ mode, initial }: { mode: Mode; initial?: Assign
                 type="button"
                 onClick={() => removeSlot(i)}
                 aria-label="הסר משבצת"
-                className="mt-6 rounded-lg border border-border bg-white p-2 text-text-muted hover:border-rose-300 hover:text-rose-700"
+                className="mt-6 rounded-lg border border-border bg-surface p-2 text-text-muted hover:border-rose-300 hover:text-rose-700"
               >
                 <Trash className="h-4 w-4" />
               </button>
@@ -166,7 +166,7 @@ export function AssignmentForm({ mode, initial }: { mode: Mode; initial?: Assign
         .input {
           width: 100%; height: 40px; padding: 0 12px;
           border-radius: 10px; border: 1px solid var(--border);
-          background: white; color: var(--text); font-size: 14px;
+          background: var(--surface); color: var(--text); font-size: 14px;
         }
         .input:focus { outline: none; border-color: var(--primary-500); }
       `}</style>

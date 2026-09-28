@@ -13,6 +13,7 @@ import {
   SUBJECT_TITLE_HE,
 } from "@/lib/content";
 import type { SubjectId } from "@/types/content";
+import { getSection } from "@/lib/site-content";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
@@ -47,6 +48,7 @@ export default async function SubjectPage({ params }: { params: Params }) {
   const elecSys = examsFor(subject, "electrical-systems");
   const asg = assignmentsFor(subject);
   const fml = formulasFor(subject);
+  const t = await getSection("subject.tiles");
 
   const items: {
     key: string;
@@ -62,8 +64,8 @@ export default async function SubjectPage({ params }: { params: Params }) {
   if (mahat.length > 0) {
     items.push({
       key: "mahat",
-      title: 'מבחני מה"ט',
-      description: "כל מבחני מה\"ט לתחום, מסודרים לפי שנה ומועד",
+      title: t.mahatTitle,
+      description: t.mahatText,
       href: `/${subject}/mahat-exams`,
       count: mahat.length,
       icon: <GraduationCap className="h-5 w-5" />,
@@ -75,8 +77,8 @@ export default async function SubjectPage({ params }: { params: Params }) {
   if (edu.length > 0) {
     items.push({
       key: "education",
-      title: "מבחני משרד החינוך",
-      description: "מבחני משרד החינוך בתחום",
+      title: t.educationTitle,
+      description: t.educationText,
       href: `/${subject}/ministry-exams`,
       count: edu.length,
       icon: <ClipboardCheck className="h-5 w-5" />,
@@ -88,8 +90,8 @@ export default async function SubjectPage({ params }: { params: Params }) {
   if (tech.length > 0) {
     items.push({
       key: "technician",
-      title: "טכנאי חשמל",
-      description: "מבחני הסמכה לטכנאי חשמל",
+      title: t.technicianTitle,
+      description: t.technicianText,
       href: `/${subject}/technician-exams`,
       count: tech.length,
       icon: <Wrench className="h-5 w-5" />,
@@ -101,8 +103,8 @@ export default async function SubjectPage({ params }: { params: Params }) {
   if (elecSys.length > 0) {
     items.push({
       key: "electrical-systems",
-      title: "מערכות חשמל",
-      description: "מבחני מערכות חשמל",
+      title: t.systemsTitle,
+      description: t.systemsText,
       href: `/${subject}/electrical-systems-exams`,
       count: elecSys.length,
       icon: <Building2 className="h-5 w-5" />,
@@ -114,8 +116,8 @@ export default async function SubjectPage({ params }: { params: Params }) {
   if (asg.length > 0) {
     items.push({
       key: "assignments",
-      title: "עבודות ותרגולים",
-      description: "מטלות ותרגילים לתרגול עצמי",
+      title: t.assignmentsTitle,
+      description: t.assignmentsText,
       href: `/${subject}/assignments`,
       count: asg.length,
       icon: <NotebookPen className="h-5 w-5" />,
@@ -127,8 +129,8 @@ export default async function SubjectPage({ params }: { params: Params }) {
   if (fml.length > 0) {
     items.push({
       key: "formulas",
-      title: "נוסחאונים וסיכומים",
-      description: "נוסחאונים, סיכומים וחומרי עזר למבחנים",
+      title: t.formulasTitle,
+      description: t.formulasText,
       href: `/${subject}/formulas`,
       count: fml.length,
       icon: <FileText className="h-5 w-5" />,

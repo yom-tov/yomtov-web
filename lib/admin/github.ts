@@ -157,6 +157,19 @@ export interface CommitSummary {
 }
 
 export async function recentCommits(limit = 10): Promise<CommitSummary[]> {
+  return (await recentCommitsWithMeta(limit)).commits;
+}
+
+export function githubConfigured(): boolean {
+  return Boolean(process.env.GITHUB_TOKEN);
+}
+
+// Same as recentCommits, plus the token's expiry date. GitHub reports it in
+// the `github-authentication-token-expiration` header for expiring tokens
+// (fine-grained PATs); it's absent for tokens that never expire.
+export async function recentCommitsWithMeta(
+  limit = 10,
+): Promise<{ commits: CommitSummary[]; tokenExpiresAt: Date | null }> {
   const gh = client();
   const res = await gh.rest.repos.listCommits({
     owner: OWNER,
@@ -164,13 +177,18 @@ export async function recentCommits(limit = 10): Promise<CommitSummary[]> {
     sha: BRANCH,
     per_page: limit,
   });
-  return res.data.map((c) => ({
+  const expiry = res.headers["github-authentication-token-expiration"];
+  const tokenExpiresAt =
+    typeof expiry === "string" && !Number.isNaN(Date.parse(expiry)) ? new Date(expiry) : null;
+  const commits = res.data.map((c) => ({
     sha: c.sha,
     message: c.commit.message.split("\n")[0].slice(0, 120),
     author: c.commit.author?.name ?? c.author?.login ?? "unknown",
-    date: c.commit.author?.date ?? new Date().toISOString(),
+    // Committer date = when it landed on the branch (matters for "not deployed yet").
+    date: c.commit.committer?.date ?? c.commit.author?.date ?? new Date().toISOString(),
     url: c.html_url,
   }));
+  return { commits, tokenExpiresAt };
 }
 
 export const REPO_INFO = { owner: OWNER, repo: REPO, branch: BRANCH };

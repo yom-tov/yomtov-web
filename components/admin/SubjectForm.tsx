@@ -75,7 +75,7 @@ export function SubjectForm({ initial }: { initial: Subject }) {
               className={`rounded-lg border px-3 py-1.5 text-xs font-semibold ${
                 icon === i
                   ? "border-primary-500 bg-primary-50 text-primary-700"
-                  : "border-border bg-white text-text-muted hover:border-primary-300"
+                  : "border-border bg-surface text-text-muted hover:border-primary-300"
               }`}
             >
               {i}
@@ -133,7 +133,7 @@ export function SubjectForm({ initial }: { initial: Subject }) {
         .input {
           width: 100%; height: 40px; padding: 0 12px;
           border-radius: 10px; border: 1px solid var(--border);
-          background: white; color: var(--text); font-size: 14px;
+          background: var(--surface); color: var(--text); font-size: 14px;
         }
         .input:focus { outline: none; border-color: var(--primary-500); }
       `}</style>

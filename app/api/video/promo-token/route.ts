@@ -4,11 +4,11 @@ import { db } from "@/lib/db";
 import { videos } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { findPromoCourse } from "@/lib/promo";
+import { getSection } from "@/lib/site-content";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const PROMO_DURATION_SECONDS = 1800; // 30 minutes
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
@@ -35,9 +35,12 @@ export async function POST(req: Request) {
     );
   }
 
+  // Promo length is set by the admin ("פרטי קשר ותפריט" → פרומו).
+  const { promoMinutes } = await getSection("global.promo");
+
   const [playbackToken, thumbnailToken] = await Promise.all([
     signPlaybackToken(video.muxPlaybackId, {
-      assetEndTime: PROMO_DURATION_SECONDS,
+      assetEndTime: promoMinutes * 60,
     }),
     signThumbnailToken(video.muxPlaybackId),
   ]);

@@ -1,0 +1,114 @@
+{
+  "digital-main": [
+    {
+      "youtubeId": "1ouRvKKXfio",
+      "title": "סרטון אלקטרוניקה ספרתית"
+    }
+  ],
+  "digital-shorts": [
+    {
+      "youtubeId": "mfcqflS8bEA",
+      "title": "NAND Gate: CMOS"
+    },
+    {
+      "youtubeId": "ZFOSpk8Vse4",
+      "title": "NOR Gate: CMOS"
+    },
+    {
+      "youtubeId": "UYRTlpNrLD4",
+      "title": "AND Gate: CMOS"
+    },
+    {
+      "youtubeId": "BWlV8JhFSaE",
+      "title": "OR Gate: CMOS"
+    },
+    {
+      "youtubeId": "1Sw5cXon-K8",
+      "title": "NOT Gate: CMOS"
+    }
+  ],
+  "math": [
+    {
+      "youtubeId": "puKa0fTXPZo",
+      "title": "כל הפונקציות הטריגונומטריות"
+    },
+    {
+      "youtubeId": "7estq-ljCrI",
+      "title": "שיטת ניוטון רפסון למציאת פיתרון לכל משוואה"
+    },
+    {
+      "youtubeId": "cC3K9sOPL1Q",
+      "title": "סכומי רימן"
+    },
+    {
+      "youtubeId": "d8pI99FTa-A",
+      "title": "נפח קונוס"
+    },
+    {
+      "youtubeId": "uxk5OKU8QIA",
+      "title": "נפח גליל"
+    },
+    {
+      "youtubeId": "c9GCpX8VIGA",
+      "title": "נפח כדור"
+    },
+    {
+      "youtubeId": "WDQkne8i96k",
+      "title": "שטח מעטפת כדור"
+    },
+    {
+      "youtubeId": "z1hyPdqDrLU",
+      "title": "שטח מעגל"
+    },
+    {
+      "youtubeId": "VpK2JYulYJQ",
+      "title": "משפט פיתגורס"
+    },
+    {
+      "youtubeId": "KaVDG_2QcMs",
+      "title": "נוסחת אוילר"
+    }
+  ],
+  "physics-main": [
+    {
+      "youtubeId": "hGzJEon4YD4",
+      "title": "פיסיקה — חיבור וקטורים"
+    }
+  ],
+  "physics": [
+    {
+      "youtubeId": "xf67dLnVlxo",
+      "title": "המנוף — הסבר ודוגמאות יסוד | חלק 1"
+    },
+    {
+      "youtubeId": "QB7o2hql0Ac",
+      "title": "המנוף — דיבוב עברי | חלק 2"
+    },
+    {
+      "youtubeId": "K_gmTomN5UU",
+      "title": "מישור משופע — הסבר ודוגמאות יסוד | חלק 3"
+    },
+    {
+      "youtubeId": "gGJFxnhRudo",
+      "title": "גלגלות — הסבר ודוגמאות יסוד | חלק 4"
+    },
+    {
+      "youtubeId": "FP8YCapyKnQ",
+      "title": "גלגלים וצירים — הסבר ודוגמאות יסוד | חלק 5"
+    },
+    {
+      "youtubeId": "5DnssU0Mdzo",
+      "title": "שילוב מכונות פשוטות | חלק 6"
+    },
+    {
+      "youtubeId": "50LuuJqSknU",
+      "title": "Accelerometer vs Gyroscope"
+    }
+  ],
+  "psychometric": [
+    {
+      "youtubeId": "9o_SrVCz4NY",
+      "title": "פסיכומטרי/פסיכוטכני │הקבלות מילוליות, סדרות, חשבון, סדרות צורניות, אוצר מילים, הגיון, הבנה טכנית│חלק 1.0"
+    }
+  ]
+}

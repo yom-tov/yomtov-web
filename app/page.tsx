@@ -30,6 +30,8 @@ import {
   Waves,
 } from "lucide-react";
 import { db } from "@/lib/db";
+import { fill, getSection, lines, parseLinks, visible } from "@/lib/site-content";
+import { RichText } from "@/components/content/RichText";
 import { subjectIcon } from "@/lib/subject-icons";
 import { contentPackages, packageVideos } from "@/lib/db/schema";
 import {
@@ -60,10 +62,11 @@ import "./_landing/landing.css";
 // `absolute` bypasses the root layout's "%s | אבי יומטוביאן" title
 // template — the home page (and only the home page) shows just the brand
 // line in the browser tab.
-export const metadata: Metadata = {
-  title: { absolute: "אבי יומטוביאן - פשוט להבין!" },
-  description:
-    'כל מבחני מה"ט ומשרד החינוך עם פתרונות, מטלות, נוסחאונים, מעבדות, מחשבון הנדסי, סימולטורים וקורסי וידאו — במקום אחד. המאגר פתוח וחינמי.',
+export async function generateMetadata(): Promise<Metadata> {
+  const brand = await getSection("global.brand");
+  return {
+  title: { absolute: `${brand.siteName} - ${brand.tagline}` },
+  description: brand.seoDescription,
   alternates: { canonical: "/" },
   openGraph: {
     url: "/",
@@ -71,14 +74,12 @@ export const metadata: Metadata = {
     description:
       'מבחני מה"ט ומשרד החינוך עם פתרונות, מעבדות, סימולטורים וקורסי וידאו בחשמל ואלקטרוניקה.',
   },
-};
+  };
+}
 
 // Content counts come from the bundled JSON; only the course list hits the
 // DB, and it changes rarely — an hourly refresh is plenty.
 export const revalidate = 3600;
-
-const LESSONS_EMAIL = "lessons@yomtovian.com";
-const CONTACT_EMAIL = "contact@yomtovian.com";
 
 type CourseRow = {
   id: string;
@@ -138,15 +139,6 @@ const SOURCE_DOT: Record<ExamSource, string> = {
   "electrical-systems": "text-rose-600 dark:text-rose-300",
 };
 
-// What each subject page offers beyond the countable JSON content.
-const SUBJECT_EXTRAS: Record<SubjectId, string[]> = {
-  electricity: ["סימולטור מעגלים"],
-  analog: ["סימולטור מעגלים"],
-  digital: ["סימולטור ספרתי", "סרטונים קצרים"],
-  math: ["סימולטור פורייה", "סרטוני הדרכה"],
-  physics: ["סרטוני הדרכה"],
-};
-
 const SUBJECT_SPANS: Record<SubjectId, string> = {
   electricity: "md:col-span-2 lg:col-span-2 lg:row-span-2",
   analog: "lg:col-span-2",
@@ -155,14 +147,29 @@ const SUBJECT_SPANS: Record<SubjectId, string> = {
   physics: "lg:col-span-2",
 };
 
-const LAB_GUIDES = [
-  { title: "הנחיות בטיחות במעבדה", dot: "bg-rose-500" },
-  { title: "קוד צבעים לנגדים", dot: "bg-amber-500" },
-  { title: "קבלים וסלילים", dot: "bg-emerald-500" },
-  { title: "טבלת קודי קבלים", dot: "bg-blue-500" },
-  { title: "מבוא ל-Matlab", dot: "bg-violet-500" },
-  { title: "התפלגות נורמלית", dot: "bg-cyan-500" },
+// Dot colour per lab-aid row, by position (texts come from the admin).
+const LAB_GUIDE_DOTS = ["bg-rose-500", "bg-amber-500", "bg-emerald-500", "bg-blue-500", "bg-violet-500", "bg-cyan-500"];
+
+// Icon + colour per card, by position (texts come from the admin).
+const AUDIENCE_STYLES = [
+  { icon: GraduationCap, tone: "from-indigo-500 to-blue-500" },
+  { icon: School, tone: "from-cyan-500 to-teal-500" },
+  { icon: Video, tone: "from-fuchsia-500 to-violet-500" },
+  { icon: Brain, tone: "from-sky-500 to-indigo-500" },
 ];
+const FEATURE_ICONS = [Play, LayoutDashboard, History];
+const EXTRA_STYLES = [
+  { icon: Smartphone, tone: "text-cyan-600 bg-cyan-50 dark:bg-cyan-500/10 dark:text-cyan-300" },
+  { icon: Moon, tone: "text-violet-600 bg-violet-50 dark:bg-violet-500/10 dark:text-violet-300" },
+  { icon: Accessibility, tone: "text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 dark:text-emerald-300" },
+  { icon: Search, tone: "text-amber-600 bg-amber-50 dark:bg-amber-500/10 dark:text-amber-300" },
+];
+
+const splitList = (v: string) =>
+  v
+    .split(",")
+    .map((x) => x.trim())
+    .filter(Boolean);
 
 const COURSE_TONES = [
   "from-amber-400 via-orange-500 to-rose-500",
@@ -185,7 +192,69 @@ export default async function Home() {
     .sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
   const latestMahat = byRecent.find((e) => e.source === "mahat") ?? byRecent[0];
 
-  const courses = await getCourses();
+  const [
+    courses,
+    hero,
+    what,
+    stats,
+    audience,
+    subjectsText,
+    how,
+    tools,
+    coursesText,
+    start,
+    extras,
+    faq,
+    cta,
+    contact,
+    social,
+    promo,
+  ] = await Promise.all([
+    getCourses(),
+    getSection("home.hero"),
+    getSection("home.what"),
+    getSection("home.stats"),
+    getSection("home.audience"),
+    getSection("home.subjects"),
+    getSection("home.how"),
+    getSection("home.tools"),
+    getSection("home.courses"),
+    getSection("home.start"),
+    getSection("home.extras"),
+    getSection("home.faq"),
+    getSection("home.cta"),
+    getSection("global.contact"),
+    getSection("global.social"),
+    getSection("global.promo"),
+  ]);
+
+  // Live numbers the admin can use inside any text: "{exams} מבחנים".
+  const vars = {
+    exams: c.exams,
+    mahatExams: c.mahatExams,
+    ministryExams: c.ministryExams,
+    techExams: techAndSystems,
+    assignments: c.assignments,
+    formulas: formulas.length,
+    labs: c.labs,
+    solutionPct,
+    minYear,
+    maxYear,
+    yearSpan,
+    promoMinutes: promo.promoMinutes,
+    lessonsEmail: contact.lessonsEmail,
+    contactEmail: contact.contactEmail,
+  };
+  const f = (t: string) => fill(t, vars);
+  const LESSONS_EMAIL = contact.lessonsEmail;
+  const CONTACT_EMAIL = contact.contactEmail;
+  const SUBJECT_EXTRAS: Record<SubjectId, string[]> = {
+    electricity: splitList(subjectsText.extrasElectricity),
+    analog: splitList(subjectsText.extrasAnalog),
+    digital: splitList(subjectsText.extrasDigital),
+    math: splitList(subjectsText.extrasMath),
+    physics: splitList(subjectsText.extrasPhysics),
+  };
 
   // ---- ExamStory data (all real content) ----
   const storyExams: StoryExam[] = byRecent.map((e) => ({
@@ -223,77 +292,13 @@ export default async function Home() {
   const marqueeExams = byRecent.slice(0, 18);
   const recentElectricity = byRecent.filter((e) => e.subject === "electricity").slice(0, 3);
 
-  const startSteps: StartStep[] = [
-    {
-      title: "בוחרים תחום או מחפשים",
-      text: "חשמל, אלקטרוניקה תקבילית, ספרתית, מתמטיקה או פיסיקה, או פשוט מקלידים בחיפוש את מה שצריך.",
-      links: [
-        { href: "/search", label: "חיפוש במאגר" },
-        { href: "/electricity", label: "חשמל" },
-        { href: "/analog", label: "תקבילית" },
-      ],
-    },
-    {
-      title: "פותחים מבחן, פותרים ובודקים",
-      text: "צופים במבחן ישר בדפדפן או מורידים PDF, פותרים, ובודקים את עצמכם מול קובץ הפתרון.",
-      links: [
-        { href: "/exams", label: "כל המבחנים" },
-        { href: "/labs", label: "מעבדות" },
-        { href: "/calculator", label: "מחשבון הנדסי" },
-      ],
-    },
-    {
-      title: "רוצים ליווי? מעמיקים",
-      text: "קורסי וידאו עם 30 דקות ראשונות בחינם, או שיעור פרטי בזום, אחד על אחד.",
-      links: [
-        { href: "/courses", label: "קורסי וידאו" },
-        { href: "/register", label: "הרשמה לאתר" },
-      ],
-    },
-  ];
+  const startSteps: StartStep[] = visible(start.steps).map((st) => ({
+    title: f(st.title),
+    text: f(st.text),
+    links: parseLinks(st.links),
+  }));
 
-  const faqs: { q: string; a: React.ReactNode }[] = [
-    {
-      q: "השימוש באתר עולה כסף?",
-      a: "לא. המאגר (מבחנים, פתרונות, מטלות, נוסחאונים, חומרי מעבדה, המחשבון והסימולטורים) פתוח וחינמי. קורסי הווידאו והשיעורים הפרטיים הם בתשלום.",
-    },
-    {
-      q: "יש פתרונות למבחנים?",
-      a:
-        solutionPct === 100
-          ? "כן. לכל מבחן במאגר מצורף קובץ פתרון, לצפייה ישר בדפדפן ולהורדה."
-          : `כן. ${solutionPct}% מהמבחנים במאגר מגיעים עם קובץ פתרון, לצפייה ישר בדפדפן ולהורדה.`,
-    },
-    {
-      q: "אפשר לראות קורס לפני שרוכשים?",
-      a: "כן. ב־30 הדקות הראשונות של הקורס אפשר לצפות בחינם, בלי הרשמה, דרך כפתור הפרומו בעמוד הקורס.",
-    },
-    {
-      q: "איך רוכשים קורס?",
-      a: (
-        <>
-          נרשמים לאתר, ובעמוד הקורס לוחצים על &quot;לרכישה&quot;. הרכישה מתבצעת בפנייה במייל. אחרי הרכישה הקורס
-          מופיע באזור האישי, ואפשר לצפות בו ולהמשיך מהנקודה שבה עצרתם.
-        </>
-      ),
-    },
-    {
-      q: "איך מתאמים שיעור פרטי?",
-      a: (
-        <>
-          שולחים מייל ל־
-          <a href={`mailto:${LESSONS_EMAIL}`} className="prose-link" dir="ltr">
-            {LESSONS_EMAIL}
-          </a>{" "}
-          עם שם מלא, החומר המבוקש לשיעור, פרטים נוספים (רמת ידע, מועד מבחן) ומספר טלפון.
-        </>
-      ),
-    },
-    {
-      q: "אפשר להתקין את האתר כאפליקציה?",
-      a: 'כן. בנייד אפשר להוסיף את האתר למסך הבית ("הוסף למסך הבית") ולקבל אייקון כמו של אפליקציה.',
-    },
-  ];
+  const faqs = visible(faq.items).map((x) => ({ q: f(x.q), a: <RichText text={f(x.a)} /> }));
 
   return (
     <div className="relative overflow-x-clip">
@@ -325,7 +330,7 @@ export default async function Home() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-fuchsia-400 opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-fuchsia-500" />
                 </span>
-                פלטפורמת לימוד לחשמל ואלקטרוניקה
+                {hero.badge}
               </div>
 
               <h1
@@ -333,16 +338,18 @@ export default async function Home() {
                 className="mt-6 font-extrabold leading-[1.05] tracking-tight text-text"
               >
                 <span className="block text-4xl sm:text-5xl xl:text-6xl">
-                  <span className="lp-word" style={{ "--d": "120ms" } as React.CSSProperties}>
-                    חשמל
-                  </span>{" "}
-                  <span className="lp-word" style={{ "--d": "230ms" } as React.CSSProperties}>
-                    ואלקטרוניקה.
-                  </span>
+                  {hero.titleLine1.split(" ").map((w, i) => (
+                    <span key={i}>
+                      {i > 0 && " "}
+                      <span className="lp-word" style={{ "--d": `${120 + i * 110}ms` } as React.CSSProperties}>
+                        {w}
+                      </span>
+                    </span>
+                  ))}
                 </span>
                 <span className="mt-2 block text-[3.25rem] sm:text-7xl xl:text-8xl">
                   <span className="lp-shimmer" style={{ "--d": "380ms" } as React.CSSProperties}>
-                    פשוט להבין!
+                    {hero.titleLine2}
                   </span>
                 </span>
               </h1>
@@ -351,8 +358,8 @@ export default async function Home() {
                 className="lp-rise mt-7 max-w-xl text-lg leading-8 text-text-muted sm:text-xl sm:leading-9"
                 style={{ "--d": "560ms" } as React.CSSProperties}
               >
-                כל מבחני מה&quot;ט ומשרד החינוך עם פתרונות, מטלות, נוסחאונים, מעבדות, סימולטורים וקורסי וידאו.
-                הכול מסודר במקום אחד. <strong className="whitespace-nowrap font-bold text-text">המאגר פתוח וחינמי.</strong>
+                {f(hero.subtitle)}{" "}
+                {hero.subtitleBold && <strong className="whitespace-nowrap font-bold text-text">{f(hero.subtitleBold)}</strong>}
               </p>
 
               <div
@@ -364,7 +371,7 @@ export default async function Home() {
                   className="group relative inline-flex h-14 items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-l from-primary-700 via-primary-600 to-accent-500 px-7 text-base font-bold text-white shadow-xl shadow-primary-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent-500/30"
                 >
                   <span className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
-                  <span className="relative">התחילו ללמוד, בחינם</span>
+                  <span className="relative">{hero.ctaPrimary}</span>
                   <ArrowLeft className="relative h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
                 </Link>
                 <Link
@@ -372,7 +379,7 @@ export default async function Home() {
                   className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl border border-border bg-surface/70 px-6 text-base font-bold text-text backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-primary-300 hover:shadow-lg hover:shadow-primary-500/10"
                 >
                   <Search className="h-5 w-5 text-primary-500 dark:text-primary-200" />
-                  חיפוש במאגר
+                  {hero.ctaSearch}
                 </Link>
                 <Link
                   href="/courses"
@@ -381,7 +388,7 @@ export default async function Home() {
                   <span className="grid h-9 w-9 place-items-center rounded-full bg-primary-50 transition-transform duration-300 group-hover:scale-110 dark:bg-primary-500/15">
                     <Play className="h-4 w-4 fill-current" />
                   </span>
-                  קורסי וידאו
+                  {hero.ctaCourses}
                 </Link>
               </div>
 
@@ -465,10 +472,10 @@ export default async function Home() {
       <section id="lp-what" aria-labelledby="lp-what-title" className="container-page scroll-mt-24 py-24 sm:py-32">
         <SectionHeading
           id="lp-what-title"
-          eyebrow="מה זה?"
-          title="מאגר, כלים ווידאו."
-          highlight="הכול במקום אחד."
-          sub="פלטפורמת לימוד לחשמל, אלקטרוניקה תקבילית ואלקטרוניקה ספרתית: חומרי לימוד מקצועיים, חיפוש חופשי ופילטרים חכמים, בממשק מהיר שעובד מצוין גם בנייד."
+          eyebrow={what.eyebrow}
+          title={f(what.title)}
+          highlight={f(what.highlight)}
+          sub={f(what.sub)}
         />
         <div className="mt-16 grid gap-6 lg:grid-cols-3">
           {[
@@ -477,51 +484,33 @@ export default async function Home() {
               icon: <FileText className="h-8 w-8" />,
               tone: "from-primary-600 to-accent-500",
               spot: "var(--accent-500)",
-              title: "מאגר מבחנים ופתרונות",
-              text:
-                solutionPct === 100
-                  ? "מבחנים משנים קודמות, מסודרים לפי תחום, שנה ומועד, ולכל מבחן קובץ פתרון."
-                  : "מבחנים משנים קודמות, מסודרים לפי תחום, שנה ומועד, רובם עם קובץ פתרון.",
-              bullets: [
-                `${c.mahatExams} מבחני מה"ט`,
-                `${c.ministryExams} מבחני משרד החינוך`,
-                `${techAndSystems} מבחני טכנאי חשמל ומערכות חשמל`,
-                `${c.assignments} מטלות ותרגולים · ${formulas.length} נוסחאונים`,
-              ],
-              cta: "לכל המבחנים",
+              title: f(what.card1Title),
+              text: f(what.card1Text),
+              bullets: lines(f(what.card1Bullets)),
+              cta: what.card1Cta,
             },
             {
               href: "/calculator",
               icon: <Calculator className="h-8 w-8" />,
               tone: "from-amber-500 to-rose-500",
               spot: "var(--joy-amber)",
-              title: "כלים וסימולטורים",
-              text: "כלים אינטראקטיביים שעובדים ישר בדפדפן, בלי להתקין כלום.",
-              bullets: [
-                "מחשבון הנדסי מדעי + ממיר יחידות",
-                "סימולטור מעגלים (CircuitJS)",
-                "סימולטור פורייה (PhET)",
-                "סימולטור ספרתי: רמזור תנועה",
-              ],
-              cta: "למחשבון ההנדסי",
+              title: f(what.card2Title),
+              text: f(what.card2Text),
+              bullets: lines(f(what.card2Bullets)),
+              cta: what.card2Cta,
             },
             {
               href: "/courses",
               icon: <PlayCircle className="h-8 w-8" />,
               tone: "from-fuchsia-500 to-violet-600",
               spot: "var(--joy-fuchsia)",
-              title: "וידאו שמסביר",
-              text: "הסברים ברורים בווידאו, מסרטונים קצרים ועד קורסים מקיפים.",
-              bullets: [
-                `${c.labs} סרטוני הדרכה למעבדה`,
-                "סרטוני הדרכה במתמטיקה ובפיסיקה",
-                "הכנה לפסיכומטרי ופסיכוטכני",
-                "קורסי וידאו מאת אבי יומטוביאן",
-              ],
-              cta: "לקורסי הווידאו",
+              title: f(what.card3Title),
+              text: f(what.card3Text),
+              bullets: lines(f(what.card3Bullets)),
+              cta: what.card3Cta,
             },
           ].map((p, i) => (
-            <div key={p.title} data-reveal="tilt" style={{ "--d": `${i * 130}ms` } as React.CSSProperties}>
+            <div key={i} data-reveal="tilt" style={{ "--d": `${i * 130}ms` } as React.CSSProperties}>
               <Link
                 href={p.href}
                 data-spot
@@ -557,9 +546,9 @@ export default async function Home() {
       <section aria-labelledby="lp-stats-title" className="lp-night overflow-hidden py-20 sm:py-24">
         <div className="container-page">
           <div data-reveal="up" className="text-center">
-            <div className="text-sm font-bold tracking-wide text-accent-400">המאגר במספרים</div>
-            <h2 id="lp-stats-title" className="mt-2 text-3xl font-extrabold text-white sm:text-4xl">
-              <span className="num">{yearSpan}</span> שנים של מבחנים, במקום אחד
+            <div className="text-sm font-bold tracking-wide text-accent-400">{stats.eyebrow}</div>
+            <h2 id="lp-stats-title" className="mt-2 text-3xl font-extrabold text-white sm:text-4xl num">
+              {f(stats.title)}
             </h2>
           </div>
           <ul className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-5">
@@ -592,44 +581,18 @@ export default async function Home() {
       <section aria-labelledby="lp-who-title" className="container-page py-24 sm:py-32">
         <SectionHeading
           id="lp-who-title"
-          eyebrow="למי זה מיועד?"
-          title="נבנה בשביל מי"
-          highlight="שלומד חשמל ואלקטרוניקה"
+          eyebrow={audience.eyebrow}
+          title={f(audience.title)}
+          highlight={f(audience.highlight)}
           stack
-          sub="סטודנטים ותלמידים ללימודי חשמל, אלקטרוניקה תקבילית ואלקטרוניקה ספרתית, בכל שלב של הלימודים."
+          sub={f(audience.sub)}
         />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              icon: <GraduationCap className="h-6 w-6" />,
-              tone: "from-indigo-500 to-blue-500",
-              title: 'מתכוננים למבחני מה"ט',
-              text: 'טכנאים והנדסאים: מבחני מה"ט משנים קודמות, מסודרים לפי שנה ומועד, עם פתרונות.',
-              href: "/electricity/mahat-exams",
-            },
-            {
-              icon: <School className="h-6 w-6" />,
-              tone: "from-cyan-500 to-teal-500",
-              title: "לקראת מבחני משרד החינוך",
-              text: "מבחני משרד החינוך בחשמל, לתרגול אמיתי לפני הבחינה.",
-              href: "/electricity/ministry-exams",
-            },
-            {
-              icon: <Video className="h-6 w-6" />,
-              tone: "from-fuchsia-500 to-violet-500",
-              title: "צריכים הסבר מעמיק",
-              text: "קורסי וידאו מוסברים ומפורטים, ושיעורים פרטיים בזום אחד על אחד, בקצב שלכם.",
-              href: "/courses",
-            },
-            {
-              icon: <Brain className="h-6 w-6" />,
-              tone: "from-sky-500 to-indigo-500",
-              title: "מתכוננים לפסיכומטרי / פסיכוטכני",
-              text: "סרטון הכנה מקיף: הקבלות מילוליות, סדרות, חשבון, הגיון והבנה טכנית.",
-              href: "/psychometric",
-            },
-          ].map((a, i) => (
-            <div key={a.title} data-reveal="up" style={{ "--d": `${i * 100}ms` } as React.CSSProperties}>
+          {visible(audience.cards).map((card, i) => {
+            const st = AUDIENCE_STYLES[i % AUDIENCE_STYLES.length];
+            const a = { ...card, title: f(card.title), text: f(card.text), tone: st.tone, icon: <st.icon className="h-6 w-6" /> };
+            return (
+            <div key={i} data-reveal="up" style={{ "--d": `${i * 100}ms` } as React.CSSProperties}>
               <Link
                 href={a.href}
                 data-spot
@@ -646,7 +609,8 @@ export default async function Home() {
                 <ArrowLeft className="mt-auto h-5 w-5 pt-1 text-text-subtle transition-all duration-300 group-hover:-translate-x-1.5 group-hover:text-primary-600" />
               </Link>
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -656,10 +620,10 @@ export default async function Home() {
         <div className="container-page">
           <SectionHeading
             id="lp-subjects-title"
-            eyebrow="תחומי הלימוד"
-            title="בוחרים תחום,"
-            highlight="ומתחילים ללמוד"
-            sub="כל תחום מרכז את המבחנים, התרגולים, הנוסחאונים, הסרטונים והסימולטורים שלו."
+            eyebrow={subjectsText.eyebrow}
+            title={f(subjectsText.title)}
+            highlight={f(subjectsText.highlight)}
+            sub={f(subjectsText.sub)}
           />
           <div className="mt-14 grid auto-rows-[minmax(210px,auto)] gap-4 md:grid-cols-2 lg:grid-cols-4">
             {subjectTiles.map(({ s, total, chips }, i) => {
@@ -689,11 +653,11 @@ export default async function Home() {
             <div data-reveal="up" style={{ "--d": "400ms" } as React.CSSProperties} className="md:col-span-2">
               <SubjectTile
                 href="/psychometric"
-                title="פסיכומטרי / פסיכוטכני"
-                description="סרטון הכנה מקיף: הקבלות מילוליות, סדרות, חשבון, סדרות צורניות, אוצר מילים, הגיון והבנה טכנית."
+                title={subjectsText.psychoTitle}
+                description={subjectsText.psychoText}
                 color="from-sky-500 via-blue-500 to-indigo-500"
                 icon={<Brain className="h-7 w-7" strokeWidth={2.2} />}
-                chips={["סרטון הדרכה"]}
+                chips={splitList(subjectsText.psychoChip)}
                 watermark={null}
               />
             </div>
@@ -706,15 +670,15 @@ export default async function Home() {
         <div className="container-page">
           <SectionHeading
             id="lp-how-title"
-            eyebrow="איך זה עובד"
-            title="ממבחן לפתרון,"
-            highlight="בכמה שניות"
-            sub="בלי לחפש בקבצים מפוזרים. הכול מסודר, מחופש ומוכן לתרגול."
+            eyebrow={how.eyebrow}
+            title={f(how.title)}
+            highlight={f(how.highlight)}
+            sub={f(how.sub)}
           />
           <div className="mt-12 lg:mt-6">
             <ExamStory
               exams={storyExams}
-              searchWords={["קיץ 2024", "משרד החינוך", "אביב 2025", "טכנאי חשמל"]}
+              searchWords={splitList(how.searchWords)}
               filter={{
                 subjects: examSubjects.map((id) => ({ label: SUBJECT_TITLE_HE[id], active: id === latestMahat.subject })),
                 sources: (["mahat", "education", "technician", "electrical-systems"] as ExamSource[]).map((src) => ({
@@ -740,17 +704,17 @@ export default async function Home() {
       <section aria-labelledby="lp-tools-title" className="container-page py-24 sm:py-32">
         <SectionHeading
           id="lp-tools-title"
-          eyebrow="כלים"
-          title="לא רק לקרוא,"
-          highlight="לנסות בעצמכם"
-          sub="מחשבון הנדסי, סימולטורים וחומרי עזר למעבדה, ישר בדפדפן."
+          eyebrow={tools.eyebrow}
+          title={f(tools.title)}
+          highlight={f(tools.highlight)}
+          sub={f(tools.sub)}
         />
         <div className="mt-14 grid gap-5 lg:grid-cols-3">
           <div data-reveal="up" className="lg:col-span-2">
             <ToolTile
               href="/calculator"
-              title="מחשבון הנדסי"
-              text="מחשבון מדעי מלא, בסיסי מספרים, קבועים פיזיקליים וממיר יחידות, בכרטיסיות נוחות."
+              title={tools.calcTitle}
+              text={f(tools.calcText)}
               icon={<Calculator className="h-5 w-5" />}
               tone="from-amber-500 to-orange-500"
               spot="var(--joy-amber)"
@@ -784,8 +748,8 @@ export default async function Home() {
           <div data-reveal="up" style={{ "--d": "100ms" } as React.CSSProperties}>
             <ToolTile
               href="/simulator"
-              title="סימולטור מעגלים"
-              text="בונים מעגלים, מריצים סימולציה וצופים בתוצאות בזמן אמת (CircuitJS)."
+              title={tools.circuitTitle}
+              text={f(tools.circuitText)}
               icon={<Cpu className="h-5 w-5" />}
               tone="from-lime-500 to-green-600"
               spot="var(--joy-emerald)"
@@ -796,8 +760,8 @@ export default async function Home() {
           <div data-reveal="up">
             <ToolTile
               href="/fourier"
-              title="סימולטור פורייה"
-              text="בונים גלים מהרמוניות ומגלים את הקשר בין תחום הזמן לתחום התדר (PhET)."
+              title={tools.fourierTitle}
+              text={f(tools.fourierText)}
               icon={<Waves className="h-5 w-5" />}
               tone="from-indigo-500 to-violet-500"
               spot="var(--joy-violet)"
@@ -808,8 +772,8 @@ export default async function Home() {
           <div data-reveal="up" style={{ "--d": "100ms" } as React.CSSProperties}>
             <ToolTile
               href="/digital"
-              title="סימולטור ספרתי"
-              text="רמזור תנועה ספרתי: צופים בלוגיקה הסדרתית שמפעילה את הנורות."
+              title={tools.digitalTitle}
+              text={f(tools.digitalText)}
               icon={<Binary className="h-5 w-5" />}
               tone="from-emerald-500 to-cyan-500"
               spot="var(--joy-cyan)"
@@ -820,17 +784,17 @@ export default async function Home() {
           <div data-reveal="up" style={{ "--d": "200ms" } as React.CSSProperties}>
             <ToolTile
               href="/labs"
-              title="חומרי עזר למעבדה"
-              text="מדריכים וטבלאות חיוניות לצפייה בלחיצה."
+              title={tools.labAidsTitle}
+              text={f(tools.labAidsText)}
               icon={<FlaskConical className="h-5 w-5" />}
               tone="from-rose-500 to-red-600"
               spot="var(--joy-rose)"
             >
               <ul className="grid h-full grid-cols-2 content-center gap-2">
-                {LAB_GUIDES.map((g) => (
-                  <li key={g.title} className="flex items-center gap-2 rounded-lg border border-border bg-surface px-2.5 py-2 text-[11px] font-semibold leading-tight text-text-muted">
-                    <span className={`h-2 w-2 shrink-0 rounded-full ${g.dot}`} />
-                    {g.title}
+                {lines(tools.labAids).map((title, i) => (
+                  <li key={i} className="flex items-center gap-2 rounded-lg border border-border bg-surface px-2.5 py-2 text-[11px] font-semibold leading-tight text-text-muted">
+                    <span className={`h-2 w-2 shrink-0 rounded-full ${LAB_GUIDE_DOTS[i % LAB_GUIDE_DOTS.length]}`} />
+                    {title}
                   </li>
                 ))}
               </ul>
@@ -848,14 +812,10 @@ export default async function Home() {
                   <span className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-rose-500 to-fuchsia-500 text-white shadow-md">
                     <PlayCircle className="h-5 w-5" />
                   </span>
-                  <h3 className="mt-4 text-xl font-extrabold text-text">
-                    <span className="num">{c.labs}</span> סרטוני הדרכה למעבדה
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-text-muted">
-                    סרטונים קצרים: סקופ, מולטימטר, מחולל אותות, מגבר שרת ועוד.
-                  </p>
+                  <h3 className="mt-4 text-xl font-extrabold text-text num">{f(tools.labVideosTitle)}</h3>
+                  <p className="mt-2 text-sm leading-6 text-text-muted">{f(tools.labVideosText)}</p>
                   <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-primary-700 dark:text-primary-200">
-                    לכל הסרטונים
+                    {tools.labVideosCta}
                     <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1.5" />
                   </span>
                 </div>
@@ -895,32 +855,32 @@ export default async function Home() {
         <div className="container-page">
           <SectionHeading
             id="lp-courses-title"
-            eyebrow="קורסי וידאו"
-            title="רוצים להעמיק?"
-            highlight="קורסים מאת אבי יומטוביאן"
+            eyebrow={coursesText.eyebrow}
+            title={f(coursesText.title)}
+            highlight={f(coursesText.highlight)}
             stack
-            sub="שיעורי וידאו מקצועיים: הסברים ברורים ומפורטים שיעזרו לכם להצליח בלימודים."
+            sub={f(coursesText.sub)}
             dark
           />
 
           <div className="mt-12 grid gap-4 sm:grid-cols-3">
-            {[
-              { icon: <Play className="h-5 w-5" />, title: "30 הדקות הראשונות בחינם", text: "צפייה בפרומו בלי הרשמה" },
-              { icon: <LayoutDashboard className="h-5 w-5" />, title: "אזור אישי", text: "כל הקורסים שרכשתם במקום אחד" },
-              { icon: <History className="h-5 w-5" />, title: "ממשיכים מאיפה שעצרתם", text: "הנגן זוכר את נקודת הצפייה" },
-            ].map((f, i) => (
-              <div key={f.title} data-reveal="up" style={{ "--d": `${i * 100}ms` } as React.CSSProperties}>
+            {visible(coursesText.features).map((feat, i) => {
+              const Icon = FEATURE_ICONS[i % FEATURE_ICONS.length];
+              const fe = { title: f(feat.title), text: f(feat.text), icon: <Icon className="h-5 w-5" /> };
+              return (
+              <div key={i} data-reveal="up" style={{ "--d": `${i * 100}ms` } as React.CSSProperties}>
                 <div className="flex h-full items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.05] p-4 backdrop-blur-sm">
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-500/20 text-accent-400 ring-1 ring-accent-400/30">
-                    {f.icon}
+                    {fe.icon}
                   </span>
                   <div>
-                    <div className="font-bold text-white">{f.title}</div>
-                    <div className="text-sm text-[#AEB9DC]">{f.text}</div>
+                    <div className="font-bold text-white">{fe.title}</div>
+                    <div className="text-sm text-[#AEB9DC]">{fe.text}</div>
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {courses.length > 0 && (
@@ -975,12 +935,11 @@ export default async function Home() {
                   <div className="flex-1">
                     <div className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/15 px-3 py-1 text-xs font-bold text-white">
                       <Sparkles className="h-3.5 w-3.5" />
-                      שיעור אישי 1 על 1
+                      {coursesText.lessonsBadge}
                     </div>
-                    <h3 className="mt-3 text-2xl font-extrabold text-white sm:text-3xl">שיעורים פרטיים בזום</h3>
+                    <h3 className="mt-3 text-2xl font-extrabold text-white sm:text-3xl">{coursesText.lessonsTitle}</h3>
                     <p className="mt-2 max-w-lg text-sm leading-6 text-white/85 sm:text-base sm:leading-7">
-                      למידה מותאמת אישית, בקצב שלכם, עם הסברים ברורים ומפורטים. מתאים להכנה למבחנים, השלמת פערים או
-                      העמקה בנושאים מורכבים.
+                      {f(coursesText.lessonsText)}
                     </p>
                   </div>
                 </div>
@@ -996,10 +955,10 @@ export default async function Home() {
             <div data-reveal="up" style={{ "--d": "120ms" } as React.CSSProperties}>
               <div className="flex h-full flex-col justify-between gap-6 rounded-3xl border border-white/10 bg-white/[0.05] p-7 backdrop-blur-sm sm:p-9">
                 <div>
-                  <h3 className="text-2xl font-extrabold text-white">איך רוכשים קורס?</h3>
+                  <h3 className="text-2xl font-extrabold text-white">{coursesText.buyTitle}</h3>
                   <ol className="mt-5 space-y-3 text-sm text-[#AEB9DC] sm:text-base">
-                    {["נרשמים לאתר", 'בעמוד הקורס לוחצים "לרכישה" ופונים במייל', "הקורס מופיע באזור האישי"].map((t, i) => (
-                      <li key={t} className="flex items-center gap-3">
+                    {lines(f(coursesText.buySteps)).map((t, i) => (
+                      <li key={i} className="flex items-center gap-3">
                         <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-500/20 text-xs font-bold text-accent-400 ring-1 ring-accent-400/30 num">
                           {i + 1}
                         </span>
@@ -1012,7 +971,7 @@ export default async function Home() {
                   href="/courses"
                   className="group inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-accent-500 to-accent-400 px-5 py-3 text-sm font-bold text-[#0B1E3A] shadow-lg shadow-accent-500/25 transition-all duration-300 hover:-translate-y-0.5"
                 >
-                  לכל הקורסים
+                  {coursesText.buyCta}
                   <ArrowLeft className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-1" />
                 </Link>
               </div>
@@ -1025,10 +984,10 @@ export default async function Home() {
       <section aria-labelledby="lp-start-title" className="container-page py-24 sm:py-32">
         <SectionHeading
           id="lp-start-title"
-          eyebrow="איך מתחילים?"
-          title="שלושה צעדים,"
-          highlight="וזהו."
-          sub="בלי הרשמה ובלי התחייבות. נכנסים ומתחילים לתרגל."
+          eyebrow={start.eyebrow}
+          title={f(start.title)}
+          highlight={f(start.highlight)}
+          sub={f(start.sub)}
         />
         <div className="mt-16">
           <StartSteps steps={startSteps} />
@@ -1041,13 +1000,11 @@ export default async function Home() {
           ועוד
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            { icon: <Smartphone className="h-5 w-5" />, title: "מותאם לנייד", text: "ואפשר להוסיף למסך הבית כמו אפליקציה", tone: "text-cyan-600 bg-cyan-50 dark:bg-cyan-500/10 dark:text-cyan-300" },
-            { icon: <Moon className="h-5 w-5" />, title: "מצב כהה", text: "לימוד נוח לעיניים גם בלילה", tone: "text-violet-600 bg-violet-50 dark:bg-violet-500/10 dark:text-violet-300" },
-            { icon: <Accessibility className="h-5 w-5" />, title: "תפריט נגישות", text: "גודל טקסט, ניגודיות, עצירת אנימציות ועוד", tone: "text-emerald-600 bg-emerald-50 dark:bg-emerald-500/10 dark:text-emerald-300" },
-            { icon: <Search className="h-5 w-5" />, title: "חיפוש מהיר", text: "חיפוש חכם בכל המאגר, מכל עמוד", tone: "text-amber-600 bg-amber-50 dark:bg-amber-500/10 dark:text-amber-300" },
-          ].map((x, i) => (
-            <div key={x.title} data-reveal="up" style={{ "--d": `${i * 80}ms` } as React.CSSProperties}>
+          {visible(extras.items).map((item, i) => {
+            const st = EXTRA_STYLES[i % EXTRA_STYLES.length];
+            const x = { title: f(item.title), text: f(item.text), tone: st.tone, icon: <st.icon className="h-5 w-5" /> };
+            return (
+            <div key={i} data-reveal="up" style={{ "--d": `${i * 80}ms` } as React.CSSProperties}>
               <div className="flex h-full items-center gap-4 rounded-2xl border border-border bg-surface p-4 shadow-sm">
                 <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-xl ${x.tone}`}>{x.icon}</span>
                 <div>
@@ -1056,7 +1013,8 @@ export default async function Home() {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -1066,11 +1024,11 @@ export default async function Home() {
           <div>
             <SectionHeading
               id="lp-faq-title"
-              eyebrow="שאלות נפוצות"
-              title="יש שאלה?"
-              highlight="יש תשובה."
+              eyebrow={faq.eyebrow}
+              title={f(faq.title)}
+              highlight={f(faq.highlight)}
               stack
-              sub="לא מצאתם את מה שחיפשתם? כתבו לנו במייל."
+              sub={f(faq.sub)}
               align="start"
             />
             <div data-reveal="up" style={{ "--d": "200ms" } as React.CSSProperties} className="mt-6">
@@ -1084,16 +1042,16 @@ export default async function Home() {
             </div>
           </div>
           <div className="space-y-3">
-            {faqs.map((f, i) => (
-              <div key={f.q} data-reveal="up" style={{ "--d": `${i * 70}ms` } as React.CSSProperties}>
+            {faqs.map((qa, i) => (
+              <div key={i} data-reveal="up" style={{ "--d": `${i * 70}ms` } as React.CSSProperties}>
                 <details className="lp-faq group rounded-2xl border border-border bg-surface shadow-sm transition-colors open:border-primary-200 open:shadow-md dark:open:border-primary-400/30">
                   <summary className="flex items-center justify-between gap-4 px-5 py-4 text-base font-bold text-text sm:px-6 sm:py-5">
-                    {f.q}
+                    {qa.q}
                     <span className="lp-faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full bg-surface-2 text-text-muted group-open:bg-primary-600 group-open:text-white">
                       <Plus className="h-4 w-4" />
                     </span>
                   </summary>
-                  <div className="lp-faq-body px-5 pb-5 text-sm leading-7 text-text-muted sm:px-6 sm:text-base">{f.a}</div>
+                  <div className="lp-faq-body px-5 pb-5 text-sm leading-7 text-text-muted sm:px-6 sm:text-base">{qa.a}</div>
                 </details>
               </div>
             ))}
@@ -1112,21 +1070,19 @@ export default async function Home() {
                   <Image src="/images/mark.png" alt="" width={120} height={120} className="h-auto w-full drop-shadow-xl animate-hero-spin" />
                 </div>
                 <h2 id="lp-cta-title" className="mt-6 text-4xl font-extrabold tracking-tight text-text sm:text-5xl md:text-6xl">
-                  מוכנים להתחיל?{" "}
+                  {f(cta.title)}{" "}
                   <span className="bg-gradient-to-l from-primary-700 via-accent-500 to-fuchsia-500 bg-clip-text text-transparent dark:from-primary-200 dark:via-accent-400 dark:to-fuchsia-400">
-                    פשוט להבין.
+                    {f(cta.highlight)}
                   </span>
                 </h2>
-                <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-text-muted">
-                  המאגר פתוח לכולם, בחינם. בוחרים מבחן ומתחילים לתרגל, עכשיו.
-                </p>
+                <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-text-muted">{f(cta.text)}</p>
                 <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                   <Link
                     href="/exams"
                     className="group relative inline-flex h-14 items-center justify-center gap-2 overflow-hidden rounded-2xl bg-gradient-to-l from-primary-700 via-primary-600 to-accent-500 px-8 text-base font-bold text-white shadow-xl shadow-primary-500/30 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
                   >
                     <span className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
-                    <span className="relative">התחילו ללמוד, בחינם</span>
+                    <span className="relative">{cta.ctaPrimary}</span>
                     <ArrowLeft className="relative h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
                   </Link>
                   <Link
@@ -1134,13 +1090,13 @@ export default async function Home() {
                     className="inline-flex h-14 items-center justify-center gap-2 rounded-2xl border border-border bg-surface px-7 text-base font-bold text-text transition-all duration-300 hover:-translate-y-1 hover:border-primary-300 hover:shadow-lg"
                   >
                     <BookOpen className="h-5 w-5 text-primary-500 dark:text-primary-200" />
-                    הרשמה לאתר
+                    {cta.ctaRegister}
                   </Link>
                 </div>
                 <div className="mt-10 flex items-center justify-center gap-3 text-sm text-text-subtle">
-                  <span>עקבו אחרינו:</span>
+                  <span>{cta.follow}</span>
                   <a
-                    href="https://www.youtube.com/@yomtov7"
+                    href={social.youtubeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="YouTube"
@@ -1152,7 +1108,7 @@ export default async function Home() {
                     </svg>
                   </a>
                   <a
-                    href="https://www.tiktok.com/@avi_yomtovian"
+                    href={social.tiktokUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="TikTok"

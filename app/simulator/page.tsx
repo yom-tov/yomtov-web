@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { getSection } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "סימולטור מעגלים",
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 const SIMULATOR_URL =
   "https://www.falstad.com/circuit/circuitjs.html?startCircuit=voltdivide.txt";
 
-export default function SimulatorPage() {
+export default async function SimulatorPage() {
+  const t = await getSection("simulator.page");
   return (
     <div className="flex min-h-[calc(100vh-4rem)] flex-col">
       <div className="container-page py-4">
@@ -25,13 +27,8 @@ export default function SimulatorPage() {
         />
         <div className="mt-3 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-extrabold text-text">
-              סימולטור מעגלים
-            </h1>
-            <p className="mt-1 text-sm text-text-muted">
-              סימולטור אינטראקטיבי מבוסס CircuitJS — בנו מעגלים, הריצו סימולציה
-              וצפו בתוצאות בזמן אמת.
-            </p>
+            <h1 className="text-2xl font-extrabold text-text">{t.title}</h1>
+            <p className="mt-1 text-sm text-text-muted">{t.text}</p>
           </div>
           <Link
             href="/labs"

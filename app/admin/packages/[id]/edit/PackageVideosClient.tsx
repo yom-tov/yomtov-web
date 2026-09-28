@@ -121,7 +121,7 @@ export function PackageVideosClient({
                       type="button"
                       onClick={() => handleRemove(v.videoId)}
                       disabled={pending}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
                     >
                       <Trash2 className="h-3.5 w-3.5" /> הסר
                     </button>
@@ -146,7 +146,7 @@ export function PackageVideosClient({
             <select
               value={selectedVideo}
               onChange={(e) => setSelectedVideo(e.target.value)}
-              className="h-9 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
+              className="h-9 rounded-lg border border-border bg-surface px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
             >
               <option value="">בחר סרטון...</option>
               {availableVideos.map((v) => (
@@ -169,7 +169,7 @@ export function PackageVideosClient({
               onChange={(e) => setOrder(Number(e.target.value))}
               min={0}
               max={999}
-              className="h-9 w-20 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
+              className="h-9 w-20 rounded-lg border border-border bg-surface px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
             />
           </label>
           <button

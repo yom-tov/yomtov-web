@@ -258,7 +258,7 @@ export function ExamForm({ mode, initial }: { mode: Mode; initial?: Exam }) {
           padding: 0 12px;
           border-radius: 10px;
           border: 1px solid var(--border);
-          background: white;
+          background: var(--surface);
           color: var(--text);
           font-size: 14px;
         }
@@ -296,7 +296,7 @@ function Select({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       disabled={disabled}
-      className="h-10 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary-500 focus:outline-none disabled:opacity-60"
+      className="h-10 rounded-lg border border-border bg-surface px-3 text-sm text-text focus:border-primary-500 focus:outline-none disabled:opacity-60"
     >
       {children}
     </select>

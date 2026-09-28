@@ -463,7 +463,7 @@ function PurchasesTab({
                         type="button"
                         onClick={() => handleRevoke(p.purchaseId)}
                         disabled={pending}
-                        className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
+                        className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
                       >
                         <Ban className="h-3.5 w-3.5" /> שלול
                       </button>
@@ -493,7 +493,7 @@ function PurchasesTab({
             <select
               value={selectedPackage}
               onChange={(e) => setSelectedPackage(e.target.value)}
-              className="h-9 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
+              className="h-9 rounded-lg border border-border bg-surface px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
             >
               <option value="">בחר חבילה...</option>
               {allPackages.map((pkg) => (
@@ -511,7 +511,7 @@ function PurchasesTab({
               type="date"
               value={expiresAt}
               onChange={(e) => setExpiresAt(e.target.value)}
-              className="h-9 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
+              className="h-9 rounded-lg border border-border bg-surface px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
             />
           </label>
           <label className="flex flex-col gap-1">
@@ -521,7 +521,7 @@ function PurchasesTab({
             <input
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
-              className="h-9 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
+              className="h-9 rounded-lg border border-border bg-surface px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
               placeholder="Bit / העברה / מזומן"
             />
           </label>
@@ -532,7 +532,7 @@ function PurchasesTab({
             <input
               value={paymentNote}
               onChange={(e) => setPaymentNote(e.target.value)}
-              className="h-9 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
+              className="h-9 rounded-lg border border-border bg-surface px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
               placeholder="מספר אסמכתא וכד׳"
             />
           </label>
@@ -543,7 +543,7 @@ function PurchasesTab({
             <input
               value={adminNotes}
               onChange={(e) => setAdminNotes(e.target.value)}
-              className="h-9 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
+              className="h-9 rounded-lg border border-border bg-surface px-3 text-sm text-text focus:border-primary-500 focus:outline-none"
               placeholder="הערות פנימיות..."
             />
           </label>

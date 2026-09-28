@@ -24,12 +24,12 @@ const LABEL: Record<State, string> = {
   INITIALIZING: "מאתחל…",
 };
 const TONE: Record<State, string> = {
-  READY: "border-emerald-200 bg-emerald-50 text-emerald-700",
-  BUILDING: "border-amber-200 bg-amber-50 text-amber-800",
-  QUEUED: "border-slate-200 bg-slate-50 text-slate-700",
-  ERROR: "border-rose-200 bg-rose-50 text-rose-700",
-  CANCELED: "border-slate-200 bg-slate-50 text-slate-700",
-  INITIALIZING: "border-amber-200 bg-amber-50 text-amber-800",
+  READY: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/15 dark:text-emerald-300",
+  BUILDING: "border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/15 dark:text-amber-300",
+  QUEUED: "border-border bg-surface-2 text-text-muted",
+  ERROR: "border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-500/30 dark:bg-rose-500/15 dark:text-rose-300",
+  CANCELED: "border-border bg-surface-2 text-text-muted",
+  INITIALIZING: "border-amber-200 bg-amber-50 text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/15 dark:text-amber-300",
 };
 
 function fmtRelative(ms: number): string {

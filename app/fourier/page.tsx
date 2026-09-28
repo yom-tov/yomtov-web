@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { getSection } from "@/lib/site-content";
 
 export const metadata: Metadata = {
   title: "סימולטור פורייה",
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 const PHET_URL =
   "https://phet.colorado.edu/sims/html/fourier-making-waves/latest/fourier-making-waves_en.html";
 
-export default function FourierPage() {
+export default async function FourierPage() {
+  const t = await getSection("fourier.page");
   return (
     <div className="flex min-h-[calc(100vh-4rem)] flex-col">
       <div className="container-page py-4">
@@ -24,13 +26,8 @@ export default function FourierPage() {
         />
         <div className="mt-3 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-extrabold text-text">
-              סימולטור פורייה — Fourier: Making Waves
-            </h1>
-            <p className="mt-1 text-sm text-text-muted">
-              סימולטור אינטראקטיבי מבית PhET — בנו גלים מהרמוניות, צפו בהתמרת
-              פורייה וגלו את הקשר בין תחום הזמן לתחום התדר.
-            </p>
+            <h1 className="text-2xl font-extrabold text-text">{t.title}</h1>
+            <p className="mt-1 text-sm text-text-muted">{t.text}</p>
           </div>
           <Link
             href="/"

@@ -6,6 +6,8 @@ import { assignmentsFor, getSubject } from "@/lib/content";
 import ShortsRow from "./ShortsRow";
 import DigitalSimulator from "./DigitalSimulator";
 import type { Metadata } from "next";
+import { getSection } from "@/lib/site-content";
+import { getCollection } from "@/lib/site-content/youtube";
 
 export const metadata: Metadata = {
   title: "אלקטרוניקה ספרתית",
@@ -13,19 +15,14 @@ export const metadata: Metadata = {
     "לוגיקה בוליאנית, שערים, מונים, זיכרונות ומעגלים ספרתיים — חומרי לימוד, נוסחאות וסיכומים.",
 };
 
-const MAIN_VIDEO_ID = "1ouRvKKXfio";
-
-const SHORTS = [
-  { id: "mfcqflS8bEA", title: "NAND Gate: CMOS" },
-  { id: "ZFOSpk8Vse4", title: "NOR Gate: CMOS" },
-  { id: "UYRTlpNrLD4", title: "AND Gate: CMOS" },
-  { id: "BWlV8JhFSaE", title: "OR Gate: CMOS" },
-  { id: "1Sw5cXon-K8", title: "NOT Gate: CMOS" },
-];
-
-export default function DigitalPage() {
+export default async function DigitalPage() {
   const s = getSubject("digital")!;
   const asg = assignmentsFor("digital");
+  const [t, [main], shorts] = await Promise.all([
+    getSection("digital.page"),
+    getCollection("digital-main"),
+    getCollection("digital-shorts"),
+  ]);
 
   return (
     <div className="container-page py-8">
@@ -48,38 +45,36 @@ export default function DigitalPage() {
       </header>
 
       {/* Main video — 70% width */}
-      <section className="mt-10">
-        <div className="mx-auto w-full max-w-3xl">
-          <div className="overflow-hidden rounded-2xl border border-border shadow-lg">
-            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-              <iframe
-                className="absolute inset-0 h-full w-full"
-                src={`https://www.youtube.com/embed/${MAIN_VIDEO_ID}`}
-                title="סרטון אלקטרוניקה ספרתית"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+      {main && (
+        <section className="mt-10">
+          <div className="mx-auto w-full max-w-3xl">
+            <div className="overflow-hidden rounded-2xl border border-border shadow-lg">
+              <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+                <iframe
+                  className="absolute inset-0 h-full w-full"
+                  src={`https://www.youtube.com/embed/${main.youtubeId}`}
+                  title={main.title}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Shorts row */}
-      <section className="mt-10">
-        <h2 className="text-xl font-extrabold text-text">
-          סרטונים קצרים באלקטרוניקה
-        </h2>
-        <ShortsRow shorts={SHORTS} />
-      </section>
+      {shorts.length > 0 && (
+        <section className="mt-10">
+          <h2 className="text-xl font-extrabold text-text">{t.shortsTitle}</h2>
+          <ShortsRow shorts={shorts.map((v) => ({ id: v.youtubeId, title: v.title }))} />
+        </section>
+      )}
 
       {/* Circuit Simulator */}
       <section className="mt-10">
-        <h2 className="text-xl font-extrabold text-text">
-          סימולטור מעגלים ספרתיים
-        </h2>
-        <p className="mt-1 text-sm text-text-muted">
-          רמזור תנועה ספרתי — צפו בלוגיקה הסדרתית שמפעילה את הנורות
-        </p>
+        <h2 className="text-xl font-extrabold text-text">{t.simulatorTitle}</h2>
+        <p className="mt-1 text-sm text-text-muted">{t.simulatorText}</p>
         <div className="mt-4">
           <DigitalSimulator />
         </div>
@@ -87,9 +82,7 @@ export default function DigitalPage() {
 
       {/* Assignments */}
       <section className="mt-10">
-        <h2 className="text-xl font-extrabold text-text">
-          נוסחאונים וסיכומים
-        </h2>
+        <h2 className="text-xl font-extrabold text-text">{t.assignmentsTitle}</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {asg.slice().reverse().map((a) => (
             <AssignmentCard key={a.id} assignment={a} />
@@ -106,12 +99,8 @@ export default function DigitalPage() {
             <NotebookPen className="h-5 w-5" />
           </div>
           <div>
-            <div className="text-base font-bold text-text">
-              עבודות ותרגולים
-            </div>
-            <div className="text-sm text-text-muted">
-              כל חומרי הלימוד לאלקטרוניקה ספרתית
-            </div>
+            <div className="text-base font-bold text-text">{t.linkTitle}</div>
+            <div className="text-sm text-text-muted">{t.linkText}</div>
           </div>
           <ArrowLeft className="h-5 w-5 text-text-subtle transition-transform group-hover:-translate-x-1" />
         </Link>

@@ -63,7 +63,7 @@ export function LabsListClient({ items }: { items: Lab[] }) {
                   <div className="flex gap-1">
                     <Link
                       href={`/admin/labs/${encodeURIComponent(l.id)}/edit`}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
                     >
                       <Edit3 className="h-3.5 w-3.5" /> ערוך
                     </Link>
@@ -71,7 +71,7 @@ export function LabsListClient({ items }: { items: Lab[] }) {
                       type="button"
                       onClick={() => setToDelete(l)}
                       disabled={pending}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
                     >
                       <Trash2 className="h-3.5 w-3.5" /> מחק
                     </button>

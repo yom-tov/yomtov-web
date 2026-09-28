@@ -9,6 +9,7 @@ import { ThemeScript } from "@/components/layout/ThemeScript";
 import { AccessibilityScript } from "@/components/layout/AccessibilityScript";
 import { AccessibilityWidget } from "@/components/layout/AccessibilityWidget";
 import { CookieBanner } from "@/components/layout/CookieBanner";
+import { getSection, visible } from "@/lib/site-content";
 
 const heebo = Heebo({
   variable: "--font-heebo",
@@ -60,7 +61,16 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// Pages read admin-edited texts from the database. Saves in the admin refresh
+// the affected pages right away; this hourly refresh is only a safety net.
+export const revalidate = 3600;
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const [nav, brand, contact] = await Promise.all([
+    getSection("global.nav"),
+    getSection("global.brand"),
+    getSection("global.contact"),
+  ]);
   return (
     <html
       lang="he"
@@ -80,11 +90,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           דלג לתוכן הראשי
         </a>
         <SiteChrome
-          header={<Header />}
+          header={
+            <Header
+              nav={visible(nav.links).map(({ label, href }) => ({ label, href }))}
+              siteName={brand.siteName}
+              tagline={brand.tagline}
+            />
+          }
           footer={<Footer />}
           extras={
             <>
-              <AccessibilityWidget />
+              <AccessibilityWidget contactEmail={contact.contactEmail} />
               <CookieBanner />
             </>
           }

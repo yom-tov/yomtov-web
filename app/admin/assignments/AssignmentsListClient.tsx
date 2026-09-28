@@ -56,7 +56,7 @@ export function AssignmentsListClient({ items }: { items: Assignment[] }) {
       <div className="mb-4 rounded-2xl border border-border bg-surface p-3">
         <div className="flex flex-wrap items-end gap-3">
           <div className="flex-1 min-w-[220px]">
-            <label className="flex items-center gap-2 rounded-xl border border-border bg-white px-3 py-2 focus-within:border-primary-500">
+            <label className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2 focus-within:border-primary-500">
               <Search className="h-4 w-4 text-text-subtle" />
               <input
                 value={q}
@@ -76,7 +76,7 @@ export function AssignmentsListClient({ items }: { items: Assignment[] }) {
             </select>
           </label>
           {(q || subject) && (
-            <button type="button" onClick={() => { setQ(""); setSubject(""); }} className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-3 py-2 text-xs text-text-muted hover:text-text">
+            <button type="button" onClick={() => { setQ(""); setSubject(""); }} className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-3 py-2 text-xs text-text-muted hover:text-text">
               <X className="h-3.5 w-3.5" /> נקה
             </button>
           )}
@@ -106,7 +106,7 @@ export function AssignmentsListClient({ items }: { items: Assignment[] }) {
                   <div className="flex gap-1">
                     <Link
                       href={`/admin/assignments/${encodeURIComponent(a.id)}/edit`}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-primary-300 hover:text-primary-700"
                     >
                       <Edit3 className="h-3.5 w-3.5" /> ערוך
                     </Link>
@@ -114,7 +114,7 @@ export function AssignmentsListClient({ items }: { items: Assignment[] }) {
                       type="button"
                       onClick={() => setToDelete(a)}
                       disabled={pending}
-                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-white px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
+                      className="inline-flex items-center gap-1 rounded-lg border border-border bg-surface px-2 py-1.5 text-xs text-text-muted hover:border-rose-300 hover:text-rose-700"
                     >
                       <Trash2 className="h-3.5 w-3.5" /> מחק
                     </button>
@@ -142,7 +142,7 @@ export function AssignmentsListClient({ items }: { items: Assignment[] }) {
       <style jsx>{`
         .select {
           height: 36px; padding: 0 10px; border-radius: 8px;
-          border: 1px solid var(--border); background: white;
+          border: 1px solid var(--border); background: var(--surface);
           color: var(--text); font-size: 13px;
         }
         .select:focus { outline: none; border-color: var(--primary-500); }
